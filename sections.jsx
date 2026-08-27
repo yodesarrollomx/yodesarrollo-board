@@ -1643,7 +1643,7 @@ const SecAcuerdoPagos = (props) => {
 // utm_source identifica la herramienta, utm_medium el contexto. Con esto el CRM
 // distingue al lead que nació en una presentación (este board) del que llegó por
 // redes. El formulario captura el origen con lógica de primer toque.
-const PPP_CTA_URL = "https://alexpueblag.github.io/plan-potencial/?utm_source=yodesarrollo-board&utm_medium=presentacion&utm_campaign=board-ppp";
+const PPP_CTA_URL = "https://tableros.yodesarrollo.mx/plan-potencial/?utm_source=yodesarrollo-board&utm_medium=presentacion&utm_campaign=board-ppp";
 
 const PPP_FALLBACK = {
   hero: {
@@ -1880,7 +1880,7 @@ const AUTOR_FALLBACK = {
     titulo: "Todo empieza con el Cuestionario de Arquitectura de Autor",
     cuerpo: "Ese 'escuchar' no es una plática suelta: es un cuestionario de perfil de vida que diseñamos para conocerte antes de dibujar. Cómo despiertas, cómo recibes, qué espacios usas de verdad y cuáles solo estorban. De tus respuestas nace el programa de áreas de tu proyecto — cada metro cuadrado justificado por tu forma de vivir, no por un catálogo — y con él, una cotización seria. Lo ideal es llenarlo acompañado, en una videollamada con el despacho: media hora de conversación que le ahorra meses de correcciones al proyecto.",
     boton: "Abrir el cuestionario",
-    url: "https://alexpueblag.github.io/aurum-experiencia/?utm_source=yodesarrollo-board&utm_medium=presentacion&utm_campaign=board-autor",
+    url: "https://tableros.yodesarrollo.mx/aurum-experiencia/?utm_source=yodesarrollo-board&utm_medium=presentacion&utm_campaign=board-autor",
     sub: "Sin costo y sin compromiso. Tus respuestas llegan al despacho y te contactamos para agendar la conversación.",
   },
 };
