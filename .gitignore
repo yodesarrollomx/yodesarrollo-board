@@ -1,3 +1,6 @@
 # Backend Apps Script — NO publicar
 apps-script/
 .clasp.json
+
+# Respaldo en claro — NUNCA publicar (va cifrado en datos.enc)
+datos.json

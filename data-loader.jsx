@@ -283,13 +283,81 @@ const procesarDatos = (d) => {
    ganar solo. OJO: aquí ya no se borra la credencial ante un error "liga" —
    el Portero de respaldo puede haber validado una clave que el backend
    original no conoce, y borrarla provocaba el loop de acceso. */
+/* El respaldo ya NO es datos.json en claro: GitHub Pages lo servía a cualquiera
+   con un curl (material comercial: proyectos, lotes, escalones de rendimiento).
+   Ahora viaja cifrado (datos.enc) con el MISMO esquema del pintarrón:
+     openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -md sha256 -salt -base64 -A
+   y se descifra aquí con WebCrypto. La frase es la clave de equipo del Portero
+   (la misma que el usuario teclea en "Tengo una clave del equipo"), así que en
+   el caso resiliente —Apps Script caído— el tablero ya la trae en localStorage. */
+const RESPALDO_CLAVE_SSK = "ydr_respaldo_clave";
+
+const _b64aBytes = (b64) => {
+  const bin = atob(String(b64).replace(/\s+/g, ""));
+  const u = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+  return u;
+};
+
+// Réplica de openssl: blob = "Salted__"(8) + salt(8) + ciphertext, todo en base64.
+const descifrarRespaldo = async (b64, pass) => {
+  const raw = _b64aBytes(b64);
+  if (raw.length < 16 || String.fromCharCode.apply(null, raw.slice(0, 8)) !== "Salted__")
+    throw new Error("formato inesperado");
+  const salt = raw.slice(8, 16);
+  const cipher = raw.slice(16);
+  const passKey = await crypto.subtle.importKey(
+    "raw", new TextEncoder().encode(pass), "PBKDF2", false, ["deriveBits"]);
+  const bits = new Uint8Array(await crypto.subtle.deriveBits(
+    { name: "PBKDF2", salt, iterations: 200000, hash: "SHA-256" }, passKey, 384));
+  const aesKey = await crypto.subtle.importKey(
+    "raw", bits.slice(0, 32), { name: "AES-CBC" }, false, ["decrypt"]);
+  const iv = bits.slice(32, 48);
+  const plano = await crypto.subtle.decrypt({ name: "AES-CBC", iv }, aesKey, cipher);
+  return JSON.parse(new TextDecoder().decode(plano));
+};
+window.YDR_descifrarRespaldo = descifrarRespaldo;   // útil para diagnóstico en consola
+
 const fetchRespaldoLocal = async () => {
   const local = (window.YDR_CONFIG && window.YDR_CONFIG.datosRespaldo) || "";
   if (!local) throw new Error("sin_respaldo_local");
   const res = await fetchWithTimeout(local + "?cb=" + Date.now(), FETCH_TIMEOUT);
   if (!res.ok) throw new Error("http_" + res.status);
-  const json = await res.json();
-  return procesarDatos(json.data || json);
+  const b64 = (await res.text()).trim();
+
+  // Frases candidatas, en orden: la credencial del Portero (es literalmente la
+  // clave de equipo cuando se entró por "Tengo una clave del equipo"), la que ya
+  // se validó en esta pestaña, y —solo si ninguna sirve— se pide una vez.
+  const candidatas = [];
+  const k = credencial(); if (k) candidatas.push(k);
+  try {
+    const g = sessionStorage.getItem(RESPALDO_CLAVE_SSK);
+    if (g && candidatas.indexOf(g) === -1) candidatas.push(g);
+  } catch (e) {}
+
+  for (const frase of candidatas) {
+    try {
+      const json = await descifrarRespaldo(b64, frase);
+      try { sessionStorage.setItem(RESPALDO_CLAVE_SSK, frase); } catch (e) {}
+      return procesarDatos(json.data || json);
+    } catch (e) { /* frase equivocada: probamos la siguiente */ }
+  }
+
+  // Última oportunidad: el usuario entró con liga mágica o Google (su credencial
+  // es un token, no la clave), y el servidor está caído. Se la pedimos una vez.
+  let tecleada = "";
+  try {
+    tecleada = (window.prompt(
+      "El servidor no responde. Escribe la clave del equipo para abrir el respaldo:") || "").trim();
+  } catch (e) {}
+  if (tecleada) {
+    try {
+      const json = await descifrarRespaldo(b64, tecleada);
+      try { sessionStorage.setItem(RESPALDO_CLAVE_SSK, tecleada); } catch (e) {}
+      return procesarDatos(json.data || json);
+    } catch (e) { /* cae al error claro de abajo */ }
+  }
+  throw new Error("respaldo_ilegible");
 };
 
 const fetchLive = async (forceRefresh = false) => {
