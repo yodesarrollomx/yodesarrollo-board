@@ -328,6 +328,44 @@ const SecComparativo = (props) => {
 // =============================================================================
 // 3. CASA ALYSA
 // =============================================================================
+// --- MaterialDelProyecto: los botones de presentacion / propuesta / video ------
+//  Vive aparte para que lo puedan usar TANTO la seccion generica como las
+//  secciones propias de Casa Alysa y Real Miramar, que son anteriores y se
+//  habian quedado sin el bloque. Lee la fila del proyecto por id del tab
+//  Proyectos, asi que respeta lo que este en el Sheet y el respaldo local.
+const MaterialDelProyecto = ({ id, p: pDirecto }) => {
+  const { data } = window.useData();
+  const p = pDirecto || ((data && data.proyectos) || []).filter((x) => x.id === id)[0] || {};
+  if (!(p.presentacion_url || p.pdf_dossier_url || p.video_url || p.cta_url)) return null;
+  return (
+    <section className="block">
+      <h2 className="block-title">Material del proyecto</h2>
+      <div className="proj-action-row">
+        {p.presentacion_url && (
+          <a className="path-cta" href={matUrl(p, "presentacion_url")} target="_blank" rel="noreferrer">
+            Ver presentación completa <IconArrow size={14} sw={2} />
+          </a>
+        )}
+        {p.pdf_dossier_url && (
+          <a className="path-cta" href={matUrl(p, "pdf_dossier_url")} target="_blank" rel="noreferrer">
+            Ver propuesta (PDF) <IconArrow size={14} sw={2} />
+          </a>
+        )}
+        {p.video_url && (
+          <a className="path-cta" href={matUrl(p, "video_url")} target="_blank" rel="noreferrer">
+            Ver avance de obra <IconArrow size={14} sw={2} />
+          </a>
+        )}
+        {p.cta_url && (
+          <a className="path-cta" href={linkArchivo(p.cta_url)} target="_blank" rel="noreferrer">
+            {p.cta_text || "Más información"} <IconArrow size={14} sw={2} />
+          </a>
+        )}
+      </div>
+    </section>
+  );
+};
+
 const SecCasaAlysa = (props) => {
   const { data } = window.useData();
   const hero    = (data.alysa && data.alysa.hero) || {};
@@ -403,6 +441,14 @@ const SecCasaAlysa = (props) => {
             </ul>
           </div>
         </section>
+
+
+        {/* Material del proyecto — mismo bloque que usa SecProyecto.
+            Casa Alysa y Real Miramar tienen componente propio (heredado) y por eso
+            se habian quedado SIN los botones de material: el bloque solo vivia en la
+            seccion generica, que es la que usan los proyectos nuevos como Dunas.
+            El proyecto se saca del tab Proyectos por id. */}
+        <MaterialDelProyecto id="casa-alysa" />
       </div>
     </Shell>
   );
@@ -461,6 +507,9 @@ const SecRealMiramar = (props) => {
             </div>
           </div>
         </details>
+
+        {/* Mismo caso que Casa Alysa: seccion propia heredada, sin el bloque. */}
+        <MaterialDelProyecto id="real-miramar" />
       </div>
     </Shell>
   );
