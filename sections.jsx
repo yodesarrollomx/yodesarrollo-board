@@ -1929,7 +1929,7 @@ const AUTOR_FALLBACK = {
     titulo: "Todo empieza con el Cuestionario de Arquitectura de Autor",
     cuerpo: "Ese 'escuchar' no es una plática suelta: es un cuestionario de perfil de vida que diseñamos para conocerte antes de dibujar. Cómo despiertas, cómo recibes, qué espacios usas de verdad y cuáles solo estorban. De tus respuestas nace el programa de áreas de tu proyecto — cada metro cuadrado justificado por tu forma de vivir, no por un catálogo — y con él, una cotización seria. Lo ideal es llenarlo acompañado, en una videollamada con el despacho: media hora de conversación que le ahorra meses de correcciones al proyecto.",
     boton: "Abrir el cuestionario",
-    url: "https://yodesarrollomx.github.io/aurum-experiencia/?utm_source=yodesarrollo-board&utm_medium=presentacion&utm_campaign=board-autor",
+    url: "https://aurumarquitectos.github.io/experiencia/?utm_source=yodesarrollo-board&utm_medium=presentacion&utm_campaign=board-autor",
     sub: "Sin costo y sin compromiso. Tus respuestas llegan al despacho y te contactamos para agendar la conversación.",
   },
 };
