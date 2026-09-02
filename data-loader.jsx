@@ -469,7 +469,7 @@ const DataErrorView = ({ onRetry }) => (
             persiste, el backend de este tablero puede necesitar re-despliegue.
           </span>
           <div style={{ display: "flex", gap: "10px", marginTop: "6px", flexWrap: "wrap", justifyContent: "center" }}>
-            <a className="foot-cta" href="https://alexpueblag.github.io/yod-portal/os/">Volver a YOD OS</a>
+            <a className="foot-cta" href="https://tableros.yodesarrollo.mx/yod-portal/os/">Volver a YOD OS</a>
             <button className="foot-cta" onClick={onRetry}>Reintentar</button>
             <button className="foot-cta" style={{ opacity: .7 }} onClick={cerrarSesionManual}>Cerrar sesión</button>
           </div>
