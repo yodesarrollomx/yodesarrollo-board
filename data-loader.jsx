@@ -317,6 +317,10 @@ const descifrarRespaldo = async (b64, pass) => {
   return JSON.parse(new TextDecoder().decode(plano));
 };
 window.YDR_descifrarRespaldo = descifrarRespaldo;   // útil para diagnóstico en consola
+window.YDR_abrirRespaldo = (frase) => {           // da la clave del equipo sin prompt modal
+  try { sessionStorage.setItem(RESPALDO_CLAVE_SSK, String(frase || "").trim()); } catch (e) {}
+  location.reload();
+};
 
 const fetchRespaldoLocal = async () => {
   const local = (window.YDR_CONFIG && window.YDR_CONFIG.datosRespaldo) || "";
@@ -343,20 +347,13 @@ const fetchRespaldoLocal = async () => {
     } catch (e) { /* frase equivocada: probamos la siguiente */ }
   }
 
-  // Última oportunidad: el usuario entró con liga mágica o Google (su credencial
-  // es un token, no la clave), y el servidor está caído. Se la pedimos una vez.
-  let tecleada = "";
-  try {
-    tecleada = (window.prompt(
-      "El servidor no responde. Escribe la clave del equipo para abrir el respaldo:") || "").trim();
-  } catch (e) {}
-  if (tecleada) {
-    try {
-      const json = await descifrarRespaldo(b64, tecleada);
-      try { sessionStorage.setItem(RESPALDO_CLAVE_SSK, tecleada); } catch (e) {}
-      return procesarDatos(json.data || json);
-    } catch (e) { /* cae al error claro de abajo */ }
-  }
+  // 1-sep-2026: aqui habia un window.prompt() pidiendo la clave del equipo. Un
+  // prompt es MODAL: congela la pestana completa (y cualquier revisor automatico)
+  // hasta que alguien teclee. Si el usuario entro por Google o liga magica, su
+  // credencial es un token y no abre el respaldo: se avisa y se cae al error
+  // claro; la clave se puede dar sin bloquear con window.YDR_abrirRespaldo("clave").
+  console.warn("[data-loader] el respaldo cifrado necesita la clave del equipo; " +
+    "entra con \"Tengo una clave del equipo\" o llama YDR_abrirRespaldo('clave') en consola");
   throw new Error("respaldo_ilegible");
 };
 
@@ -367,7 +364,17 @@ const fetchLive = async (forceRefresh = false) => {
     const k = credencial();
     if (!k) throw new Error("sin_credencial");
     const query = "k=" + encodeURIComponent(k) + (forceRefresh ? "&refresh=1" : "");
-    const res = await fetchWithTimeout(url + (url.indexOf("?") === -1 ? "?" : "&") + query, FETCH_TIMEOUT);
+    const full = url + (url.indexOf("?") === -1 ? "?" : "&") + query;
+    // 1-sep-2026: Apps Script a veces tarda mas de 15 s en frio. Un segundo
+    // intento (mismo limite) antes de caer al respaldo evita el falso "servidor
+    // no disponible" que dejaba el tablero sin datos en la primera visita.
+    let res;
+    try { res = await fetchWithTimeout(full, FETCH_TIMEOUT); }
+    catch (e1) {
+      if (e1 && e1.name !== "AbortError") throw e1;
+      console.warn("[data-loader] servidor lento (>15 s), reintentando una vez");
+      res = await fetchWithTimeout(full, FETCH_TIMEOUT);
+    }
     if (!res.ok) throw new Error("http_" + res.status);
     const json = await res.json();
     if (!json.ok) throw new Error("api_error:" + (json.error || "unknown"));
