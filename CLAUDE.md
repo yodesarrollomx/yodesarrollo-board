@@ -13,7 +13,7 @@ En el menú de YOD OS aparece como **«Codesarrolladores»** (memoria `board-ofi
 - `https://alexpueblag.github.io/yodesarrollo-board/` → HTTP 200 (cascarón que reenvía; commit `1946e3d`).
 - `https://tableros.yodesarrollo.mx/yodesarrollo-board/` → **000, no resuelve**. El dominio propio todavía no existe en el DNS. No escribas esa liga como si funcionara.
 
-Repo: `yodesarrollomx/yodesarrollo-board` (`git remote -v`). Clon local: `/Users/a./yodesarrollo-board`. Primer commit `64c3222` del 2026-05-17; último `acd6578` del 2026-09-02.
+Repo: `yodesarrollomx/yodesarrollo-board` (`git remote -v`). Clon local: `/Users/a./yodesarrollo-board`. Primer commit `64c3222` del 2026-05-17; último `09226a9` del 2026-09-04 (este mismo documento). El último cambio de **código** es `acd6578` del 2026-09-02.
 
 **NO confundir con `Co-desarrolladores-Yod`**, que es el portal privado de cada inversionista con su estado de cuenta (memoria `board-oficial-resiliente`). Los dos suenan igual. Si la pantalla dice «Carpeta de inversión · documento confidencial», es ESTE.
 
@@ -96,4 +96,4 @@ Ediciones locales: localStorage ydr_overrides_v1 (Modo Edición v1) — NO tocan
 - **¿El `README.md` sigue vigente?** Describe una carpeta `apps-script/` dentro del repo (hoy en `.gitignore`), un `data.json` retirado y «27 pestañas» del Sheet. No pude verificar el número de pestañas. Pregunta: ¿se actualiza el README o se marca como histórico?
 - **¿Qué pasó con `codesarrolladores-libre`?** La memoria `board-oficial-resiliente` lo da por vivo como copia sin candado; hoy `https://alexpueblag.github.io/codesarrolladores-libre/` responde **404**. Pregunta a Alejandro: ¿se archivó, se borró o se movió?
 - **Id del Sheet.** El `11tkKgl4W3ug…` viene de memoria, no del código (el repo no trae el `Code.gs`). Confírmalo contra el editor de Apps Script antes de usarlo.
-- **Ramas viejas en `origin`**: `respaldo-pre-migracion`, `respaldo-v3`, `agent/*`, `claude/*`, `fix/login-board-iv`, `dominio-propio`. Pregunta si ya se pueden borrar.
+- **Ramas viejas en `origin`**: `respaldo-pre-migracion`, `respaldo-v3`, `agent/repair-sheets-live`, `agent/yod-navigation`, `claude/access-board-password-google-4571d5`, `claude/boards-online-permissions-40s7zm`, `fix/login-board-iv` — las 7 que acompañan a `main` en `git ls-remote --heads origin`. Pregunta si ya se pueden borrar.
