@@ -1,15 +1,23 @@
 {
-  "model_revision": "2026-09-30.1",
-  "proposal_id": "CHG-ATLAS-001",
-  "summary": "Incorporar este repositorio al atlas de YOD OS: instrucciones para agentes, declaración de impacto y verificación de propuestas versionadas antes de integrar cambios.",
+  "model_revision": "2026-10-09.128-brokers",
+  "proposal_id": "CHG-BROKERS-128",
+  "summary": "Brokers con CRM canónico contrastado en fuente viva, autorización por registro, seguimiento y participaciones. Código listo; activación de API de Sheets, versión backend y publicación pendientes.",
   "components": [
     "SYS-INVERSION",
     "GAS-INVERSION",
-    "SHEET-INVERSION"
+    "SHEET-INVERSION",
+    "GAS-CRM",
+    "SHEET-CRM",
+    "SYS-POTENCIALES",
+    "GAS-PORTERO",
+    "SYS-YOD-OS"
   ],
   "tests": [
-    "git diff --check",
-    "Revisión sintáctica local de JavaScript/HTML y, cuando corresponde, AST de Python, sin ejecutar integraciones."
+    "Contrato de snapshot autorizado, sin caché privada ni fallback general",
+    "Alta y actualización con revisión y clave idempotente, ACK explícito",
+    "CRM, búsqueda, etapas, seguimiento, participación y navegación PPP con datos sintéticos",
+    "21 pruebas de cliente/dominio aprobadas; adaptador y DOM verificados con datos sintéticos",
+    "Lectura del esquema vivo comprobada; Google Sheets API deshabilitada impide activar el guardado"
   ],
-  "rollback": "Revertir el commit de este cambio mediante revisión y repetir las verificaciones locales. No borrar ni restaurar registros de negocio, Sheets o archivos de clientes como parte del rollback."
+  "rollback": "Revertir por PR sin borrar registros, identidades ni historial."
 }

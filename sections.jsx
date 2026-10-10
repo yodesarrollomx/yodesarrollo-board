@@ -1684,152 +1684,23 @@ const SecAcuerdoPagos = (props) => {
 
 // =============================================================================
 // 13. ¿QUÉ ES UN PPP? — Plan de Potencial Patrimonial
-// Sheet-driven (tab `ppp` del Sheet) con respaldo en código: si el Sheet aún no
-// trae la pestaña, la sección se ve completa igual. Regla: lo que llegue del
-// Sheet SIEMPRE gana sobre el respaldo.
-// =============================================================================
-// Liga medible al formulario "Despierta tu Terreno". Convención YOD de UTMs:
-// utm_source identifica la herramienta, utm_medium el contexto. Con esto el CRM
-// distingue al lead que nació en una presentación (este board) del que llegó por
-// redes. El formulario captura el origen con lógica de primer toque.
-const PPP_CTA_URL = "https://yodesarrollomx.github.io/plan-potencial/?utm_source=yodesarrollo-board&utm_medium=presentacion&utm_campaign=board-ppp";
-
-const PPP_FALLBACK = {
-  hero: {
-    kicker: "El punto de partida",
-    display_line1: "Tu terreno ya sabe lo que quiere ser.",
-    display_line2: "Un PPP lo traduce a números.",
-    lead: "Un Plan de Potencial Patrimonial (PPP) es un estudio hecho a la medida de UN terreno: qué permite la norma, qué aguantan los servicios, qué pide el mercado — y cuánto vale cada camino. No es una corazonada ni un folleto: es el expediente con el que un propietario decide con datos, antes de mover un solo peso.",
-    stat_1_value: "1", stat_1_label: "terreno por estudio",
-    stat_2_value: "8", stat_2_label: "servicios auditados con norma",
-    stat_3_value: "3+", stat_3_label: "escenarios corridos",
-    stat_4_value: "1", stat_4_label: "propuesta concreta",
-  },
-  pasos: [
-    { mes: "Paso 1", titulo: "Nos platicas tu terreno", note: "Ubicación, superficie y qué te gustaría lograr. No necesitas planos ni escrituras para empezar: con el formulario de 5 minutos o una plática alcanza." },
-    { mes: "Paso 2", titulo: "Lo corremos en vivo en el YOD OS", note: "En nuestro tablero de Potenciales cargamos tu terreno y sale a la vista, contigo en la pantalla: giros que permite la norma, densidades, y la realidad de agua, energía, drenaje, vialidades y estacionamiento — cada cuadro con su norma citada." },
-    { mes: "Paso 3", titulo: "Escenarios con números", note: "¿Residencial, usos mixtos, comercial, logístico? Cada vocación se corre con inversión requerida, absorción del mercado y valor de salida. Se comparan lado a lado y ganan los números, no el gusto." },
-    { mes: "Paso 4", titulo: "Expediente y propuesta", note: "Recibes el documento con mapas, cuadros normativos y escenarios comparados, más UNA propuesta concreta. El expediente es tuyo, decidas lo que decidas." },
-  ],
-  seguimiento: [
-    { numero: "✓", accent: "#7fb069", titulo: "Los números dan", cuerpo: "Te presentamos la fórmula de co-desarrollo: normalmente aportas el terreno, participas de cada venta y no inviertes de más ni te endeudas. El proyecto arranca con reglas escritas y lo sigues en un tablero como este: aportaciones, avance y fechas a la vista." },
-    { numero: "~", accent: "#d4be8a", titulo: "Dan, pero todavía no", cuerpo: "A veces el terreno vale más esperando con un plan: gestionar el uso de suelo, acercar servicios, madurar la zona. Te decimos exactamente qué le falta, cuánto cuesta lograrlo y le damos seguimiento contigo hasta que los números sí den." },
-    { numero: "✕", accent: "#c96e6e", titulo: "No dan — y se dice de frente", cuerpo: "Si desarrollar no conviene, te lo decimos con los datos en la mesa. Te quedas con el expediente y con la verdad. Preferimos un no honesto hoy que un proyecto que truene en obra — así se construye la confianza que buscamos." },
-  ],
-  diferencias: [
-    { numero: "01", titulo: "vs. un avalúo", cuerpo: "El avalúo te dice cuánto vale tu terreno HOY, tal como está. El PPP te dice cuánto puede PRODUCIR: son preguntas distintas, y la segunda suele valer varias veces la primera." },
-    { numero: "02", titulo: "vs. una inmobiliaria", cuerpo: "El corredor gana cuando vendes rápido, aunque sea barato. Nosotros ganamos cuando el proyecto gana — por eso nos conviene decirte la verdad sobre el potencial, no apurarte a soltar la tierra." },
-    { numero: "03", titulo: "vs. un estudio de mercado", cuerpo: "El estudio genérico habla del sector: 'la vivienda crece 4%'. El PPP habla de TU terreno: qué giro permite TU norma, cuánta agua hay en TU calle, qué absorbe TU zona. Con fuentes citadas, no promedios." },
-    { numero: "04", titulo: "vs. un render bonito", cuerpo: "Un render vende ilusión sin corrida financiera. En el PPP el dibujo llega al final: primero la norma, luego el número, y solo entonces la imagen. Si un escenario no aguanta su corrida, no entra al plan." },
-  ],
-  buscamos: {
-    titulo: "Qué estamos buscando",
-    cuerpo: "Terrenos con vocación — desde un lote urbano hasta decenas de hectáreas — y propietarios dispuestos a pensar como socios: gente que prefiere entender el potencial de su tierra antes de malvenderla. Si ese eres tú, la evaluación inicial es el primer paso.",
-  },
-  costo: {
-    titulo: "Cuánto cuesta y por qué",
-    cuerpo: "La evaluación inicial no cuesta: llenas el formulario y recibes el primer análisis de potencial. El PPP completo se cotiza según superficie y complejidad del terreno — es trabajo de arquitectos e ingeniería normativa hecho a la medida. Y si el proyecto se desarrolla con nosotros, lo invertido en tu PPP se abona al proyecto: el estudio te sale gratis por haber decidido con datos.",
-  },
-  cta: {
-    titulo: "Evalúa tu terreno hoy",
-    sub: "5 minutos, sin compromiso y sin costo. Ubicas tu terreno en el mapa, nos cuentas qué buscas y el primer análisis llega a tu correo.",
-    boton: "Evaluar mi terreno",
-    url: PPP_CTA_URL,
-  },
-};
-
+// Presentación definitiva desde Secciones del Sheet; sin precios ni copy comercial duplicado.
 const SecPPP = (props) => {
   const { data } = window.useData();
   const d = (data && data.ppp) || {};
-  const hero  = { ...PPP_FALLBACK.hero, ...(d.hero || {}) };
-  const pasos = (d.pasos && d.pasos.length ? d.pasos : PPP_FALLBACK.pasos).slice().sort((a, b) => (a.order || 0) - (b.order || 0));
-  const segui = (d.seguimiento && d.seguimiento.length ? d.seguimiento : PPP_FALLBACK.seguimiento).slice().sort((a, b) => (a.order || 0) - (b.order || 0));
-  const difs  = (d.diferencias && d.diferencias.length ? d.diferencias : PPP_FALLBACK.diferencias).slice().sort((a, b) => (a.order || 0) - (b.order || 0));
-  const buscamos = { ...PPP_FALLBACK.buscamos, ...(d.buscamos || {}) };
-  const costo    = { ...PPP_FALLBACK.costo,    ...(d.costo || {}) };
-  const cta      = { ...PPP_FALLBACK.cta,      ...(d.cta || {}) };
-
-  return (
-    <Shell {...props} related={["calculadora", "estrategia", "contacto"]}>
-      <div className="gar">
-        <div className="sec-title-row">
-          <span className="kicker">{hero.kicker}</span>
-          <h1 className="display">{hero.display_line1}<br/>{hero.display_line2}</h1>
-          <p className="lead">{hero.lead}</p>
-          <div className="stat-row">
-            <div className="stat"><span className="big mono">{hero.stat_1_value}</span><span className="mini">{hero.stat_1_label}</span></div>
-            <div className="stat"><span className="big mono">{hero.stat_2_value}</span><span className="mini">{hero.stat_2_label}</span></div>
-            <div className="stat"><span className="big mono">{hero.stat_3_value}</span><span className="mini">{hero.stat_3_label}</span></div>
-            <div className="stat"><span className="big mono accent">{hero.stat_4_value}</span><span className="mini">{hero.stat_4_label}</span></div>
-          </div>
-        </div>
-
-        <section className="block">
-          <h2 className="block-title">La dinámica: así se corre tu terreno</h2>
-          <div className="timeline">
-            {pasos.map((s, i) => (
-              <div key={i} className="tl-step">
-                <div className="tl-marker"><span className="tl-num mono">{i + 1}</span></div>
-                <div className="tl-body">
-                  <span className="tl-mes mono accent">{s.mes}</span>
-                  <span className="tl-title">{s.titulo}</span>
-                  <span className="tl-note muted small">{s.note}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="block">
-          <h2 className="block-title">El seguimiento: qué pasa según tus números</h2>
-          <div className="gar-grid">
-            {segui.map((g) => (
-              <article key={g.titulo} className="gar-card" style={g.accent ? { ["--accent"]: g.accent } : undefined}>
-                <span className="gar-num mono" style={g.accent ? { color: g.accent } : undefined}>{g.numero}</span>
-                <h3>{g.titulo}</h3>
-                <p>{g.cuerpo}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="block">
-          <h2 className="block-title">¿En qué es distinto de otros análisis?</h2>
-          <div className="gar-grid">
-            {difs.map((g) => (
-              <article key={g.numero} className="gar-card">
-                <span className="gar-num mono">{g.numero}</span>
-                <h3>{g.titulo}</h3>
-                <p>{g.cuerpo}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <div className="gar-grid">
-          <article className="gar-card">
-            <span className="gar-num mono">→</span>
-            <h3>{buscamos.titulo}</h3>
-            <p>{buscamos.cuerpo}</p>
-          </article>
-          <article className="gar-card">
-            <span className="gar-num mono">$</span>
-            <h3>{costo.titulo}</h3>
-            <p>{costo.cuerpo}</p>
-          </article>
-        </div>
-
-        <section className="block" style={{ textAlign: "center", paddingTop: "28px", paddingBottom: "12px" }}>
-          <h2 className="display" style={{ fontSize: "clamp(26px, 4vw, 40px)", marginBottom: "10px" }}>{cta.titulo}</h2>
-          <p className="lead" style={{ maxWidth: "560px", margin: "0 auto 22px" }}>{cta.sub}</p>
-          <a className="foot-cta" href={cta.url} target="_blank" rel="noopener noreferrer"
-             style={{ display: "inline-flex", alignItems: "center", gap: "10px", fontSize: "16px", padding: "14px 28px" }}>
-            {cta.boton} <IconArrow size={16} sw={2} />
-          </a>
-        </section>
-      </div>
-    </Shell>
-  );
+  let presentation = "";
+  try { const u = new URL(d.presentation_url || ""); if (u.protocol === "https:" && u.hostname === "docs.google.com" && /^\/presentation\/d\/[A-Za-z0-9_-]+/.test(u.pathname) && !u.username && !u.password) presentation = u.href; } catch (_) {}
+  const embed = presentation ? presentation.replace(/\/(edit|present).*$/, "/embed") : "";
+  return <Shell {...props} related={["contacto"]}>
+    <div className="gar"><div className="sec-title-row">
+      <span className="kicker">Plan de potencial personalizado</span>
+      <h1 className="display">{d.presentation_title || "El potencial de tu terreno"}</h1>
+      {presentation ? <a className="foot-cta" href={presentation} target="_blank" rel="noopener noreferrer">Abrir presentación definitiva ↗</a> : <p className="lead">Conecta el tablero para cargar la presentación aprobada.</p>}
+    </div>
+    {embed && <iframe title="Presentación definitiva del PPP" src={embed} loading="lazy" allowFullScreen style={{width:"100%",aspectRatio:"16 / 9",minHeight:320,border:0,borderRadius:16,background:"#fff"}} />}
+    {presentation && <p className="small muted">Si Google solicita acceso, abre la presentación para usar tu cuenta autorizada.</p>}
+    </div>
+  </Shell>;
 };
 
 // =============================================================================
