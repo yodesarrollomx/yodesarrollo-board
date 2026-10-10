@@ -27,6 +27,18 @@
     return s.opportunities.filter(o => (!broker || (o.broker_ids || []).includes(broker)) && (!stage || o.stage === stage) && [o.title, o.location, o.id, (s.contacts.find(c => c.id === o.contact_id) || {}).name].join(' ').toLocaleLowerCase('es').includes(q));
   }
   function overdue(o, today) { return !!o.next_date && o.next_date < today && !['Formalizado', 'Descartado', 'En pausa'].includes(o.stage); }
+  function nextStep(value) {
+    const text = String(value || ''), match = text.match(/^\[(YOD|Masterbroker)\]\s*/);
+    return { owner: match ? match[1] : '', text: match ? text.slice(match[0].length) : text };
+  }
+  function encodeStep(owner, value) {
+    const text = nextStep(value).text.trim();
+    return text && ['YOD','Masterbroker'].includes(owner) ? `[${owner}] ${text}` : text;
+  }
+  function agenda(rows, owner) {
+    return rows.filter(o => !['Formalizado','Descartado','En pausa'].includes(o.stage) && (!owner || nextStep(o.next_action).owner === owner))
+      .slice().sort((a,b) => String(a.next_date || '9999').localeCompare(String(b.next_date || '9999')));
+  }
   function createClient(config) {
     let generation = 0;
     async function request(action, data, requestId) {
@@ -50,7 +62,7 @@
     }
     return { load: () => request('brokers_snapshot', {}), save: (kind, record, revision, requestId) => request('brokers_save', { kind, record, expected_revision: revision }, requestId), invalidate: () => { generation++; } };
   }
-  const api = { stages, participationStates, safeLink, validateSnapshot, visible, overdue, createClient };
+  const api = { stages, participationStates, safeLink, validateSnapshot, visible, overdue, nextStep, encodeStep, agenda, createClient };
   if (typeof module !== 'undefined') module.exports = api;
   root.BrokersCore = api;
 })(typeof window === 'undefined' ? globalThis : window);

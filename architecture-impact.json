@@ -1,7 +1,7 @@
 {
-  "model_revision": "2026-10-09.128-brokers",
-  "proposal_id": "CHG-BROKERS-128",
-  "summary": "Brokers con CRM canónico contrastado en fuente viva, autorización por registro, seguimiento y participaciones. Código listo; activación de API de Sheets, versión backend y publicación pendientes.",
+  "model_revision": "2026-10-10.130-masterbrokers",
+  "proposal_id": "CHG-MASTERBROKERS-130",
+  "summary": "Masterbrokers: espacio personal con oferta, oportunidades, solicitudes a YOD, seguimiento y acuerdos sobre brokers.v1. Frontend rediseñado; sin cambios de permisos ni datos comerciales.",
   "components": [
     "SYS-INVERSION",
     "GAS-INVERSION",
@@ -13,11 +13,9 @@
     "SYS-YOD-OS"
   ],
   "tests": [
-    "Contrato de snapshot autorizado, sin caché privada ni fallback general",
-    "Alta y actualización con revisión y clave idempotente, ACK explícito",
-    "CRM, búsqueda, etapas, seguimiento, participación y navegación PPP con datos sintéticos",
-    "21 pruebas de cliente/dominio aprobadas; adaptador y DOM verificados con datos sintéticos",
-    "Lectura del esquema vivo comprobada; Google Sheets API deshabilitada impide activar el guardado"
+    "23 pruebas de contrato, aislamiento, guardado idempotente, agenda y responsabilidad explícita",
+    "DOM con datos sintéticos: broker y Dirección, registro de capital/contacto, solicitud YOD y ACK, navegación y cambio de sesión",
+    "JavaScript, diff y manifiesto de arquitectura validados; sin escrituras de prueba en producción"
   ],
   "rollback": "Revertir por PR sin borrar registros, identidades ni historial."
 }
