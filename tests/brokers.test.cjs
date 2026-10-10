@@ -2,6 +2,13 @@ const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const C = require('../brokers-core.js');
 const snapshot = () => ({contract:'brokers.v1',actor:{id:'b1',role:'broker'},revision:1,brokers:[{id:'b1',name:'Broker sintético'}],contacts:[{id:'c1',broker_ids:['b1']}],opportunities:[{id:'o1',title:'Terreno ejemplo',broker_ids:['b1'],contact_id:'c1',stage:'Recibido',next_date:'2026-01-01'}],activities:[],participations:[]});
+test('vista previa de Dirección reduce todas las colecciones sin mutar identidad real',()=>{
+  const s=snapshot();s.actor={id:'dir',role:'direccion',name:'Dirección'};s.capabilities={write:true,agree_participation:true};s.brokers.push({id:'b2',name:'Otro perfil'});s.contacts.push({id:'c2',broker_ids:['b2']});s.opportunities.push({id:'o2',broker_ids:['b2']});s.activities=[{id:'a1',opportunity_id:'o1'},{id:'a2',opportunity_id:'o2'}];s.participations=[{id:'p1',opportunity_id:'o1',broker_id:'b1'},{id:'p2',opportunity_id:'o1',broker_id:'b2'}];
+  const copy=JSON.stringify(s),p=C.previewSnapshot(s,'b1');assert.equal(p.actor.role,'broker');assert.equal(p.actor.id,'b1');for(const key of ['contacts','opportunities','activities','participations','brokers'])assert.equal(p[key].length,1,key);assert.equal(p.capabilities.agree_participation,false);assert.equal(JSON.stringify(s),copy);
+});
+test('parámetro de vista nunca amplía alcance de un broker ni cae en todos',()=>{
+  const s=snapshot();assert.equal(C.previewSnapshot(s,'b1'),s);assert.throws(()=>C.previewSnapshot(s,'b2'),/acceso/);s.actor.role='direccion';assert.throws(()=>C.previewSnapshot(s,'inexistente'),/cartera/);
+});
 test('responsable explícito conserva textos anteriores sin inferir asignación',()=>{
   assert.deepEqual(C.nextStep('Revisar con YOD'),{owner:'',text:'Revisar con YOD'});
   assert.deepEqual(C.nextStep('[YOD] Entregar análisis'),{owner:'YOD',text:'Entregar análisis'});

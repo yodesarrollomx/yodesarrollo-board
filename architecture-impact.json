@@ -1,7 +1,7 @@
 {
-  "model_revision": "2026-10-10.130-masterbrokers",
+  "model_revision": "2026-10-10.131-masterbroker-personal",
   "proposal_id": "CHG-MASTERBROKERS-130",
-  "summary": "Masterbrokers: espacio personal con oferta, oportunidades, solicitudes a YOD, seguimiento y acuerdos sobre brokers.v1. Frontend rediseñado; sin cambios de permisos ni datos comerciales.",
+  "summary": "Recorrido personal del Masterbroker con cartera real y preparación de conversación. Vista previa para Dirección limitada al perfil elegido y sin guardado.",
   "components": [
     "SYS-INVERSION",
     "GAS-INVERSION",
@@ -13,9 +13,9 @@
     "SYS-YOD-OS"
   ],
   "tests": [
-    "23 pruebas de contrato, aislamiento, guardado idempotente, agenda y responsabilidad explícita",
-    "DOM con datos sintéticos: broker y Dirección, registro de capital/contacto, solicitud YOD y ACK, navegación y cambio de sesión",
-    "JavaScript, diff y manifiesto de arquitectura validados; sin escrituras de prueba en producción"
+    "25 pruebas de contrato y dominio; preview reduce colecciones, no muta identidad y rechaza perfiles ajenos/inexistentes",
+    "DOM: cinco casos sintéticos propios, contactos acotados, sin administración; formularios de vista previa sin POST de guardado",
+    "DOM de broker real y Dirección: formularios y guardado simulado con ACK; sintaxis y diff correctos"
   ],
   "rollback": "Revertir por PR sin borrar registros, identidades ni historial."
 }
