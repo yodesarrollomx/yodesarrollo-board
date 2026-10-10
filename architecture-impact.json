@@ -1,7 +1,7 @@
 {
   "model_revision": "2026-10-09.128-brokers",
   "proposal_id": "CHG-BROKERS-128",
-  "summary": "Organizar oportunidades, contactos, seguimiento y participación por broker dentro de SYS-INVERSION, reutilizando identidad y registros canónicos. Interfaz preparada; contrato servidor pendiente de contrastar con fuente viva.",
+  "summary": "Brokers con CRM canónico contrastado en fuente viva, autorización por registro, seguimiento y participaciones. Código listo; activación de API de Sheets, versión backend y publicación pendientes.",
   "components": [
     "SYS-INVERSION",
     "GAS-INVERSION",
@@ -16,7 +16,8 @@
     "Contrato de snapshot autorizado, sin caché privada ni fallback general",
     "Alta y actualización con revisión y clave idempotente, ACK explícito",
     "CRM, búsqueda, etapas, seguimiento, participación y navegación PPP con datos sintéticos",
-    "Autorización real por registro y despliegue backend pendientes de fuente viva"
+    "21 pruebas de cliente/dominio aprobadas; adaptador y DOM verificados con datos sintéticos",
+    "Lectura del esquema vivo comprobada; Google Sheets API deshabilitada impide activar el guardado"
   ],
   "rollback": "Revertir por PR sin borrar registros, identidades ni historial."
 }

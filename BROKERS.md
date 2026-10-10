@@ -1,6 +1,6 @@
 # Brokers en Yod OS
 
-Implementación inicial de la vista de Brokers en `brokers.html`, dentro de SYS-INVERSION. Mantiene la presentación actual en `index.html`. La interfaz y el adaptador están implementados; el backend, las identidades reales y el despliegue operativo están pendientes. No se habilita captura local que aparente sincronización.
+Implementación inicial de la vista de Brokers en `brokers.html`, dentro de SYS-INVERSION. Mantiene la presentación actual en `index.html`. La interfaz y el dominio del servidor están implementados. La integración se añadió al editor vivo del CRM; su publicación y las identidades están pendientes de activación. No se habilita captura local que aparente sincronización.
 
 ## Pantallas implementadas
 
@@ -11,11 +11,11 @@ Implementación inicial de la vista de Brokers en `brokers.html`, dentro de SYS-
 - Participaciones separadas del origen de la oportunidad; estados por definir, propuesta, acordada, devengada y pagada. El servidor debe autorizar y auditar cada transición; la interfaz no calcula porcentajes ni valida pagos.
 - Cambios de sesión descartan datos, no borran la credencial compartida y no reutilizan la caché general.
 
-## Integración requerida con la fuente viva
+## Integración con la fuente viva
 
-CLAUDE.md exige obtener el Code.gs VIVO antes de tocar el backend. GAS-INVERSION no está en este repositorio; no se debe inventar una implementación paralela ni publicar fuentes privadas aquí. Contrastar también el CRM existente para reutilizar contactos y oportunidades, en vez de crear duplicados.
+Se contrastaron GAS-INVERSION y GAS-CRM en sus editores. Brokers reutiliza GAS-CRM, los folios de LEADS-POTENCIAL y tablas auxiliares en el mismo libro. La cartera existente se lee por sus IDs canónicos; las revisiones agregan seguimiento sin duplicar terrenos o PPP. La lectura dedicada POST `brokers_snapshot` no crea registros.
 
-Solo después de adaptar el backend existente se configura `window.YDR_BROKERS_CONFIG = {url: <endpoint existente>}` antes de brokers.js. No apuntar al backend legado sin verificar el contrato: la vista rechaza su respuesta general. La lectura dedicada usa POST `brokers_snapshot` y debe ser estrictamente de lectura, sin creación automática de registros.
+El servidor puro vive en `brokers-server.js`. El adaptador de Apps Script, las identidades y los identificadores privados permanecen en el proyecto de Google, fuera del repositorio público. El guardado agrupa contacto, relación, historial y recibo en una sola llamada de Sheets batchUpdate. La lectura del esquema vivo está comprobada. La API de Sheets requiere activación antes de publicar una nueva versión; el endpoint sigue en su versión anterior.
 
 Respuesta: `{ok:true,data:{contract:'brokers.v1',actor:{id,name,role},revision,capabilities:{write,agree_participation},brokers:[],contacts:[],opportunities:[],activities:[],participations:[]}}`.
 
@@ -27,15 +27,14 @@ La revisión evita sobrescrituras; la clave idempotente debe devolver el resulta
 
 ## Activación pendiente
 
-1. Obtener y contrastar fuente viva de GAS-INVERSION/CRM y su esquema real. Mapear identidades de acceso a brokers; nombres de personas no se publican en este repositorio.
-2. Implementar contrato y autorización en el backend existente; probar con dobles y hojas aisladas, nunca escrituras de prueba en producción.
-3. Configurar la URL real en brokers.html. Confirmar lectura/escritura y aislamiento en entorno de prueba con broker A, broker B y Dirección, incluidos enlaces directos y acceso revocado.
-4. Cambiar el destino/nombre de SYS-INVERSION en catálogo canónico y Control Maestro, conservando su ID. Regenerar copias del catálogo; no ampliar permisos IV indiscriminadamente.
-5. Vincular la presentación definitiva del PPP después de resolver su archivo/versión aprobados. No sustituirla por texto reconstruido ni una versión histórica.
-6. Integrar mediante PR, publicar y comprobar por separado frontend y versión activa backend. La existencia de estos archivos no acredita usuarios activos.
+1. Activar Google Sheets API en el proyecto existente: el diagnóstico devuelve 403 por API deshabilitada. El diálogo de Google presenta términos de API; requiere la confirmación correspondiente.
+2. Publicar una nueva versión de la implementación existente, conservando URL y permisos. Verificar lectura autorizada; no hacer escrituras de prueba en producción.
+3. Vincular correos verificados a los perfiles; no inferir identidad por nombre ni ampliar IV indiscriminadamente.
+4. Integrar los PR de portal y board después de las comprobaciones. Actualizar nombre y destino de SYS-INVERSION en Control Maestro conservando fórmulas, ID y sensibilidad.
+5. La presentación definitiva del PPP ya está referenciada en la hoja; el frontend la muestra desde esa fuente, sin copiar precios al código.
 
 ## Verificación y reversión
 
-`node --test tests/brokers.test.cjs`, `node --check brokers-core.js`, `node --check brokers.js`, `git diff --check`. Recorrido de navegador con servidor simulado y datos sintéticos: filtros, alta, edición, historial, acuerdos, móvil, sesión y errores. Producción pendiente.
+`node --test tests/brokers*.test.cjs`, `node --check brokers-core.js`, `node --check brokers.js`, `git diff --check`. 21 pruebas aprobadas. DOM sintético comprobado: expediente, campos canónicos, edición y transición de acuerdos, envío y limpieza por cambio de sesión. Adaptador comprobado con dobles: lote atómico, fechas nativas, texto literal, columnas ajenas preservadas y propagación de fallo. Navegador integrado y guardado real pendientes; no se acreditan por las pruebas aisladas.
 
 Revertir los commits del frontend mediante PR. No borrar ni restaurar registros de negocio o accesos como rollback.

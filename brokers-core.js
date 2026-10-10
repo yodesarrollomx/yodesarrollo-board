@@ -40,7 +40,7 @@
         if (!response.ok) throw new Error(response.status === 403 || response.status === 401 ? 'Tu sesión no tiene acceso a Brokers.' : 'No se pudo conectar con Brokers.');
         const json = await response.json();
         if (own !== generation || config.token() !== token) throw new Error('La sesión cambió; vuelve a cargar.');
-        if (!json.ok) throw new Error(json.error === 'conflict' ? 'Otra persona actualizó el expediente. Recarga antes de guardar.' : 'El servidor no confirmó la operación.');
+        if (!json.ok) { const messages = { conflict:'Otra persona actualizó el expediente. Recarga antes de guardar.', broker_not_linked:'Tu sesión es válida; Dirección debe vincularla con tu perfil de broker.', duplicate_contact:'Este contacto ya existe en el CRM. Pide a Dirección vincularlo con tu cartera.', contact_not_linked:'Vincula primero el contacto a los brokers del expediente.', evidence_required:'Agrega el documento que respalda el acuerdo.', invalid_transition:'Avanza la participación una etapa a la vez.', forbidden:'Tu sesión no tiene permiso para esta operación.' }; throw new Error(messages[json.error] || 'El servidor no confirmó la operación.'); }
         if (requestId && json.request_id !== requestId) throw new Error('No se recibió la confirmación del guardado. Conserva el formulario y verifica antes de reintentar.');
         return validateSnapshot(json.data);
       } catch (e) {

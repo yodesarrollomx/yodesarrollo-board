@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: yodesarrollomx/yod-portal
-          ref: 6363cfacf38aa5fd5d3db2bba9978b63fc31b999
+          ref: abbe9ab0baaebf2bce28b6f97358e9eb3a279c16
           path: .yod-atlas
           persist-credentials: false
           sparse-checkout-cone-mode: false
@@ -55,6 +55,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Contratos de Brokers
+        run: node --test tests/brokers*.test.cjs
       - name: Resolver comparación
         id: refs
         env:
