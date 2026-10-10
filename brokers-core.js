@@ -39,6 +39,25 @@
     return rows.filter(o => !['Formalizado','Descartado','En pausa'].includes(o.stage) && (!owner || nextStep(o.next_action).owner === owner))
       .slice().sort((a,b) => String(a.next_date || '9999').localeCompare(String(b.next_date || '9999')));
   }
+  function previewSnapshot(s, id) {
+    validateSnapshot(s);
+    if (!id) return s;
+    if (s.actor.role !== 'direccion') {
+      if (s.actor.id !== id) throw new Error('Esta cartera no corresponde a tu acceso.');
+      return s;
+    }
+    const person = s.brokers.find(b => b.id === id);
+    if (!person) throw new Error('No se encontró la cartera solicitada.');
+    const owns = r => (r.broker_ids || []).includes(id);
+    const opportunities = s.opportunities.filter(owns), ids = new Set(opportunities.map(o => o.id));
+    return validateSnapshot(Object.assign({},s,{
+      actor:{id:person.id,name:person.name,role:'broker'},
+      capabilities:Object.assign({},s.capabilities,{agree_participation:false}),
+      brokers:[person],contacts:s.contacts.filter(owns),opportunities,
+      activities:s.activities.filter(a => ids.has(a.opportunity_id)),
+      participations:s.participations.filter(p => p.broker_id === id && ids.has(p.opportunity_id))
+    }));
+  }
   function createClient(config) {
     let generation = 0;
     async function request(action, data, requestId) {
@@ -62,7 +81,7 @@
     }
     return { load: () => request('brokers_snapshot', {}), save: (kind, record, revision, requestId) => request('brokers_save', { kind, record, expected_revision: revision }, requestId), invalidate: () => { generation++; } };
   }
-  const api = { stages, participationStates, safeLink, validateSnapshot, visible, overdue, nextStep, encodeStep, agenda, createClient };
+  const api = { stages, participationStates, safeLink, validateSnapshot, visible, overdue, nextStep, encodeStep, agenda, previewSnapshot, createClient };
   if (typeof module !== 'undefined') module.exports = api;
   root.BrokersCore = api;
 })(typeof window === 'undefined' ? globalThis : window);
