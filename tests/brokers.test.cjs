@@ -31,3 +31,15 @@ test('sin sesión o endpoint no hace red',async()=>{let calls=0;const fetch=()=>
 test('guardado exige ACK y conserva idempotencia y revisión',async()=>{let body;const client=C.createClient({token:()=> 't',url:'https://example.test',fetch:async(u,o)=>{body=JSON.parse(o.body);return {ok:true,json:async()=>({ok:true,request_id:body.request_id,data:snapshot()})};}});await client.save('opportunity',{id:'o1'},1,'request-1');assert.equal(body.request_id,'request-1');assert.equal(body.data.expected_revision,1);assert.equal(body.action,'brokers_save');});
 test('ACK equivocado y conflicto nunca confirman',async()=>{for(const json of [{ok:true,request_id:'otro',data:snapshot()},{ok:false,error:'conflict'}]){const c=C.createClient({token:()=> 't',url:'x',fetch:async()=>({ok:true,json:async()=>json})});await assert.rejects(c.save('contact',{},1,'r'));}});
 test('respuesta tardía de sesión anterior se descarta',async()=>{let token='t1';const c=C.createClient({token:()=>token,url:'x',fetch:async()=>{token='t2';return{ok:true,json:async()=>({ok:true,data:snapshot()})};}});await assert.rejects(c.load(),/sesión cambió/);});
+test('control diario diferencia fechas, faltantes y responsables sin asignaciones inferidas',()=>{
+ const rows=[{id:'v',stage:'Recibido',next_date:'2026-10-08',next_action:'[Masterbroker] Llamar'},{id:'h',stage:'En revisión',next_date:'2026-10-09',next_action:'[YOD] Entregar'},{id:'p',stage:'En revisión',next_date:'2026-10-12',next_action:'Revisar con YOD'},{id:'s',stage:'Recibido',next_action:'[Masterbroker] Visita'},{id:'c',stage:'Formalizado',next_date:'2026-10-01'}];
+ const d=C.dailyControl(rows,'2026-10-09');
+ for(const [k,ids] of Object.entries({overdue:['v'],today:['h'],upcoming:['p'],unplanned:['p','s'],mine:['v','s'],yod:['h'],closed:['c']}))assert.deepEqual(d[k].map(o=>o.id),ids,k);
+ assert.equal(rows[0].id,'v');assert.equal(d.all.length,4);
+});
+test('gestión acotada conserva al actor Dirección y capacidades reales',()=>{
+ const s=snapshot();s.actor={id:'dir',role:'direccion',name:'Dirección'};s.capabilities={write:true,agree_participation:true};s.brokers.push({id:'b2',name:'Otro'});s.opportunities.push({id:'o2',broker_ids:['b2']});
+ const m=C.workspaceSnapshot(s,'b1',true);assert.equal(m.actor,s.actor);assert.equal(m.capabilities,s.capabilities);assert.equal(m.opportunities.length,1);assert.equal(m.brokers.length,1);assert.equal(s.opportunities.length,2);
+ assert.equal(C.workspaceSnapshot(s,'b1',false).actor.role,'broker');
+ const b=snapshot();assert.equal(C.workspaceSnapshot(b,'b1',true),b);assert.throws(()=>C.workspaceSnapshot(b,'b2',true),/acceso/);assert.throws(()=>C.workspaceSnapshot(s,'no-existe',true),/cartera/);
+});

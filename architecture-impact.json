@@ -1,7 +1,7 @@
 {
-  "model_revision": "2026-10-10.131-masterbroker-personal",
+  "model_revision": "2026-10-10.132-masterbroker-control",
   "proposal_id": "CHG-MASTERBROKERS-130",
-  "summary": "Recorrido personal del Masterbroker con cartera real y preparación de conversación. Vista previa para Dirección limitada al perfil elegido y sin guardado; oculta también el acceso administrativo añadido por Portero.",
+  "summary": "Control diario, agenda por fecha/responsable, historial y acuerdos faltantes. Gestión de cartera por Dirección con actor real, alcance tras ACK y preview sin escrituras.",
   "components": [
     "SYS-INVERSION",
     "GAS-INVERSION",
@@ -13,9 +13,9 @@
     "SYS-YOD-OS"
   ],
   "tests": [
-    "25 pruebas de contrato y dominio; preview reduce colecciones, no muta identidad y rechaza perfiles ajenos/inexistentes",
-    "DOM: cinco casos sintéticos propios, contactos acotados, sin administración; formularios de vista previa sin POST de guardado",
-    "DOM de broker real y Dirección: formularios y guardado simulado con ACK; sintaxis y diff correctos"
+    "27 pruebas de contrato y dominio",
+    "DOM sintético: broker, preview y gestión; reintento idempotente, ACK, vínculos compartidos y alcance después de guardar",
+    "Sintaxis JS y diff sin errores; lectura real y publicación se verifican por separado"
   ],
   "rollback": "Revertir por PR sin borrar registros, identidades ni historial."
 }
