@@ -58,6 +58,25 @@
       participations:s.participations.filter(p => p.broker_id === id && ids.has(p.opportunity_id))
     }));
   }
+  function workspaceSnapshot(s, id, manage) {
+    const scoped = previewSnapshot(s,id);
+    // URL chooses a view, never an identity or extra authorization.
+    if (!id || !manage || s.actor.role !== 'direccion') return scoped;
+    return Object.assign({},scoped,{actor:s.actor,capabilities:s.capabilities});
+  }
+  function dailyControl(rows, day) {
+    const active = agenda(rows,''), closed = rows.filter(o => !active.includes(o));
+    return {
+      all: active,
+      overdue: active.filter(o => o.next_date && o.next_date < day),
+      today: active.filter(o => o.next_date === day),
+      upcoming: active.filter(o => o.next_date && o.next_date > day),
+      unplanned: active.filter(o => !o.next_date || !nextStep(o.next_action).owner || !nextStep(o.next_action).text.trim()),
+      mine: active.filter(o => nextStep(o.next_action).owner === 'Masterbroker'),
+      yod: active.filter(o => nextStep(o.next_action).owner === 'YOD'),
+      closed
+    };
+  }
   function createClient(config) {
     let generation = 0;
     async function request(action, data, requestId) {
@@ -81,7 +100,7 @@
     }
     return { load: () => request('brokers_snapshot', {}), save: (kind, record, revision, requestId) => request('brokers_save', { kind, record, expected_revision: revision }, requestId), invalidate: () => { generation++; } };
   }
-  const api = { stages, participationStates, safeLink, validateSnapshot, visible, overdue, nextStep, encodeStep, agenda, previewSnapshot, createClient };
+  const api = { stages, participationStates, safeLink, validateSnapshot, visible, overdue, nextStep, encodeStep, agenda, previewSnapshot, workspaceSnapshot, dailyControl, createClient };
   if (typeof module !== 'undefined') module.exports = api;
   root.BrokersCore = api;
 })(typeof window === 'undefined' ? globalThis : window);

@@ -38,3 +38,11 @@ La revisión evita sobrescrituras; la clave idempotente debe devolver el resulta
 `node --test tests/brokers*.test.cjs`, `node --check brokers-core.js`, `node --check brokers.js`, `git diff --check`. 21 pruebas aprobadas. DOM sintético comprobado: expediente, campos canónicos, edición y transición de acuerdos, envío y limpieza por cambio de sesión. Adaptador comprobado con dobles: lote atómico, fechas nativas, texto literal, columnas ajenas preservadas y propagación de fallo. Lectura integrada de Dirección comprobada en navegador; no se realizaron escrituras de prueba en producción. Las pruebas aisladas no acreditan un guardado real.
 
 Revertir los commits del frontend mediante PR. No borrar ni restaurar registros de negocio o accesos como rollback.
+
+## Control diario (10-oct-2026)
+
+Mi día prioriza por fecha registrada: vencidos, hoy, casos por organizar y próximo compromiso. Seguimiento filtra activos, fechas, responsable explícito y pausados/cerrados; no infiere asignaciones ni rentabilidad. La actividad reciente proviene del historial y los acuerdos faltantes se muestran por expediente. Registrar seguimiento conserva los valores actuales para revisión; el resultado se incorpora a la nota y persiste con brokers.v1.
+
+Dirección dispone de gestión de una cartera seleccionada mediante `masterbroker=<id>&mode=manage`: conserva su actor, autoría y capacidades de servidor, y vuelve a acotar cada snapshot tras guardar. Sin `mode=manage` continúa la previsualización sin escrituras. Un broker real nunca adquiere rol de Dirección por el parámetro. La gestión de contactos compartidos preserva los demás brokers vinculados. Activación de identidad individual pendiente de correo verificado; no se suplanta al Masterbroker.
+
+Verificación: 27 pruebas de contrato/dominio. DOM con casos sintéticos: broker, preview y gestión; agenda, formularios, reintento con mismo request_id tras fallo, ACK, historial, conservación de vínculos compartidos, alcance tras guardado y limpieza al cambiar sesión. Sin escrituras de prueba en producción.
