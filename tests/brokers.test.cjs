@@ -43,3 +43,14 @@ test('gestión acotada conserva al actor Dirección y capacidades reales',()=>{
  assert.equal(C.workspaceSnapshot(s,'b1',false).actor.role,'broker');
  const b=snapshot();assert.equal(C.workspaceSnapshot(b,'b1',true),b);assert.throws(()=>C.workspaceSnapshot(b,'b2',true),/acceso/);assert.throws(()=>C.workspaceSnapshot(s,'no-existe',true),/cartera/);
 });
+test('expedientes agrupan gestiones por referencia y conservan cada prospecto y movimiento',()=>{
+ const s=snapshot();s.actor.role='direccion';s.contacts=[{id:'c1',name:'Cliente A',broker_ids:['b1']},{id:'c2',name:'Prospecto B',broker_ids:['b1']}];
+ s.opportunities=[{id:'o1',title:'Predio sintético',terrain_id:'t1',contact_id:'c1',broker_ids:['b1'],stage:'En revisión'},{id:'o2',title:'Capital del mismo predio',terrain_id:'t1',contact_id:'c2',broker_ids:['b1'],stage:'Formalizado'},{id:'o3',title:'Predio sintético',terrain_id:'t2',contact_id:'c1',broker_ids:['b1'],stage:'Descartado'},{id:'o4',title:'Predio sintético',contact_id:'c1',broker_ids:['b1'],stage:'Recibido'}];
+ s.activities=[{id:'a1',opportunity_id:'o1',date:'2026-10-01'},{id:'a2',opportunity_id:'o2',date:'2026-10-09'},{id:'a3',opportunity_id:'o3',date:'2026-10-10'}];
+ const before=JSON.stringify(s),g=C.caseGroups(s,'b1','Prospecto B','','');assert.equal(g.length,1);assert.deepEqual(g[0].records.map(o=>o.id),['o1','o2']);assert.equal(g[0].contacts.length,2);assert.deepEqual(g[0].activities.map(a=>a.id),['a2','a1']);assert.equal(g[0].open,1);
+ assert.equal(C.caseGroups(s,'b1','','','').length,3);assert.equal(C.caseGroups(s,'b1','','','closed').length,1);assert.equal(C.caseGroups(s,'b1','','','open').length,2);assert.equal(C.caseGroups(s,'b1','','Formalizado','').length,1);assert.equal(JSON.stringify(s),before);
+});
+test('agrupar no amplía alcance por coincidencia de terreno; PPP solo si falta terreno',()=>{
+ const s=snapshot();s.actor.role='direccion';s.opportunities=[{id:'o1',ppp_id:'p1',broker_ids:['b1']},{id:'o2',ppp_id:'p1',broker_ids:['b1']},{id:'o3',terrain_id:'t1',ppp_id:'p1',broker_ids:['b1']},{id:'o4',terrain_id:'t1',broker_ids:['b2']}];
+ s.activities=[{id:'private',opportunity_id:'o4'}];const g=C.caseGroups(s,'b1','','','');assert.equal(g.length,2);assert.equal(g.flatMap(x=>x.records).length,3);assert.equal(g.flatMap(x=>x.activities).length,0);assert.equal(C.caseGroups(s,'none','','','').length,0);
+});
