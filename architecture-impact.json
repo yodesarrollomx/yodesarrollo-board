@@ -1,21 +1,23 @@
 {
-  "model_revision": "2026-10-10.132-masterbroker-control",
-  "proposal_id": "CHG-MASTERBROKERS-130",
-  "summary": "Control diario, agenda por fecha/responsable, historial y acuerdos faltantes. Gestión de cartera por Dirección con actor real, alcance tras ACK y preview sin escrituras.",
+  "model_revision": "2026-10-10.133-masterbroker-rows",
+  "proposal_id": "CHG-MASTERBROKERS-133",
+  "summary": "Control Masterbrokers dentro de YOD OS con tabla de expedientes y registros relacionados en un solo renglón.",
   "components": [
     "SYS-INVERSION",
     "GAS-INVERSION",
     "SHEET-INVERSION",
     "GAS-CRM",
     "SHEET-CRM",
-    "SYS-POTENCIALES",
+    "SYS-YOD-OS",
     "GAS-PORTERO",
-    "SYS-YOD-OS"
+    "SYS-POTENCIALES"
   ],
   "tests": [
-    "27 pruebas de contrato y dominio",
-    "DOM sintético: broker, preview y gestión; reintento idempotente, ACK, vínculos compartidos y alcance después de guardar",
-    "Sintaxis JS y diff sin errores; lectura real y publicación se verifican por separado"
+    "29 pruebas Node de contrato, autorización, guardado, agrupación y alcance aprobadas",
+    "DOM con dobles: una fila por referencia, múltiples gestiones/contactos, búsqueda por contacto, historial, selección de registro, guardado y filtros",
+    "Dirección, broker, vista previa sin guardado y gestión con actor real comprobados; alcance reaplicado después del ACK",
+    "Escritorio 1440px y móvil 390px inspeccionados; sintaxis y diff sin errores",
+    "Publicación y lectura autenticada pendientes de verificación separada"
   ],
-  "rollback": "Revertir por PR sin borrar registros, identidades ni historial."
+  "rollback": "Revertir PR de interfaz; no migrar, borrar ni modificar datos del CRM."
 }

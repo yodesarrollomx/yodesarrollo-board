@@ -26,6 +26,23 @@
     const q = String(query || '').toLocaleLowerCase('es');
     return s.opportunities.filter(o => (!broker || (o.broker_ids || []).includes(broker)) && (!stage || o.stage === stage) && [o.title, o.location, o.id, (s.contacts.find(c => c.id === o.contact_id) || {}).name].join(' ').toLocaleLowerCase('es').includes(q));
   }
+  // Group only explicit canonical references, inside the already-authorized snapshot.
+  // Names and contact identity never merge independent terrain records.
+  function caseGroups(s, broker, query, stage, state) {
+    const groups = new Map(), q = String(query || '').trim().toLocaleLowerCase('es');
+    const closed = o => ['Formalizado','Descartado'].includes(o.stage);
+    for (const o of visible(s,broker,'','')) {
+      const key = o.terrain_id ? 'terrain:' + o.terrain_id : o.ppp_id ? 'ppp:' + o.ppp_id : 'opportunity:' + o.id;
+      if (!groups.has(key)) groups.set(key,{key, records:[]});
+      groups.get(key).records.push(o);
+    }
+    return [...groups.values()].map(g => {
+      const ids = new Set(g.records.map(o=>o.id)), contacts = s.contacts.filter(c=>g.records.some(o=>o.contact_id===c.id));
+      const activities = s.activities.filter(a=>ids.has(a.opportunity_id)).slice().sort((a,b)=>String(b.date || '').localeCompare(String(a.date || '')));
+      return Object.assign(g,{contacts,activities,open:g.records.filter(o=>!closed(o)).length});
+    }).filter(g => (!stage || g.records.some(o=>o.stage===stage)) && (!state || (state==='open' ? g.open>0 : g.open===0)) &&
+      (!q || [...g.records.flatMap(o=>[o.id,o.title,o.location,o.kind,o.terrain_id,o.ppp_id]),...g.contacts.flatMap(c=>[c.name,c.company])].join(' ').toLocaleLowerCase('es').includes(q)));
+  }
   function overdue(o, today) { return !!o.next_date && o.next_date < today && !['Formalizado', 'Descartado', 'En pausa'].includes(o.stage); }
   function nextStep(value) {
     const text = String(value || ''), match = text.match(/^\[(YOD|Masterbroker)\]\s*/);
@@ -100,7 +117,7 @@
     }
     return { load: () => request('brokers_snapshot', {}), save: (kind, record, revision, requestId) => request('brokers_save', { kind, record, expected_revision: revision }, requestId), invalidate: () => { generation++; } };
   }
-  const api = { stages, participationStates, safeLink, validateSnapshot, visible, overdue, nextStep, encodeStep, agenda, previewSnapshot, workspaceSnapshot, dailyControl, createClient };
+  const api = { stages, participationStates, safeLink, validateSnapshot, visible, caseGroups, overdue, nextStep, encodeStep, agenda, previewSnapshot, workspaceSnapshot, dailyControl, createClient };
   if (typeof module !== 'undefined') module.exports = api;
   root.BrokersCore = api;
 })(typeof window === 'undefined' ? globalThis : window);
