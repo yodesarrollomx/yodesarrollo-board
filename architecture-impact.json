@@ -1,7 +1,7 @@
 {
   "model_revision": "2026-10-10.131-masterbroker-personal",
   "proposal_id": "CHG-MASTERBROKERS-130",
-  "summary": "Recorrido personal del Masterbroker con cartera real y preparación de conversación. Vista previa para Dirección limitada al perfil elegido y sin guardado.",
+  "summary": "Recorrido personal del Masterbroker con cartera real y preparación de conversación. Vista previa para Dirección limitada al perfil elegido y sin guardado; oculta también el acceso administrativo añadido por Portero.",
   "components": [
     "SYS-INVERSION",
     "GAS-INVERSION",
