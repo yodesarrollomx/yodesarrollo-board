@@ -1,6 +1,6 @@
 const {chromium}=require('playwright'),http=require('node:http'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 (async()=>{
- const files=new Set(['brokers.html','brokers.js','brokers-core.js','brokers-evaluator.js','brokers.css']);
+ const files=new Set(['brokers.html','brokers.js','brokers-core.js','brokers-crm.js','brokers-evaluator.js','brokers.css']);
  const server=http.createServer((req,res)=>{const name=new URL(req.url,'http://localhost').pathname.slice(1)||'brokers.html';if(!files.has(name)){res.writeHead(404);return res.end();}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':name.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(path.join(process.cwd(),name)));}).listen(0,'127.0.0.1');
  await new Promise(r=>server.once('listening',r));const base='http://127.0.0.1:'+server.address().port;
  const browser=await chromium.launch({headless:true}),context=await browser.newContext({viewport:{width:390,height:844}});
@@ -21,7 +21,7 @@ const {chromium}=require('playwright'),http=require('node:http'),fs=require('nod
  assert.equal(await p.locator('[name=title]').inputValue(),evaluation.title);assert.equal(await p.locator('[name=location]').inputValue(),evaluation.location);assert.ok((await p.locator('[name=notes]').inputValue()).includes(id));
  await p.locator('[name=next_owner]').selectOption('Masterbroker');await p.locator('[name=next_action]').fill('Revisar preevaluación');await p.locator('[name=next_date]').fill('2030-01-01');await p.locator('#save-record').click();await p.locator('#editor').waitFor({state:'hidden'});
  assert.equal(saved.data.record.broker_ids[0],'B-A');assert.ok(saved.request_id);assert.ok(!new URL(p.url()).searchParams.has('preevaluacion'));
- await p.locator('[data-open="O-A"]').click();await p.locator('[data-preevaluate="current"]').waitFor();
+ await p.locator('[data-open="O-A"]').click();await p.locator('.case-tools>summary').click();await p.locator('[data-preevaluate="current"]').waitFor();
  await p.evaluate(()=>{window.open=()=>({opener:window,document:{body:{}},location:{replace:url=>{window.__launched=url;}},close(){}});});
  await p.locator('[data-preevaluate="current"]').click();await p.waitForFunction(()=>!!window.__launched);assert.equal(launch.case_id,id);assert.equal(launch.broker_id,'B-A');assert.equal(launch.opportunity_id,'O-A');assert.ok(!(await p.evaluate(()=>window.__launched)).includes('synthetic-session'));
  assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));

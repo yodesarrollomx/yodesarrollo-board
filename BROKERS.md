@@ -54,3 +54,15 @@ El botón Preevaluar terreno abre el evaluador existente mediante un acceso de u
 Guardar mantiene la evaluación en Drive. Usar en Masterbrokers vuelve con su ID y recupera datos con la sesión vigente: nombre, ubicación, carpeta y referencia de revisión. El formulario requiere confirmar el siguiente paso y guardar mediante brokers_save; no crea ni aprueba planes automáticamente. Una referencia ya vinculada reabre el registro existente. La vista previa de Dirección no lanza ni importa evaluaciones. Los perfiles sin correo verificado siguen sujetos a vinculación canónica.
 
 Datos, configuración y expedientes viven en Drive/Sheets. Git contiene la lógica y ejemplos sintéticos. Pruebas con dobles y navegador, sin escrituras de prueba en CRM. La publicación no acredita que todos los perfiles individuales estén activados.
+
+## Mini CRM (13-oct-2026)
+
+La cartera presenta una barra por expediente y permite abrir varios resúmenes a la vez. Los titulares del PPP se leen mediante el GET de caso existente: sólo inputs y resultados guardados, versión y fecha. No se recalculan las versiones alternas. Capital máximo es el límite del input; faltante de capital es el resultado guardado y no una estimación nueva de equity necesario. Un contacto sin relación Propietario no acredita titularidad.
+
+Avance y Programar reunión reutilizan `brokers_save(kind=activity)`, revisión y recibo. Los nueve campos de BROKERS_Actividades permanecen intactos. La nota incluye texto humano y un sobre `[YOD-CRM v1]` con tipo, estado, fecha ocurrida, participantes, origen, URL, etapa observada y referencia de reemplazo. Las notas antiguas/malformadas se muestran completas sin conversión. El backend conserva el autor y la fecha de captura; participantes y `[PG]` son etiquetas de seguimiento, no nuevas identidades ni ACL.
+
+El calendario usa America/Hermosillo y distingue hechos de programación/propuesta. Registrar resultado o cancelar agrega una actividad; el evento anterior sigue en historial y sale del calendario sólo con un reemplazo explícito del mismo registro. La fecha vencida no convierte una reunión en realizada. No se envían invitaciones a Google Calendar. Consultar o abrir un caso no genera un avance comercial.
+
+La ingestión documental usa fuentes privadas verificadas y claves estables para evitar duplicados. Los hechos históricos se pueden añadir mediante el conector nativo autorizado sin cambiar el siguiente paso. WhatsApp entra desde un exportado compartido; no se presume una conexión continua a conversaciones privadas. Autorización, alcance, ACK y reintentos del contrato anterior permanecen vigentes.
+
+Verificación sintética: `node --test tests/brokers*.test.cjs`, `node tests/brokers-crm-browser.cjs` (Chromium320/390/1440), regresiones de evaluador y presentación, sintaxis y atlas. La publicación y la lectura privada se registran por separado; estas pruebas no escriben negocio en producción. Revertir el frontend preserva todas las actividades, reuniones y versiones de PPP.

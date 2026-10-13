@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: yodesarrollomx/yod-portal
-          ref: 47bbfdfe81632d8d69baa8795bf6ea7ee2f42722
+          ref: f3245c04c96281da4cd77c2b328bdb1c10fe65a0
           path: .yod-atlas
           persist-credentials: false
           sparse-checkout-cone-mode: false
@@ -76,6 +76,7 @@ jobs:
         run: |
           npm install --no-save --ignore-scripts --no-audit --no-fund playwright@1.58.2
           npx playwright install --with-deps chromium
+          node tests/brokers-crm-browser.cjs
           node tests/brokers-evaluator-browser.cjs
           node tests/brokers-story-browser.cjs
           node tests/brokers-hunt-browser.cjs
@@ -88,6 +89,7 @@ jobs:
             investor-scene*-mobile.png
             hunt-*.png
             mono-*.jpg
+            crm-*.png
           retention-days: 7
       - name: Resolver comparación
         id: refs

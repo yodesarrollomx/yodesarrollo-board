@@ -45,12 +45,12 @@
   }
   function overdue(o, today) { return !!o.next_date && o.next_date < today && !['Formalizado', 'Descartado', 'En pausa'].includes(o.stage); }
   function nextStep(value) {
-    const text = String(value || ''), match = text.match(/^\[(YOD|Masterbroker)\]\s*/);
+    const text = String(value || ''), match = text.match(/^\[(YOD|Masterbroker|PG)\]\s*/);
     return { owner: match ? match[1] : '', text: match ? text.slice(match[0].length) : text };
   }
   function encodeStep(owner, value) {
     const text = nextStep(value).text.trim();
-    return text && ['YOD','Masterbroker'].includes(owner) ? `[${owner}] ${text}` : text;
+    return text && ['YOD','Masterbroker','PG'].includes(owner) ? `[${owner}] ${text}` : text;
   }
   function agenda(rows, owner) {
     return rows.filter(o => !['Formalizado','Descartado','En pausa'].includes(o.stage) && (!owner || nextStep(o.next_action).owner === owner))

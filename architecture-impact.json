@@ -1,24 +1,21 @@
 {
-  "model_revision": "2026-10-13.investor-monoline-story.1",
-  "proposal_id": "CHG-INVESTOR-MONOLINE-STORY",
-  "summary": "Presentación 4r4 completa por scroll con un único trazo SVG naranja y 7 escenas/21 momentos; copy y configuración en TEXTOS POTENCIAL mono_*. Versión anterior conservada dentro de la misma URL; Masterbroker/ACL sin cambios.",
+  "model_revision": "2026-10-13.masterbrokers-mini-crm.1",
+  "proposal_id": "CHG-MASTERBROKERS-MINI-CRM",
+  "summary": "Mini CRM progresivo genérico de Masterbrokers sobre el Sheet/IDs vigentes: comparación readonly de PPP guardado, historial fechado y con fuente, calendario y programación con participantes. Sin motor financiero nuevo ni cambios de backend/ACL.",
   "components": [
     "SYS-INVERSION",
-    "GAS-PLAN-POTENCIAL",
-    "SHEET-PLAN-POTENCIAL",
-    "SYS-YOD-OS",
-    "SYS-CONTROL"
+    "GAS-CRM",
+    "SHEET-CRM",
+    "SYS-POTENCIALES",
+    "GAS-PORTERO",
+    "SHEET-PORTERO",
+    "SYS-YOD-OS"
   ],
   "tests": [
-    "node --test tests/brokers*.test.cjs",
-    "node --check presentacion/monoline-core.js",
-    "node --check presentacion/monoline.js",
-    "node tests/brokers-monoline-browser.cjs",
-    "node tests/brokers-story-browser.cjs",
-    "node tests/brokers-hunt-browser.cjs",
-    "Un solo path/un M, trazado acumulativo y reversible; etiquetas A/B y contenido de siete escenas en flujo normal; UI de cierre sin envíos automáticos.",
-    "Chromium320/390/1440: controles dentro del viewport, navegación de grupos, pausa/replay, resize preserva progreso y movimiento reducido completo.",
-    "Verificar publicación anónima con código exacto y copy público vivo, cero POST/escrituras de negocio."
+    "node --test tests/brokers*.test.cjs: codec compatible, fecha real distinta de captura, eventos programados/reemplazados, calendario y resumen PPP sin motor propio.",
+    "Chromium320/390/1440: varios expedientes desplegados, comparación alineada, calendario, editor y fuentes; cero overflow.",
+    "Permisos existentes, preview sin guardado, sesión invalidada, ACK/revisión/reintentos idempotentes; cero escrituras de prueba en producción.",
+    "Atlas regenerado, checks del portal y pin del consumidor; publicación registrada aparte de integración y de lectura privada."
   ],
-  "rollback": "Revertir PR frontend por revisión sin borrar filas mono_*, láminas previas, Material del Masterbroker ni registros de negocio. La entrada anterior queda conservada en la misma página."
+  "rollback": "Revertir sólo frontend; conservar IDs, todas las actividades y sus notas legibles, fuentes, PPP, pendientes, permisos y datos operativos. No restaurar filas de negocio."
 }
