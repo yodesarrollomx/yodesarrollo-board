@@ -5,9 +5,10 @@ const $=id=>document.getElementById(id),dialog=$('pin-review'),selection=$('pin-
 const context={pantalla:'investor-presentation',repo:'yodesarrollo-board',sinPastilla:true,fotosPortables:true,localOnly:true,canvas:null,alAbrir:()=>mode(true),alCerrar:()=>queueMicrotask(()=>{if(!busy&&selection.hidden&&!dialog.open){current=null;context.canvas=null;document.body.dataset.pinMode='idle';mode(false);}}),quien:()=> 'Usuario de la presentación · sin identidad verificada',alClavar:ch=>{busy=true;saved(ch).catch(showError);},alErrorGuardado:e=>{const v=document.querySelector('.chn-hoja');if(!v)return;let p=v.querySelector('[data-pin-error]');if(!p){p=node('p');p.dataset.pinError='';p.setAttribute('role','alert');v.append(p);}p.dataset.reason=e?.name||'Error';p.textContent='No se pudo guardar. Tu comentario sigue aquí; consérvalo e intenta otra vez.';}};
 let snapshot=null,anchor=null,busy=false,current=null,urls=[],lastFocus=null,selectionClick=false,ticket=0;
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-// Opening the composer on pointerup must not let that same tap close its backdrop.
+// The opening gesture's compatibility click can have detail=0 on touch browsers.
+// Consume it until the next pointerdown, so it cannot close the new composer.
 addEventListener('pointerdown',()=>{selectionClick=false;},true);
-addEventListener('click',e=>{if(selectionClick&&e.detail>0){selectionClick=false;e.preventDefault();e.stopImmediatePropagation();}},true);
+addEventListener('click',e=>{if(selectionClick){selectionClick=false;e.preventDefault();e.stopImmediatePropagation();}},true);
 const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text)e.textContent=text;if(cls)e.className=cls;return e;};
 function mode(on){if(document.body.classList.contains('pin-review-mode')!==on){document.body.classList.toggle('pin-review-mode',on);const api=window.YodSlider?.api;if(on)api?.pause?.();else api?.resume?.();}}
 function cleanUrls(){urls.forEach(u=>URL.revokeObjectURL(u));urls=[];}
