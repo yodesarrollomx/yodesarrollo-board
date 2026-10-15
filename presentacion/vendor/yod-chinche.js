@@ -391,6 +391,7 @@ function hoja(html, alto){
     modal.addEventListener('cancel',v._cancelModal);
   }
   document.body.classList.add("chn-abierto");   // cada pantalla esconde lo suyo
+  try { if (typeof CTX.alAbrir === "function") CTX.alAbrir(); } catch (e) {}
   abierta = true;
   v._urls = [];   /* objectURLs de ESTA hoja: cerrar() los revoca todos */
   v.addEventListener("click", function (e) {
@@ -414,6 +415,7 @@ function cerrar(v){
   /* si hay otra hoja debajo (entregar encima de la pila), la clase se queda */
   if (document.querySelectorAll(".chn-velo").length <= 1)
     document.body.classList.remove("chn-abierto");
+  try { if (typeof CTX.alCerrar === "function") CTX.alCerrar(); } catch (e) {}
   setTimeout(function(){ v.remove(); try { if (v._focus && v._focus.isConnected) v._focus.focus(); } catch(e) {} }, 180);
 }
 function aviso(t){
