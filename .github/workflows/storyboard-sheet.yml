@@ -1,0 +1,26 @@
+name: Storyboard sheet
+on:
+  push:
+    branches: [codex/storyboard-capture-sheet]
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --ignore-scripts --no-audit --no-fund playwright@1.58.2
+      - run: npx playwright install --with-deps chromium
+      - run: node review/render-storyboard.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: storyboard-una-hoja
+          path: |
+            storyboard.pdf
+            storyboard.png
+          retention-days: 7
