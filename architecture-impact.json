@@ -1,7 +1,7 @@
 {
   "model_revision": "2026-10-15.presentation-pins-ingest.1",
   "proposal_id": "CHG-INVESTOR-INTENT-STORY",
-  "summary": "Storyboard autorizado journey-3: un inmueble SVG persistente desde Hermosillo hasta la invitación a participar. Interpolación reversible de cámara, planta, volumen, comparación, aportaciones, ejecución y salida. Conserva interfaz, gesto, chinches y lector. journeyFilm aditivo en el Sheet vigente; las fuentes y ambos borradores siguen accesibles. Sin cambio de contratos, arquitectura, permisos, precios, evaluador ni transporte de Sala.",
+  "summary": "Storyboard autorizado journey-3: un inmueble SVG persistente desde Hermosillo hasta la invitación a participar. Interpolación reversible de cámara, planta, volumen, comparación, aportaciones, ejecución y salida. Conserva interfaz, gesto, chinches y lector. journeyFilm aditivo en el Sheet vigente; las fuentes y ambos borradores siguen accesibles. Sin cambio de contratos, arquitectura, permisos, precios, evaluador ni transporte de Sala. Corrección de transporte dentro del mismo contrato: admitir padre embebido además de opener, sin transferir sesión ni abrir ventana automáticamente. Mantener fallback de conexión explícita.",
   "components": [
     "SYS-INVERSION",
     "SYS-CONTROL",
@@ -12,7 +12,8 @@
     "Node: continuidad en fronteras, reversibilidad y posiciones finitas con datos sintéticos; sintaxis y git diff --check.",
     "WebKit y Chromium: identidad persistente de inmueble y planta durante el recorrido; fronteras sin saltos geométricos y sin animación autónoma.",
     "Regresión móvil existente: quince momentos en cinco tamaños, gesto, reversa, menú, lector, chinches y CTA.",
-    "Comprobación separada del frontend público exacto, revisión editorial y acceso anónimo; sin pruebas de escritura de negocio."
+    "Comprobación separada del frontend público exacto, revisión editorial y acceso anónimo; sin pruebas de escritura de negocio.",
+    "D24: Chromium/WebKit captura, guardado no bloqueante, sin sesión pendiente, conexión explícita y acuse, recarga sin duplicado. Red simulada, cero POST reales."
   ],
   "rollback": "Revertir el PR del frontend; journeyNext y journey originales permanecen intactos en la misma fuente. No borrar journeyFilm, chinches, recibos ni credenciales; no modificar el evaluador o Sala."
 }
