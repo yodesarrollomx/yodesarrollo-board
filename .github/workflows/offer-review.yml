@@ -1,0 +1,44 @@
+name: Offer 4 prototype review
+on:
+  push:
+    branches: [codex/offer-4-review]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: offer-review-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  review:
+    name: Prototype evidence · no deployment
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and patch whitespace
+        run: |
+          node --check tests/offer-review-browser.cjs
+          node --check presentacion/intent-core.js
+          node --check presentacion/intent.js
+          node --check presentacion/intent-mobile.js
+          node --check presentacion/offer-art.js
+          git diff --check HEAD^ HEAD
+      - name: Install browser engines
+        run: |
+          npm install --no-save --ignore-scripts --no-audit --no-fund playwright@1.58.2
+          npx playwright install --with-deps chromium webkit
+      - name: Capture and inspect prototype
+        run: node tests/offer-review-browser.cjs
+      - name: Review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: offer-4-review-${{ github.sha }}
+          path: offer-review-artifacts/
+          retention-days: 7

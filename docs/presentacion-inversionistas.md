@@ -1,3 +1,29 @@
+# Replanteamiento comercial · offer-4
+
+Journey-3 fue rechazado por Dirección después de presentarlo: la audiencia no comprendió el negocio. La evidencia técnica anterior no acredita aceptación comercial.
+
+Se conserva la interfaz aceptada, gesto iPhone, marca, chinches, originales y evaluador. Se rehace la representación para nombrar oferta, costos, aportaciones, ejecución y salida. Los textos proceden de journey_offer, clave adicional en el Sheet vigente; atlas_config se conserva íntegro. No se alteran permisos, backend, precios ni condiciones de inversión.
+
+La aprobación del guion es distinta de la aprobación visual y funcional. El guion pasó de 9.1 a 9.6; la comunicación comercial en pantallas obtuvo 9.5. Diseño pasó de 8.0 a 8.9 y después 9.5 tras corregir decisiones y eliminar colisiones durante transformaciones. Son auditorías internas con criterios inspirados en claridad de oferta y diseño, no revisión ni aval personal de Alex Hormozi o Chris Do. La revisión de experiencia comenzó únicamente después de superar ambas puertas.
+
+Nuevo arte separado en offer-art.js/css, con delegación al renderer anterior cuando la fuente no contiene offer-4. La narrativa completa, fuentes y borradores siguen en el lector. El nuevo copy no reside en Git. El mapa conserva fuente y atribución; inmueble y transformaciones son ilustrativos.
+
+Validación: tests/offer-review-browser.cjs produce quince capturas y prueba gesto, reversa, pausa, fuente, diálogos y CTA en WebKit/Chromium. Los problemas de layout se revisan junto con imágenes. La publicación requiere las puertas creativas y regresión técnica. Los recibos de ejecución y publicación se conservan en GitHub Actions y en la bitácora existente.
+
+## Lectura e interacción
+
+El inmueble mantiene su identidad al avanzar y retroceder. Los rótulos se retiran antes de moverlo y regresan al terminar la transformación. Al finalizar un gesto, la superficie se asienta en 140 ms en el punto de lectura más cercano a la entrada del usuario; no encadena etapas. Un toque nuevo, menú, pausa o pérdida de foco cancela el asentamiento. Con movimiento reducido, el ajuste es inmediato. La búsqueda programática de un intermedio permanece exacta para revisión.
+
+La auditoría de experiencia detectó pausas sin relaciones visibles y contraste insuficiente (8.7). La siguiente revisión confirmó su corrección, incluidos gesto rápido y reversa, menú, lector y alternativas de compartir/copiar (9.3). La última corrección incorpora posición visible, archivo histórico agrupado y atribución exclusiva del mapa. Las puntuaciones son revisiones internas de artefactos y pruebas, no resultados de un estudio con clientes.
+
+Evidencia de interacción y contraste: run39045148699, Chromium/WebKit, 131 estados por motor y 33 puntos transicionales adicionales, dos sentidos de gesto rápido, asentamiento interrumpible, botones reales de menú/lector/contacto y alternativas de copiar/compartir. Contraste secundario5.56:1 y acento textual5.12:1. Las pruebas no envían mensajes ni escriben datos reales de negocio. No se afirma validación con iPhone físico, VoiceOver o la hoja nativa de compartir.
+
+Rollback del frontend mediante PR; conservar fuentes editoriales, chinches y registros de negocio.
+
+---
+
+## Referencia anterior conservada
+
 # Presentación pública · storyboard continuo
 
 Revisión journey-3. Dirección autoriza ejecutar el storyboard en la URL existente y conservar la interfaz móvil aprobada. La narrativa anterior se conserva como borrador.

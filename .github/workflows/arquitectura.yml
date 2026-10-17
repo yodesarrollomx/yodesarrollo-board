@@ -84,6 +84,7 @@ jobs:
           node --check presentacion/intent-core.js
           node --check presentacion/intent-motion.js
           node --check presentacion/intent-art.js
+          node --check presentacion/offer-art.js
           node --check presentacion/intent-mobile.js
           node --check presentacion/atlas.js
           node --check presentacion/atlas-core.js
@@ -102,6 +103,7 @@ jobs:
           node tests/brokers-intent-browser.cjs
           node tests/intent-continuity-browser.cjs
           node tests/intent-visual-browser.cjs
+          node tests/offer-review-browser.cjs
           node tests/brokers-atlas-browser.cjs
           node tests/brokers-slider-browser.cjs
           node tests/brokers-simple-browser.cjs
@@ -124,6 +126,7 @@ jobs:
             slider-*.jpg
             atlas-*.jpg
             intent-*.jpg
+            offer-review-artifacts/
             mobile-*.jpg
             pin-*.jpg
             pin-*.png
