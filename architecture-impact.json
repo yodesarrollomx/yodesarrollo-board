@@ -1,7 +1,7 @@
 {
   "model_revision": "2026-10-17.master-developer-crm.1",
   "proposal_id": "CHG-MASTERBROKERS-MINI-CRM",
-  "summary": "Jerarquía visual plaza, responsable, cliente y asunto sobre el CRM existente; integra mini CRM pendiente, conserva actor y ACL, responsables nominales, estado PPP explícito y agenda append-only. Corrección visual de contraste: dentro del shell claro, el módulo usa esquema claro aunque el dispositivo prefiera oscuro.",
+  "summary": "Refinamiento visual del portal Master Developer, equipo desplegable, actividad y cobertura PPP; acceso visible al plan, estado actual y siguiente paso en el expediente. Conserva contrato brokers.v1 y autorización por identidad.",
   "components": [
     "SYS-INVERSION",
     "GAS-CRM",
@@ -18,7 +18,8 @@
     "Atlas regenerado, checks del portal y pin del consumidor; publicación registrada aparte de integración y de lectura privada.",
     "Clientes múltiples, contactos homónimos, casos compartidos y sin contacto; identidad Dirección conservada y broker aislado.",
     "Responsable nominal y estado PPP sobreviven roundtrip brokers.v1; programación/reprogramación/resultado; filtros decisión/hoy/vencidos/sin siguiente paso.",
-    "87 comprobaciones Chromium320/390/1440: conserva texto de prioridades legible dentro del shell claro con preferencia oscura del dispositivo."
+    "87 comprobaciones Chromium320/390/1440: conserva texto de prioridades legible dentro del shell claro con preferencia oscura del dispositivo.",
+    "Inicio personal, equipo desplegable, PPP visible y regreso a Mi portal; Chromium320/390/1440 y aislamiento de broker."
   ],
   "rollback": "Revertir sólo frontend; conservar IDs, todas las actividades y sus notas legibles, fuentes, PPP, pendientes, permisos y datos operativos. No restaurar filas de negocio."
 }

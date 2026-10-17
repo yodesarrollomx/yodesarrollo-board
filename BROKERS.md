@@ -76,3 +76,9 @@ La cartera agrupa clientes por contact_id explícito, con asuntos independientes
 next_action admite el responsable nominal Persona:<id> además de etiquetas heredadas. El sobre YOD-CASE v1 en notes conserva texto previo, estado PPP (Por confirmar/En preparación/Listo/Presentado) y solicitud explícita de decisión. No cambia la etapa del asunto al registrar actividad. Reprogramar agrega una nueva actividad que sustituye la programación sólo en el calendario; originales siguen en historial. Guardado conserva revisión, recibo e identidad del servidor.
 
 Validación: 139 pruebas Node; 84 comprobaciones de jerarquía/cliente/nominal/PPP/decisión/reprogramación/recarga/aislamiento y 72 del mini CRM a 320/390/1440px. Preevaluación y material comercial regresionados. Servicios sintéticos, cero escrituras de prueba en negocio. Lectura real de Dirección previa confirmada; publicación y aceptación de código nuevo registradas aparte en PR/Buzón. Revertir frontend conserva actividades, asignaciones, clientes, documentos y PPP.
+
+## Portal personal y CRM visible · 17-oct
+
+La entrada canónica muestra al Master Developer, cartera propia, equipo desplegable, actividad reciente y cobertura de PPP. Los enlaces de gestión explícitos conservan su alcance y ofrecen Mi portal sin cambiar el actor. La ficha separa situación actual, siguiente paso y plan, con historial y calendario debajo. El enlace al PPP está disponible sin desplegar la fila. El estado del acceso individual es informativo y no activa identidades.
+
+Validación local: 141 pruebas de contratos, 96 comprobaciones de jerarquía/guardado/alcance y 72 de mini CRM en 320/390/1440; incluye contraste de métricas y equipo desplegable. Cero escrituras sintéticas en producción. El registro de importaciones reales y la verificación publicada se conservan en el buzón privado.
