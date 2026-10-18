@@ -1,0 +1,36 @@
+name: Verify published broker workspace
+on:
+  push:
+    branches: [codex/broker-guided-journey]
+    paths: ['.github/workflows/broker-production-check.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Compare published assets without credentials or business writes
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import {createHash} from 'node:crypto';
+          const base='https://yodesarrollomx.github.io/yodesarrollo-board/';
+          const files=['brokers.html','brokers.js','brokers.css','brokers-core.js','brokers-evaluator.js'];
+          for(const file of files){
+            const expected=await fs.readFile(file,'utf8');let match=false;
+            for(let n=0;n<8&&!match;n++){
+              const r=await fetch(base+file+'?verify='+Date.now(),{signal:AbortSignal.timeout(20000),headers:{'Cache-Control':'no-cache'}});
+              match=r.ok&&(await r.text())===expected;
+              if(!match)await new Promise(resolve=>setTimeout(resolve,5000));
+            }
+            if(!match)throw Error('Published file does not match: '+file);
+            console.log(JSON.stringify({file,publishedMatches:true,sha256:createHash('sha256').update(expected).digest('hex'),productionWrites:0}));
+          }
+          NODE
