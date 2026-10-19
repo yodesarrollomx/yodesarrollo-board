@@ -16,7 +16,7 @@ function state(i,t,m){const W=m?480:1100,L=m?125:280,R=m?355:820,Y=m?340:330,C=W
  case 2:put('team',C,Y,1.8);put('document',L,Y+125,.6,appear(1.7));put('capital',R,Y+125,.7,appear(2.4));break;
  case 3:put('document',mix(L,C-35,ease(t-1.5)),Y-20,1.2,1-ease(t-2.5)*.6);put('nave',mix(R,C,ease(t-1.5)),Y+35,1.8,appear(.7));put('capital',L,Y+100,.75,appear(1.5));break;
  case 4:put('nave',L,Y,1.6);put('capital',L,Y+115,.85,appear(.7));put('team',R,Y,1.3,appear(.7));put('document',R,Y+115,.75,appear(1.7));break;
- case 5:put('nave',C,Y-65,1.35);put('plaza',L,Y+35,1.1,appear(.6));put('office',R,Y+30,1,appear(.6));put('hotel',L,Y+155,.9,appear(1.5));put('club',C,Y+170,1,appear(1.5));put('pocket',R,Y+165,1.1,appear(1.5));break;
+ case 5:put('nave',C,Y-35,1.35);put('plaza',L,Y+35,1.1,appear(.6));put('office',R,Y+30,1,appear(.6));put('hotel',L,Y+155,.9,appear(1.5));put('club',C,Y+170,1,appear(1.5));put('pocket',R,Y+165,1.1,appear(1.5));break;
  case 6:put('land',m?L+22:L,Y,m?1.1:1.45);put('team',C,Y+130,1.2,appear(.5));put('capital',R,Y,1.4,appear(1.4));put('document',C,Y-65,.8,appear(2.4));break;
  case 7:put('nave',L,Y,1.4);put('plaza',R,Y,1.4);put('gate',C,Y+115,1.2,appear(.6));put('document',C,Y-95,.7,appear(1.5));break;
  case 8:put('land',m?L+22:L,Y,m?1.1:1.4);put('document',C,Y-15,1.2,appear(.7));put('nave',R,Y,1.4,appear(2.3));break;
