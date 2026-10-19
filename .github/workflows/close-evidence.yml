@@ -1,0 +1,31 @@
+name: Read presentation review evidence
+on:
+  push:
+    branches: [codex/presentation-close-evidence]
+permissions:
+  actions: read
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Read selected synthetic screenshots from completed review
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import urllib.request, os, zipfile, io, base64
+          u="https://api.github.com/repos/yodesarrollomx/yodesarrollo-board/actions/artifacts/12166386840/zip"
+          q=urllib.request.Request(u,headers={"Authorization":"Bearer "+os.environ["GH_TOKEN"],"Accept":"application/vnd.github+json"})
+          with urllib.request.urlopen(q,timeout=60) as r: z=zipfile.ZipFile(io.BytesIO(r.read()))
+          for filename in ["webkit-320x568-14.png","anchor-0.png","anchor-14.png","audit.json"]:
+              matches=[n for n in z.namelist() if n.endswith("/"+filename) or n==filename]
+              assert len(matches)==1,(filename,matches)
+              data=z.read(matches[0])
+              if filename.endswith(".json"):
+                  print("AUDIT "+data.decode())
+              else:
+                  encoded=base64.b64encode(data).decode()
+                  for i in range(0,len(encoded),1600): print("REVIEW_IMAGE",filename,i//1600,encoded[i:i+1600])
+          PY
