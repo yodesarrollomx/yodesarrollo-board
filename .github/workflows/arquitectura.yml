@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: yodesarrollomx/yod-portal
-          ref: 18b40fe639092a76dc46f697359bf587e958328f
+          ref: cc7b9927ea1dd542cd3de756b0b07fe9f6b8605e
           path: .yod-atlas
           persist-credentials: false
           sparse-checkout-cone-mode: false
@@ -110,6 +110,7 @@ jobs:
           VERIFY_PUBLISHED_STORY: ${{ github.event_name == 'push' && '1' || startsWith(github.head_ref, 'codex/verify-published-story') && '1' || '0' }}
           YOD_PUBLIC_SOURCE_SNAPSHOT_DIR: ${{ runner.temp }}/yod-public-source-${{ github.run_id }}-${{ github.run_attempt }}
         run: |
+          node tests/obregon-storyboard-browser.cjs
           node tests/brokers-pin-delivery-browser.cjs
           node tests/brokers-pins-browser.cjs
           node tests/brokers-intent-browser.cjs

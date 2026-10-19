@@ -1,17 +1,20 @@
 {
-  "model_revision": "2026-10-17.chinches-entregas.1",
-  "proposal_id": "CHG-INVESTOR-INTENT-STORY",
-  "summary": "Aclarar entrada YoDesarrollo y dos rutas de participación en fuente editorial existente; alinear resumen visible de escritorio e indicadores con escenas variables. Propuesta previa docs/propuestas/cierre-presentacion-20261018.md; mismos contratos, identidad, fuentes, diagramas y enlaces, sin arquitectura nueva.",
+  "model_revision": "2026-10-19.storyboard-github.1",
+  "proposal_id": "CHG-PRESENTATION-STORYBOARD-GITHUB-20261019",
+  "summary": "Consumidor estático de storyboard por proyecto, acceso explícito Portero y chinches mediante CTR-PRESENTATION-PINS-INGEST. Guion preliminar versionado a partir de fuente autorizada; correcciones privadas a Sala. Etapa2 sólo instrucción explícita. Sin otro backend, hojas, cron ni cambios de permisos.",
   "components": [
     "SYS-INVERSION",
+    "SYS-YOD-OS",
     "SYS-CONTROL",
-    "GAS-PLAN-POTENCIAL",
-    "SHEET-PLAN-POTENCIAL"
+    "SYS-SALA",
+    "GAS-SALA",
+    "SHEET-SALA"
   ],
   "tests": [
-    "Regresión completa Arquitectura YOD con fuente pública; originales y contenido detallado conservados.",
-    "Chromium/WebKit: caption visible, indicadores iguales a momentos reales, dos CTA móviles, enlace sin credenciales.",
-    "Publicación exacta y carga anónima; cero escrituras de prueba en negocio."
+    "node --test tests/brokers-pin-delivery.test.cjs: 16 pruebas del transporte existente.",
+    "node tests/obregon-storyboard-browser.cjs: roles, captura y recibo simulado, recarga sin duplicado, continuidad visual, extremos y tres viewports.",
+    "Atlas y manifiesto de impacto, revisión sintáctica y git diff --check.",
+    "Producción: carga pública exacta. Google real y dictado iPhone pendientes de aceptación; no se realizan escrituras sintéticas en Sala."
   ],
-  "rollback": "Revertir únicamente frontend por PR; mantener todos los IDs, notas, versiones, archivos Drive/Sheets, permisos y registro de clientes. No restaurar registros operativos."
+  "rollback": "Revertir frontend por PR conservando versiones, fuente, IDs, IndexedDB, sobres privados y permisos."
 }
