@@ -1,0 +1,39 @@
+// Existing YOD composer + canonical IndexedDB + private Sala ingestion.
+let cfg,ctx,cancelComposer=null,generation=0,urls=[],busy=false,queueBusy=false;
+const inFlight=new Map();
+const $=s=>document.querySelector(s),node=(tag,text)=>{const e=document.createElement(tag);e.textContent=text;return e};
+function db(){return new Promise((ok,no)=>{const r=indexedDB.open('yodChinche',1);r.onupgradeneeded=()=>{for(const name of ['chinches','fotos'])if(!r.result.objectStoreNames.contains(name))r.result.createObjectStore(name,{keyPath:'id'});};r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}
+async function read(store,id){const d=await db();try{return await new Promise((ok,no)=>{const s=d.transaction(store).objectStore(store),r=id?s.get(id):s.getAll();r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}finally{d.close()}}
+async function rows(){const owner=cfg.identity();if(!owner)return [];return(await read('chinches')).filter(c=>c.pantalla==='distrito-abasto-storyboard'&&c.repo==='yodesarrollo-board'&&c.objeto?.ownerHash===owner&&c.objeto?.enlace===location.origin+location.pathname).sort((a,b)=>b.creado.localeCompare(a.creado))}
+async function photo(id){const f=await read('fotos',id),b=f?.full||f?.mini;return !b?null:b instanceof Blob?b:new Blob([b],{type:f.fullMime||f.miniMime||'image/jpeg'})}
+// Local outbox recovery; never creates a second ID or retries an ambiguous POST.
+async function requestSala(url,options){
+ const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),60000);
+ try{const r=await fetch(url,{...options,signal:ctl.signal,cache:'no-store',credentials:'omit'});
+ if(!r.ok)throw Error('NETWORK');const j=await r.json();if(j.error||j.ok===false){const e=Error('SALA_DENIED');if(/clave|sesión|sesion|autoriz|rol|agente/i.test(String(j.error||'')))e.code='AUTH';throw e}return j;
+ }finally{clearTimeout(timer)}
+}
+async function deliver(ch,label){
+ if(inFlight.has(ch.id))return inFlight.get(ch.id);
+ const job=(async()=>{const owner=cfg.identity();if(!owner||owner!==ch.objeto?.ownerHash)return;
+ try{if(label)label.textContent='Comprobando sesión y recepción…';
+ if(!await cfg.verify()||owner!==cfg.identity()){cfg.toast('Chinche guardada · vuelve a entrar con Google YOD para enviarla.');return}
+ const api=window.YodPinDelivery,p=await api.packet(ch,await photo(ch.id),{provider:'github',repository:'yodesarrollomx/yodesarrollo-board',path:'presentacion/distrito-abasto/'});
+ if(owner!==cfg.identity())return;
+ const r=await api.client({request:requestSala}).deliver(p);await api.mark(ch.id,r);
+ if(owner!==cfg.identity())return;if(label?.isConnected)label.textContent=api.label(r);cfg.toast(api.label(r));await refreshCount();
+ }catch{if(owner!==cfg.identity())return;if(label?.isConnected)label.textContent='Guardada aquí · Sala no confirmó la recepción';cfg.toast('Tu comentario sigue guardado. Sala aún no confirmó la recepción.');}
+ })();inFlight.set(ch.id,job);try{return await job}finally{inFlight.delete(ch.id)}
+}
+async function refreshCount(){if(!cfg?.identity())return;const all=await rows(),pending=all.filter(c=>c.delivery?.state!=='received').length;const e=$('#reviewStatus');for(const ch of all){const item=document.querySelector('[data-review-id="'+ch.id+'"] .receipt-status');if(item)item.textContent=YodPinDelivery.label(ch.delivery);}if(e)e.textContent=pending?pending+' guardadas aquí · pendientes de Sala':all.length?all.length+' recibidas en Sala':'Sin revisiones guardadas';}
+async function retryPending(){if(queueBusy||busy||document.hidden||!navigator.onLine||!cfg?.identity())return;
+ queueBusy=true;try{await refreshCount();for(const ch of await rows()){if(document.hidden||!cfg.identity())break;if(ch.delivery?.state!=='received')await deliver(ch)}}catch{cfg.toast('No se pudo consultar el guardado local. Tus revisiones no se han borrado.')}finally{queueBusy=false}}
+async function saved(ch){cancelComposer=null;cfg.resume();cfg.toast('Chinche guardada en este dispositivo · enviando a Sala…');await deliver(ch)}
+async function capture(el,x,y,prefill=''){if(busy)return;busy=true;try{if(!await cfg.verify())return cfg.toast('Entra con tu cuenta de Dirección.');const owner=cfg.identity(),mine=++generation,scene=cfg.current();cfg.pause();await YODChinche.preparar();const rect=el.getBoundingClientRect(),scale=Math.min(2,devicePixelRatio||1);const canvas=await html2canvas(el,{backgroundColor:'#f8f6ee',scale,logging:false,useCORS:true,ignoreElements:e=>e.tagName==='BUTTON'||e.id==='rotor'});if(mine!==generation||cfg.identity()!==owner)return;ctx.canvas=canvas;const px=Math.max(0,Math.min(rect.width,x==null?rect.width/2:x-rect.left)),py=Math.max(0,Math.min(rect.height,y==null?rect.height/2:y-rect.top));const objeto={tipo:'presentation-storyboard',ownerHash:owner,version:'YOD-AB01',etapa:scene.id,titulo:scene.title,explicacion:scene.beats[scene.beat],paso:scene.beat,guion:scene.moments[scene.beat].spoken,fuente:'Propuesta Integral · Distrito Abasto Sonora · octubre 2026 · p.'+scene.page,enlace:location.origin+location.pathname,punto:{x:px,y:py},zona:{w:rect.width,h:rect.height},estado:'En revisión'};const handle=await YODChinche.anotar({x:px*scale,y:py*scale,clase:'presentation-storyboard',vista:scene.title,seccion:scene.label,objeto,texto:scene.beats[scene.beat],sinFolio:true,sinUrlParams:true});cancelComposer=handle?.cancel||null;if(prefill&&$('.chn-txt'))$('.chn-txt').value=prefill;
+}catch(e){cfg.toast('No se pudo preparar la captura. Vuelve a intentarlo; aún no se guardó una chinche.');cfg.resume()}finally{busy=false}}
+async function history(){if(!await cfg.verify())return;const owner=cfg.identity();const list=await rows();if(owner!==cfg.identity())return;const root=$('#reviewList');root.replaceChildren();for(const ch of list){const a=node('article','');a.className='review-item';a.dataset.reviewId=ch.id;a.append(node('h3',ch.objeto.titulo),node('p',ch.texto),node('small',ch.id+' · '+ch.objeto.version));const b=await photo(ch.id);if(owner!==cfg.identity())return;if(b){const im=document.createElement('img'),url=URL.createObjectURL(b);urls.push(url);im.src=url;im.alt='Recorte guardado de la escena';a.append(im)}const status=node('p',YodPinDelivery.label(ch.delivery));status.className='receipt-status';a.append(status);if(ch.delivery?.state!=='received'){const button=node('button','Comprobar recepción en Sala');button.onclick=()=>deliver(ch,status);a.append(button)}root.append(a)}if(!list.length)root.append(node('p','No hay chinches de esta presentación guardadas por tu cuenta en este navegador.'));cfg.pause();$('#reviewsDialog').showModal()}
+function clear(){generation++;cancelComposer?.();cancelComposer=null;urls.forEach(u=>URL.revokeObjectURL(u));urls=[];$('#reviewList')?.replaceChildren();cfg?.resume()}
+async function exportRows(){if(!await cfg.verify())return;const owner=cfg.identity(),list=await rows();if(owner!==cfg.identity())return;const a=document.createElement('a'),url=URL.createObjectURL(new Blob([JSON.stringify(list,null,2)],{type:'application/json'}));a.href=url;a.download='distrito-abasto-chinches.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+export const reviews={init(options){cfg=options;ctx={pantalla:'distrito-abasto-storyboard',repo:'yodesarrollo-board',sinPastilla:true,fotosPortables:true,localOnly:true,canvas:null,quien:()=> 'Dirección YOD · sesión verificada',alAbrir:cfg.pause,alCerrar:cfg.resume,alClavar:ch=>saved(ch),alErrorGuardado:()=>cfg.toast('No se guardó la chinche. Conserva el comentario y vuelve a intentarlo.')};YODChinche.init(ctx)},capture,history,clear,refresh:refreshCount,retryPending,export:exportRows};
+
+addEventListener('online',()=>retryPending());addEventListener('focus',()=>retryPending());document.addEventListener('visibilitychange',()=>{if(!document.hidden)retryPending()});setInterval(()=>retryPending(),60000);

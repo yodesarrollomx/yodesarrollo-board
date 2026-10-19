@@ -1,7 +1,7 @@
 {
   "model_revision": "2026-10-19.storyboard-github.1",
   "proposal_id": "CHG-PRESENTATION-STORYBOARD-GITHUB-20261019",
-  "summary": "SB05: 10 escenas/40 momentos, morfología conceptual recuperada y mapa OSM; kernel Hairline MIT existente. Repara outbox de chinches con canje single-flight, reintento visible y plazo60s. Mantiene CTR-PRESENTATION-PINS-INGEST, Portero/Sala y etapa1; sin backend, permisos, Sheets ni cron nuevos.",
+  "summary": "YOD-AB01: consumidor adicional Distrito Abasto Sonora, 12 escenas/48 momentos y geometría Hairline MIT. Aplica el patrón de storyboard existente con Portero y CTR-PRESENTATION-PINS-INGEST; separación por proyecto, fuente editorial preliminar y sin modificar backend, permisos ni PPP.",
   "components": [
     "SYS-INVERSION",
     "SYS-YOD-OS",
@@ -11,11 +11,10 @@
     "SHEET-SALA"
   ],
   "tests": [
-    "node --test tests/brokers-pin-delivery.test.cjs: 16 pruebas del transporte existente.",
-    "node tests/obregon-storyboard-browser.cjs: 10 escenas, tres viewports, canje concurrente, captura offline, recuperación automática al recargar, respuesta POST perdida sin duplicación y extremos del rotor.",
-    "Atlas y manifiesto de impacto, revisión sintáctica y git diff --check.",
-    "Producción: carga pública exacta. Google real y dictado iPhone pendientes de aceptación; no se realizan escrituras sintéticas en Sala.",
-    "Sonda Sala39300005312: GET real con rol agente PASS; recibo Google/iPhone propietario pendiente."
+    "node --test tests/brokers-pin-delivery.test.cjs: transporte privado existente.",
+    "node tests/abasto-storyboard-browser.cjs: 12 escenas, persistencia visual, 3 viewports, canje fresco, captura offline y recibo sin duplicar; todos los servicios simulados.",
+    "Sintaxis de módulos nuevos, git diff --check y verificación de impacto contra atlas fijado.",
+    "Pages: comprobar archivos servidos tras despliegue. Google real de Dirección y dictado en iPhone físico se acreditan aparte."
   ],
   "rollback": "Revertir frontend por PR conservando versiones, fuente, IDs, IndexedDB, sobres privados y permisos."
 }
