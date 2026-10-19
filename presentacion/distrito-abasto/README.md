@@ -20,7 +20,7 @@ Propuesta Integral de Servicios de Desarrollo · Distrito Abasto Sonora, octubre
 
 ## Implementación y validación
 
-Implementación aislada de 12 escenas y 48 momentos. Geometría Hairline MIT original, rótulos y funciones narrativas de YOD; transiciones reversibles y objetos persistentes. El ciclo de dibujo sólo trabaja mientras hay movimiento solicitado.
+Implementación aislada de 12 escenas y 48 momentos. Geometría Hairline MIT original, rótulos y funciones narrativas de YOD; transiciones reversibles y objetos persistentes. El ciclo de dibujo sólo trabaja mientras hay movimiento solicitado. Alineado con el criterio SB06 de la referencia: función narrativa por momento, guía explícita de seis colores, idea que debe quedar clara y cierre visible para contratar la prefactibilidad (sin aceptación automática).
 
 Validado el 19 de octubre de 2026: sintaxis de los seis módulos, 16 contratos del transporte y navegador con servicios sintéticos en 390×844, 844×390 y 1365×900. Navegación, 12 escenas, 6 funciones, continuidad de objetos, rol en caché denegado, canje fresco concurrente, captura sin conexión, recuperación al recargar y recibo después de respuesta perdida sin duplicación: PASS. Un único POST simulado, cero escrituras de prueba en Sala real. Capturas de guion e importe revisadas en los tres formatos.
 

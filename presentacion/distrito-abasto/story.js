@@ -81,3 +81,36 @@ export const story={
  ],'La revisión del guion no equivale a contratar. Ninguna opción envía mensajes, acepta términos ni compromete recursos automáticamente.','¿Qué necesitamos resolver para tomar la decisión sobre la primera contratación?','Cierre del guion: la corrección se registra con chinches sobre esta misma versión.')
  ]
 };
+
+// Narrative function belongs to the spoken moment, not to a building or actor.
+const roles=[
+ ['contexto','problema','riesgo','accion'],['solucion','solucion','solucion','plan'],
+ ['solucion','solucion','plan','resultado'],['contexto','contexto','solucion','plan'],
+ ['plan','plan','riesgo','resultado'],['plan','plan','plan','riesgo'],
+ ['plan','plan','plan','resultado'],['plan','plan','resultado','resultado'],
+ ['contexto','riesgo','plan','resultado'],['plan','plan','riesgo','accion'],
+ ['accion','contexto','plan','riesgo'],['accion','accion','accion','resultado']
+];
+const understand=[
+ 'El concepto abre una posibilidad; la inversión se decide después de validar.',
+ 'La mezcla inmobiliaria debe responder a cómo circulan el producto y sus usuarios.',
+ 'El equipo coordina el desarrollo y el propietario conserva las autorizaciones.',
+ 'Venta, renta y mezcla exigen compromisos distintos; se comparan con los mismos criterios.',
+ 'La prefactibilidad entrega seis piezas de evidencia y una recomendación integrada.',
+ 'Contratar el estudio no compromete las etapas posteriores.',
+ 'Proyecto, presupuesto, contratos y reportes deben sostener la misma ejecución.',
+ 'El interés de un prospecto debe convertirse en acuerdos comprobables y entregas coordinadas.',
+ 'La viabilidad depende del flujo completo, el tiempo y los supuestos de cada producto.',
+ 'Honorarios, comisiones y participación variable se pactan por alcances distintos.',
+ 'La primera oferta tiene entregables, plazo estimado, hitos de pago y exclusiones explícitos.',
+ 'La decisión inicial es contratar el estudio; su resultado orientará la siguiente inversión.'
+];
+story.scenes.forEach((s,i)=>{s.understand=understand[i];s.moments.forEach((m,j)=>m.role=roles[i][j])});
+story.colorReview={criteria:{
+ problema:'Expone una dificultad concreta del propietario: decidir la inversión sin suficiente evidencia. No exagera ni inventa una amenaza.',
+ solucion:'Muestra cómo la propuesta responde a esa dificultad: operación coherente, alternativas o coordinación. Debe explicar el mecanismo.',
+ plan:'Describe pasos, responsables, entregables o condiciones. Permite entender cómo se avanza y qué autoriza cada etapa.',
+ riesgo:'Hace visible un compromiso que se busca evitar: capital inmovilizado, supuestos sin validar o mezcla de obligaciones. No lo presenta como un daño seguro.',
+ resultado:'Explica qué podría obtener el propietario si las condiciones se cumplen: información, control, colocación o patrimonio. No promete rentabilidad.',
+ accion:'Pide un siguiente paso concreto y proporcionado: revisar, aclarar o formalizar la primera contratación. No equivale a una aceptación automática.'
+}};
