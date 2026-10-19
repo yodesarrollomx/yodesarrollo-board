@@ -1,4 +1,4 @@
-# Distrito Obregón · storyboard YOD-SB04
+# Distrito Obregón · storyboard YOD-SB05
 
 Etapa uno: guion visual para revisión. La presentación de producción, sincronización de audiencia y cierre comercial no se habilitan hasta recibir instrucción explícita sobre el guion corregido.
 
@@ -8,7 +8,7 @@ URL estable: https://yodesarrollomx.github.io/yodesarrollo-board/presentacion/di
 
 Propuesta Distrito Obregón Industrial, 19 octubre 2026, cinco páginas. Es un snapshot editorial autorizado de la propuesta; no reemplaza datos operativos de Sheets ni constituye un master plan. El código no contiene reuniones, mensajes, notas privadas ni condiciones de otros proyectos.
 
-Ocho escenas: intención patrimonial, demanda BTS, beneficio y remuneración, asociación complementaria, aportaciones, gobierno, validación y decisión de estudio. `story.js` conserva guion, fuente por página, cautelas, dibujo y transición de cada escena.
+Diez escenas /40 momentos: ubicación, estrategia patrimonial, alianza, demanda BTS, retribuciones, complementos, capital, reglas, validación y decisión. La forma se traza desde la presentación conceptual original, no desde un levantamiento; la traza vial es OpenStreetMap con atribución. Hairline aporta el kernel geométrico MIT existente en YOD. `story.js` conserva guion, fuente por página, cautelas, dibujo y transición de cada escena.
 
 La auditoría del guion usa las seis funciones narrativas explicadas por Luis Ramos en su resumen de Donald Miller: https://www.youtube.com/watch?v=06iMqtU_xwM. Transcripción en español consultada mediante vidIQ. No se ha inspeccionado el video generado en NotebookLM ni se atribuyen a ese video movimientos visuales no observados. Los colores expresan funciones del mensaje; los activos se distinguen por forma y rótulo.
 
@@ -28,6 +28,12 @@ Una edición de guion se registra como corrección privada; no modifica directam
 - `node tests/obregon-storyboard-browser.cjs`: Chromium; red simulada, acceso anónimo, caché de rol no confiable, rol denegado, guardado/captura, recibo tras perder respuesta, recarga sin duplicado, objetos persistentes, extremos del rotor y tres viewports.
 - Prueba real de Google con la cuenta del propietario y dictado en iPhone físico pendientes de aceptación. No se escriben registros sintéticos en producción.
 - Historial local filtrado por cuenta/proyecto/navegador. No es un lector central completo de revisiones entre dispositivos.
-- No hay nuevo servicio, hoja, backend ni dependencia de compilación. No se altera el resto de presentaciones.
+- No hay nuevo servicio, hoja, backend ni dependencia de compilación. El transporte compartido sólo añade causas legibles de espera; no modifica su protocolo ni permisos.
 
 Atlas: CHG-PRESENTATION-STORYBOARD-GITHUB-20261019. Reversión: revertir frontend por PR, sin eliminar registros, capturas ni versiones.
+
+## Recuperación SB05
+
+Verificación Portero single-flight por credencial; outbox al entrar, volver, reconectar y cada60s con página visible. Solicitudes Sala con plazo60s; no se confunde esta cadencia con un editor automático. Estado visible arriba e historial privado accesible. Se conserva ID, captura y original de versiones anteriores. Pruebas de conexión fallida antes de POST, recarga con entrega automática y verificaciones concurrentes añadidas.
+
+Sonda real de Sala 39300005312: contrato disponible con rol agente; no acredita canje Google del dueño ni recibo de sus notas. El circuito conserva el último recibo confirmado y no reenvía POST ambiguos. La lectura actual de Sala expone30 registros recientes; una nota antigua fuera de esa ventana requiere conciliación central y no se marca falsamente recibida.

@@ -1,7 +1,7 @@
 {
   "model_revision": "2026-10-19.storyboard-github.1",
   "proposal_id": "CHG-PRESENTATION-STORYBOARD-GITHUB-20261019",
-  "summary": "Consumidor estático de storyboard por proyecto, acceso explícito Portero y chinches mediante CTR-PRESENTATION-PINS-INGEST. Guion preliminar versionado a partir de fuente autorizada; correcciones privadas a Sala. Etapa2 sólo instrucción explícita. Sin otro backend, hojas, cron ni cambios de permisos.",
+  "summary": "SB05: 10 escenas/40 momentos, morfología conceptual recuperada y mapa OSM; kernel Hairline MIT existente. Repara outbox de chinches con canje single-flight, reintento visible y plazo60s. Mantiene CTR-PRESENTATION-PINS-INGEST, Portero/Sala y etapa1; sin backend, permisos, Sheets ni cron nuevos.",
   "components": [
     "SYS-INVERSION",
     "SYS-YOD-OS",
@@ -12,9 +12,10 @@
   ],
   "tests": [
     "node --test tests/brokers-pin-delivery.test.cjs: 16 pruebas del transporte existente.",
-    "node tests/obregon-storyboard-browser.cjs: roles, captura y recibo simulado, recarga sin duplicado, continuidad visual, extremos y tres viewports.",
+    "node tests/obregon-storyboard-browser.cjs: 10 escenas, tres viewports, canje concurrente, captura offline, recuperación automática al recargar, respuesta POST perdida sin duplicación y extremos del rotor.",
     "Atlas y manifiesto de impacto, revisión sintáctica y git diff --check.",
-    "Producción: carga pública exacta. Google real y dictado iPhone pendientes de aceptación; no se realizan escrituras sintéticas en Sala."
+    "Producción: carga pública exacta. Google real y dictado iPhone pendientes de aceptación; no se realizan escrituras sintéticas en Sala.",
+    "Sonda Sala39300005312: GET real con rol agente PASS; recibo Google/iPhone propietario pendiente."
   ],
   "rollback": "Revertir frontend por PR conservando versiones, fuente, IDs, IndexedDB, sobres privados y permisos."
 }

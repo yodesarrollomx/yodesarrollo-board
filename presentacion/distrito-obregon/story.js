@@ -1,5 +1,5 @@
 export const story={
-  "version": "YOD-SB04",
+  "version": "YOD-SB05",
   "stage": "storyboard",
   "production": "requires_explicit_instruction",
   "title": "Distrito Obregón Industrial",
@@ -38,174 +38,434 @@ export const story={
   "paletteStatus": "Función narrativa según el resumen de Donald Miller por Luis Ramos; transcripción recuperada con vidIQ, 19 octubre 2026. No atribuye un estilo visual a NotebookLM sin haber visto su video generado.",
   "scenes": [
     {
-      "id": "patrimonio",
-      "label": "Lo que conservan",
+      "id": "ubicacion",
+      "label": "El lugar",
       "topic": "problem",
-      "title": "Activar el suelo. Conservar patrimonio.",
-      "takeaway": "La pregunta es cómo desarrollar sin perder la intención patrimonial.",
-      "metric": "24.7584 ha",
-      "unit": "247,584 m² · base comercial de referencia",
+      "title": "La alianza empieza por una propiedad concreta.",
       "page": 1,
-      "diagram": "patrimonio",
-      "narration": "¿Cómo convertir la propiedad en un patrimonio industrial que produzca rentas, con claridad sobre lo que aporta y recibe cada parte? Esa es la pregunta que organiza esta propuesta. Partimos de 24.7584 hectáreas de referencia comercial, sin el terreno adicional al sur. El plan maestro debe comprobar cómo se organiza el conjunto.",
+      "diagram": "ubicacion",
+      "narrativeRole": "Problema",
       "beats": [
-        "La propiedad actual: 24.7584 ha",
-        "El suelo como base de patrimonio",
-        "Una nave para un usuario específico",
-        "Un conjunto, dos modelos de negocio"
+        "Ciudad Obregón · Sonora",
+        "24.7584 hectáreas de referencia",
+        "Suelo, accesos y servicios",
+        "Una propiedad. Dos estrategias de negocio."
       ],
-      "draw": "Un terreno esquemático se convierte en soporte de una nave industrial. Los productos complementarios permanecen como una reserva complementaria discreta.",
-      "motion": "El terreno permanece. La cámara visual se acerca a la misma nave para explicar cómo llega a producir renta.",
-      "caution": "No incluye el terreno adicional al sur. Esquema conceptual: no representa linderos ni un master plan aprobado.",
-      "question": "¿La primera impresión comunica industria y patrimonio?",
-      "narrativeRole": "Problema"
+      "moments": [
+        {
+          "label": "Ciudad Obregón · Sonora",
+          "spoken": "Partimos de la propiedad que ustedes conocen, en Ciudad Obregón, sobre la carretera Federal 15. Primero ubicamos el lugar; después explicamos el negocio.",
+          "change": "La traza urbana entra a escala de zona. El punto señala la ubicación compartida, no un polígono inventado."
+        },
+        {
+          "label": "24.7584 hectáreas de referencia",
+          "spoken": "La propuesta considera 247,584 metros cuadrados. El terreno adicional al sur queda fuera de esta base. La forma se toma de la presentación conceptual original; el levantamiento confirmará linderos y accesos.",
+          "change": "El contexto urbano da paso al contorno de la presentación original y a su superficie documental."
+        },
+        {
+          "label": "Suelo, accesos y servicios",
+          "spoken": "La ubicación por sí sola no define qué cabe. Accesos de carga, servicios, usos de suelo y superficie útil determinarán el plan maestro.",
+          "change": "Aparecen tres capas de estudio: acceso, servicios y capacidad. No se dibujan conexiones como si ya estuvieran autorizadas."
+        },
+        {
+          "label": "Una propiedad. Dos estrategias de negocio.",
+          "spoken": "Sobre esta misma propiedad proponemos separar dos decisiones: conservar las naves industriales como patrimonio y asociarnos para desarrollar los productos complementarios.",
+          "change": "El punto del mapa entrega el foco a dos maquetas de negocio identificadas; no representan una subdivisión física."
+        }
+      ],
+      "narration": "Partimos de la propiedad que ustedes conocen, en Ciudad Obregón, sobre la carretera Federal 15. Primero ubicamos el lugar; después explicamos el negocio. La propuesta considera 247,584 metros cuadrados. El terreno adicional al sur queda fuera de esta base. La forma se toma de la presentación conceptual original; el levantamiento confirmará linderos y accesos. La ubicación por sí sola no define qué cabe. Accesos de carga, servicios, usos de suelo y superficie útil determinarán el plan maestro. Sobre esta misma propiedad proponemos separar dos decisiones: conservar las naves industriales como patrimonio y asociarnos para desarrollar los productos complementarios.",
+      "takeaway": "Una propiedad. Dos estrategias de negocio.",
+      "draw": "La traza urbana entra a escala de zona. El punto señala la ubicación compartida, no un polígono inventado.",
+      "motion": "El punto del mapa entrega el foco a dos maquetas de negocio identificadas; no representan una subdivisión física.",
+      "caution": "Ubicación documental: 27°28′30.0″N, 109°55′17.4″W. Contorno trazado desde la presentación conceptual original, sin georreferenciación catastral. La base comercial no sustituye un levantamiento.",
+      "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?"
     },
     {
-      "id": "demanda",
-      "label": "Cómo se activa",
-      "topic": "solution",
-      "title": "Una nave empieza por un usuario.",
-      "takeaway": "Primero necesidades y contratos; después, inversión sustentada.",
-      "page": 2,
-      "diagram": "demanda",
-      "narration": "Ustedes aportan el suelo. Nosotros buscamos usuarios y coordinamos la viabilidad. El usuario define qué nave necesita. Con esos acuerdos podemos estudiar el crédito; el banco decide con sus propios criterios.",
+      "id": "patrimonio",
+      "label": "La estrategia",
+      "topic": "outcome",
+      "title": "Conservar las naves. Desarrollar el resto en alianza.",
+      "page": 1,
+      "diagram": "patrimonio",
+      "narrativeRole": "Resultado",
       "beats": [
-        "Acercarnos a la misma nave",
-        "Escuchar al usuario industrial",
-        "Definir requerimientos y contrato",
-        "Estudiar la inversión y el crédito"
+        "Naves a la medida de un arrendatario",
+        "Patrimonio industrial para los propietarios",
+        "Otros negocios, con asociación propia",
+        "Cada negocio necesita su propia cuenta"
       ],
-      "draw": "La nave industrial crece; una hoja de requerimientos entra en su costado y se convierte en contrato. El edificio conserva su silueta mientras cambia su nivel de definición.",
-      "motion": "El contrato queda junto a la nave. En la siguiente escena, esa misma nave genera el circuito de renta.",
-      "caution": "Una carta de intención no equivale a crédito aprobado ni garantiza un arrendamiento.",
-      "question": "¿Se entiende que no proponemos construir sin validar la demanda?",
-      "narrativeRole": "Solución"
+      "moments": [
+        {
+          "label": "Naves a la medida de un arrendatario",
+          "spoken": "Una nave a la medida —Built-To-Suit o BTS— se proyecta para las necesidades de una empresa. La estrategia propuesta es conservar ese inmueble y recibir rentas a largo plazo.",
+          "change": "Una plataforma se levanta como nave con andenes y patio. Una ficha de usuario encaja con esa nave."
+        },
+        {
+          "label": "Patrimonio industrial para los propietarios",
+          "spoken": "El beneficio patrimonial de las naves permanece del lado de ustedes, sujeto a los acuerdos jurídicos y financieros. Conseguir un usuario no convierte automáticamente al equipo en dueño.",
+          "change": "La nave se vincula con los propietarios y un circuito de renta. El activo permanece visible."
+        },
+        {
+          "label": "Otros negocios, con asociación propia",
+          "spoken": "Los servicios, hotel, negocios, club y bodegas pequeñas se estudian como negocios complementarios. Ahí proponemos una asociación desarrolladora con reglas por producto.",
+          "change": "Se abre una segunda plataforma de componentes diferentes: comercio, hotel y módulos."
+        },
+        {
+          "label": "Cada negocio necesita su propia cuenta",
+          "spoken": "El objetivo no es vender las naves para pagar todo lo demás. Cada componente debe justificar su demanda, capital, obligaciones y resultado.",
+          "change": "Dos bases quedan separadas y relacionadas por el plan maestro. Sus flujos no se mezclan."
+        }
+      ],
+      "narration": "Una nave a la medida —Built-To-Suit o BTS— se proyecta para las necesidades de una empresa. La estrategia propuesta es conservar ese inmueble y recibir rentas a largo plazo. El beneficio patrimonial de las naves permanece del lado de ustedes, sujeto a los acuerdos jurídicos y financieros. Conseguir un usuario no convierte automáticamente al equipo en dueño. Los servicios, hotel, negocios, club y bodegas pequeñas se estudian como negocios complementarios. Ahí proponemos una asociación desarrolladora con reglas por producto. El objetivo no es vender las naves para pagar todo lo demás. Cada componente debe justificar su demanda, capital, obligaciones y resultado.",
+      "takeaway": "Cada negocio necesita su propia cuenta",
+      "draw": "Una plataforma se levanta como nave con andenes y patio. Una ficha de usuario encaja con esa nave.",
+      "motion": "Dos bases quedan separadas y relacionadas por el plan maestro. Sus flujos no se mezclan.",
+      "caution": "Propuesta preliminar. El plan maestro definirá superficies y número de edificios; las maquetas representan modelos de negocio, no cabida.",
+      "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?"
     },
     {
       "id": "participacion",
-      "label": "Quién recibe qué",
-      "topic": "outcome",
-      "title": "Su patrimonio. Nuestro trabajo acordado.",
-      "takeaway": "La renta del inmueble y la remuneración del equipo son conceptos diferentes.",
+      "label": "Quién lo articula",
+      "topic": "solution",
+      "title": "Una alianza que coordina todo el desarrollo.",
       "page": 2,
       "diagram": "participacion",
-      "narration": "La propuesta es que las naves y sus rentas permanezcan en beneficio de los propietarios, bajo la estructura jurídica y las obligaciones de financiamiento convenidas. Nuestro equipo identifica usuarios y coordina lo contratado. La colocación por usuarios efectivamente contratados y la gerencia, si la solicitan, se remuneran por escrito. Presentar un usuario no nos entrega propiedad ni rentas automáticamente.",
+      "narrativeRole": "Solución",
       "beats": [
-        "La nave permanece del lado patrimonial",
-        "Su renta beneficia a los propietarios",
-        "El equipo aporta usuarios y coordinación",
-        "Honorarios sólo en los términos acordados"
+        "Ustedes deciden. La alianza coordina.",
+        "Mercado y estructura financiera",
+        "Proyecto, permisos, obra y operación",
+        "Una coordinación. Responsabilidades visibles."
       ],
-      "draw": "La nave se desplaza al lado de los propietarios. Un flujo de renta expresa renta; una hoja de acuerdos separada representa servicios y honorarios.",
-      "motion": "La nave se reduce sin desaparecer y vuelve a colocarse sobre el terreno. El encuadre abre espacio al sector complementario.",
-      "caution": "Base, hecho generador, fecha y monto de honorarios por definir; no hay tarifa en el PDF.",
-      "question": "¿Quedan separados beneficio patrimonial, servicios y honorarios?",
-      "narrativeRole": "Resultado"
+      "moments": [
+        {
+          "label": "Ustedes deciden. La alianza coordina.",
+          "spoken": "Los propietarios conservan las decisiones que se pacten. La alianza entre Yo Desarrollo, Puebla Arquitectos / PG y Eduardo Lara articula el trabajo para convertir la oportunidad en un proyecto evaluable.",
+          "change": "Los propietarios se sitúan arriba; tres piezas de la alianza se ensamblan como una mesa de coordinación."
+        },
+        {
+          "label": "Mercado y estructura financiera",
+          "spoken": "A esa coordinación se conectan usuarios industriales, comercialización y especialistas financieros: demanda, contratos, fuentes de capital y condiciones que realmente pueda soportar cada negocio.",
+          "change": "Se abren las conexiones de mercado y finanzas alrededor de la mesa, con sus entregables."
+        },
+        {
+          "label": "Proyecto, permisos, obra y operación",
+          "spoken": "Arquitectura e ingenierías, asesoría legal y fiscal, gestión de permisos, ejecución y operadores se coordinan con alcances, presupuestos y responsabilidades definidos.",
+          "change": "Aparecen proyecto, legal, obra y operación. Cada rama lleva una función, no un logotipo sin explicación."
+        },
+        {
+          "label": "Una coordinación. Responsabilidades visibles.",
+          "spoken": "El valor de la alianza es integrar esas especialidades y darles seguimiento. No les proponemos que ustedes administren una lista de proveedores inconexos; los servicios y facultades se acuerdan antes de ejecutarlos.",
+          "change": "La red se reúne en un expediente con mercado, proyecto, capital y acuerdos. Se conserva la identidad de cada participante."
+        }
+      ],
+      "narration": "Los propietarios conservan las decisiones que se pacten. La alianza entre Yo Desarrollo, Puebla Arquitectos / PG y Eduardo Lara articula el trabajo para convertir la oportunidad en un proyecto evaluable. A esa coordinación se conectan usuarios industriales, comercialización y especialistas financieros: demanda, contratos, fuentes de capital y condiciones que realmente pueda soportar cada negocio. Arquitectura e ingenierías, asesoría legal y fiscal, gestión de permisos, ejecución y operadores se coordinan con alcances, presupuestos y responsabilidades definidos. El valor de la alianza es integrar esas especialidades y darles seguimiento. No les proponemos que ustedes administren una lista de proveedores inconexos; los servicios y facultades se acuerdan antes de ejecutarlos.",
+      "takeaway": "Una coordinación. Responsabilidades visibles.",
+      "draw": "Los propietarios se sitúan arriba; tres piezas de la alianza se ensamblan como una mesa de coordinación.",
+      "motion": "La red se reúne en un expediente con mercado, proyecto, capital y acuerdos. Se conserva la identidad de cada participante.",
+      "caution": "Equipo mencionado por Dirección y propuesta. Funciones y contratación de especialistas por formalizar; no implica que bancos u operadores estén comprometidos.",
+      "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?"
+    },
+    {
+      "id": "demanda",
+      "label": "Cómo nace una nave",
+      "topic": "plan",
+      "title": "Primero una empresa. Después su nave.",
+      "page": 2,
+      "diagram": "demanda",
+      "narrativeRole": "Plan",
+      "beats": [
+        "Encontrar al usuario adecuado",
+        "Convertir interés en requerimientos y acuerdos",
+        "Comprobar costo, contrato y capital",
+        "Ejecutar sólo la fase que se sostiene"
+      ],
+      "moments": [
+        {
+          "label": "Encontrar al usuario adecuado",
+          "spoken": "Prospectamos empresas cuya operación encaje con la ubicación. Hay que entender qué producen, almacenan o distribuyen, qué superficie requieren y qué renta puede sostener su negocio.",
+          "change": "Un requerimiento de empresa entra al tablero. La nave permanece en estado de proyecto."
+        },
+        {
+          "label": "Convertir interés en requerimientos y acuerdos",
+          "spoken": "Con el usuario definimos superficie, altura, patios, andenes, energía y plazo. Una carta de intención permite avanzar en la negociación; todavía no es un arrendamiento definitivo.",
+          "change": "La nave cambia de configuración alrededor de los requerimientos. La ficha se despliega como expediente técnico y comercial."
+        },
+        {
+          "label": "Comprobar costo, contrato y capital",
+          "spoken": "El proyecto y su costo deben ser compatibles con el arrendamiento. Con contratos y garantías se estudia el financiamiento; también se identifica el efectivo que hará falta.",
+          "change": "Tres piezas —costo, contrato y capital— deben ensamblarse antes de activar la obra. El crédito sigue sujeto a aprobación."
+        },
+        {
+          "label": "Ejecutar sólo la fase que se sostiene",
+          "spoken": "La fase comienza cuando sus condiciones técnicas, comerciales, legales y financieras estén aprobadas. Así se construye para una operación concreta y con una estructura de inversión conocida.",
+          "change": "La nave se completa y aparece la renta contractual como resultado buscado. El resto del predio no se representa construido."
+        }
+      ],
+      "narration": "Prospectamos empresas cuya operación encaje con la ubicación. Hay que entender qué producen, almacenan o distribuyen, qué superficie requieren y qué renta puede sostener su negocio. Con el usuario definimos superficie, altura, patios, andenes, energía y plazo. Una carta de intención permite avanzar en la negociación; todavía no es un arrendamiento definitivo. El proyecto y su costo deben ser compatibles con el arrendamiento. Con contratos y garantías se estudia el financiamiento; también se identifica el efectivo que hará falta. La fase comienza cuando sus condiciones técnicas, comerciales, legales y financieras estén aprobadas. Así se construye para una operación concreta y con una estructura de inversión conocida.",
+      "takeaway": "Ejecutar sólo la fase que se sostiene",
+      "draw": "Un requerimiento de empresa entra al tablero. La nave permanece en estado de proyecto.",
+      "motion": "La nave se completa y aparece la renta contractual como resultado buscado. El resto del predio no se representa construido.",
+      "caution": "No se presume demanda contratada, financiamiento aprobado ni rentabilidad. Requerimientos y condiciones por usuario.",
+      "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?"
+    },
+    {
+      "id": "retribucion",
+      "label": "Cómo se retribuye",
+      "topic": "outcome",
+      "title": "La renta del activo y el pago al equipo son distintos.",
+      "page": 2,
+      "diagram": "retribucion",
+      "narrativeRole": "Resultado",
+      "beats": [
+        "El activo y su arrendamiento",
+        "Colocación por un usuario contratado",
+        "Gerencia sólo cuando se contrata",
+        "La asociación tiene otra lógica"
+      ],
+      "moments": [
+        {
+          "label": "El activo y su arrendamiento",
+          "spoken": "El usuario paga por ocupar la nave. Ese flujo sostiene las obligaciones de la operación y del financiamiento acordado; el beneficio patrimonial corresponde a los propietarios.",
+          "change": "El usuario, la nave y la cuenta patrimonial forman un circuito; se señalan obligaciones antes del beneficio."
+        },
+        {
+          "label": "Colocación por un usuario contratado",
+          "spoken": "La originación y colocación se remunera por usuarios efectivamente contratados. Base, momento y monto se pactan por escrito. Una presentación o contacto no genera propiedad del inmueble.",
+          "change": "Del contrato sale un comprobante separado de honorarios de colocación. No se toma una porción de la nave."
+        },
+        {
+          "label": "Gerencia sólo cuando se contrata",
+          "spoken": "Si ustedes solicitan gerencia, estructuración o administración del desarrollo, se define un alcance y presupuesto propio. Ese servicio no se da por contratado dentro de una frase genérica.",
+          "change": "Una segunda ficha de servicios aparece con alcance y autorización propios."
+        },
+        {
+          "label": "La asociación tiene otra lógica",
+          "spoken": "En los complementarios se negocian honorarios de desarrollo y participación en resultados por producto o fase. Esa participación no se traslada automáticamente a las rentas de las naves patrimoniales.",
+          "change": "El circuito de servicios se separa del circuito de resultados de asociación. Dos bases permanecen reconocibles."
+        }
+      ],
+      "narration": "El usuario paga por ocupar la nave. Ese flujo sostiene las obligaciones de la operación y del financiamiento acordado; el beneficio patrimonial corresponde a los propietarios. La originación y colocación se remunera por usuarios efectivamente contratados. Base, momento y monto se pactan por escrito. Una presentación o contacto no genera propiedad del inmueble. Si ustedes solicitan gerencia, estructuración o administración del desarrollo, se define un alcance y presupuesto propio. Ese servicio no se da por contratado dentro de una frase genérica. En los complementarios se negocian honorarios de desarrollo y participación en resultados por producto o fase. Esa participación no se traslada automáticamente a las rentas de las naves patrimoniales.",
+      "takeaway": "La asociación tiene otra lógica",
+      "draw": "El usuario, la nave y la cuenta patrimonial forman un circuito; se señalan obligaciones antes del beneficio.",
+      "motion": "El circuito de servicios se separa del circuito de resultados de asociación. Dos bases permanecen reconocibles.",
+      "caution": "No hay porcentajes ni tarifas acordados en el PDF. Los diagramas expresan relaciones económicas, no una prelación contractual de pagos.",
+      "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?"
     },
     {
       "id": "complementos",
-      "label": "Dónde nos asociamos",
+      "label": "Por qué un distrito",
       "topic": "solution",
-      "title": "Un distrito, negocios complementarios.",
-      "takeaway": "La asociación se estudia por producto; las BTS conservan su lógica patrimonial.",
+      "title": "La industria crea necesidades alrededor.",
       "page": 3,
       "diagram": "complementos",
-      "narration": "La asociación se centra en los productos complementarios: plaza y servicios, hotel, centro de negocios, Industrial Club y bodegas pocket. Son posibilidades que el mercado y la factibilidad deben confirmar.",
+      "narrativeRole": "Solución",
       "beats": [
-        "Volver al conjunto sin perder la nave",
-        "Abrir la reserva de productos complementarios",
-        "Reconocer servicios, hotel y negocios",
-        "Estudiar club y bodegas pocket"
+        "Operación industrial como punto de partida",
+        "Servicios y espacios para trabajar",
+        "Estancia, encuentro y bodegas pequeñas",
+        "Seleccionar producto, operador y fase"
       ],
-      "draw": "El mismo terreno distingue dos componentes. La nave industrial permanece; cinco piezas complementarias emergen en la otra capa. Son familias de producto, no cantidades de edificios.",
-      "motion": "Las piezas complementarias se agrupan como un negocio en evaluación. La siguiente escena muestra las aportaciones que lo hacen posible.",
-      "caution": "No son productos, superficies, operadores ni cantidades comprometidos.",
-      "question": "¿Se entiende dónde proponemos asociarnos y qué sigue sujeto a factibilidad?",
-      "narrativeRole": "Solución"
+      "moments": [
+        {
+          "label": "Operación industrial como punto de partida",
+          "spoken": "La propuesta complementaria tiene sentido si atiende necesidades reales del entorno industrial. No es llenar el terreno de productos: cada negocio debe demostrar a quién sirve y cómo se sostiene.",
+          "change": "La nave permanece al centro. Alrededor se abren lugares distintos para servicios, trabajo, estancia y bodegas pequeñas."
+        },
+        {
+          "label": "Servicios y espacios para trabajar",
+          "spoken": "Plaza y servicios pueden atender la actividad cotidiana; oficinas flex y showrooms, a proveedores y empresas. Su escala depende de demanda, competencia y operación.",
+          "change": "Comercio con accesos y oficinas con plantas se distinguen físicamente. Se conectan con las necesidades que atienden."
+        },
+        {
+          "label": "Estancia, encuentro y bodegas pequeñas",
+          "spoken": "El hotel, el Industrial Club y bodegas pocket de 250 a 500 metros cuadrados completan las posibilidades. No todos tienen que desarrollarse juntos ni bajo el mismo modelo.",
+          "change": "Hotel, club con patio y módulos de bodega se levantan uno a uno, con siluetas distintas."
+        },
+        {
+          "label": "Seleccionar producto, operador y fase",
+          "spoken": "Para cada componente elegimos, con estudios, si conviene desarrollar, vender, arrendar o integrar un operador. La asociación se define para ese negocio; no con un porcentaje general sin sustento.",
+          "change": "Las cinco piezas se ordenan por evaluación y fase. Una ficha por producto conserva demanda, operación y capital por resolver."
+        }
+      ],
+      "narration": "La propuesta complementaria tiene sentido si atiende necesidades reales del entorno industrial. No es llenar el terreno de productos: cada negocio debe demostrar a quién sirve y cómo se sostiene. Plaza y servicios pueden atender la actividad cotidiana; oficinas flex y showrooms, a proveedores y empresas. Su escala depende de demanda, competencia y operación. El hotel, el Industrial Club y bodegas pocket de 250 a 500 metros cuadrados completan las posibilidades. No todos tienen que desarrollarse juntos ni bajo el mismo modelo. Para cada componente elegimos, con estudios, si conviene desarrollar, vender, arrendar o integrar un operador. La asociación se define para ese negocio; no con un porcentaje general sin sustento.",
+      "takeaway": "Seleccionar producto, operador y fase",
+      "draw": "La nave permanece al centro. Alrededor se abren lugares distintos para servicios, trabajo, estancia y bodegas pequeñas.",
+      "motion": "Las cinco piezas se ordenan por evaluación y fase. Una ficha por producto conserva demanda, operación y capital por resolver.",
+      "caution": "Productos propuestos, sujetos a factibilidad. Las relaciones de uso son hipótesis de diseño comercial; no acreditan mercado, operador o dimensiones definitivas.",
+      "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?"
     },
     {
       "id": "capital",
-      "label": "Cómo participar",
+      "label": "Qué aporta cada quien",
       "topic": "plan",
-      "title": "La tierra es la base. El efectivo, una opción.",
-      "takeaway": "Primero valoramos y modelamos; después acordamos participaciones.",
+      "title": "Reconocer las aportaciones antes de repartir.",
       "page": 3,
       "diagram": "capital",
-      "narration": "En los complementarios podemos estudiar tierra, o tierra más capital opcional de los propietarios. El equipo estructura el desarrollo y gestiona las fuentes de capital. Cada aportación se reconoce por separado; los porcentajes se acuerdan después de la valuación y del modelo financiero. Para BTS también se estudian las fuentes necesarias: el crédito y las preventas no están garantizados.",
+      "narrativeRole": "Plan",
       "beats": [
-        "Conservar la base de tierra",
-        "A · Tierra, con fuentes por estructurar",
-        "B · Sumar efectivo si lo desean",
-        "Valuación y modelo antes del reparto"
+        "El suelo tiene un valor que reconocer",
+        "A · Aportar tierra",
+        "B · Aportar tierra y efectivo",
+        "Del modelo a los derechos económicos"
       ],
-      "draw": "El terreno no cambia entre alternativas. Una bolsa ámbar se incorpora y se retira para explicar la opción de efectivo. Los complementarios conservan su forma.",
-      "motion": "Las fuentes se ordenan junto a cada componente. El mismo conjunto se separa en cuentas y decisiones en la escena siguiente.",
-      "caution": "Alternativas de aportación para los complementarios. Sin importes ni porcentajes acordados. Fuentes por negocio sujetas a análisis, garantías y aprobación. PDF pp.3–4.",
-      "question": "¿La alternativa permite conversar sin dar por obligado el capital adicional?",
-      "narrativeRole": "Plan"
+      "moments": [
+        {
+          "label": "El suelo tiene un valor que reconocer",
+          "spoken": "La tierra que corresponda a cada negocio se valúa. El equipo estructura el desarrollo y gestiona las fuentes de recursos. El valor del suelo, el trabajo y el riesgo no se pueden confundir en una sola cifra.",
+          "change": "Se abre una cuenta de aportaciones: suelo, desarrollo y fuentes de recursos, identificados por separado."
+        },
+        {
+          "label": "A · Aportar tierra",
+          "spoken": "En esta alternativa ustedes aportan suelo. El modelo debe definir qué efectivo necesita la fase y cómo se obtendrá: inversionistas, deuda y comercialización, cuando sean viables.",
+          "change": "La tierra entra a la alternativa A; la necesidad de capital sigue visible con fuentes pendientes, no como dinero ya disponible."
+        },
+        {
+          "label": "B · Aportar tierra y efectivo",
+          "spoken": "Si además desean invertir efectivo, esa aportación se reconoce por separado. Puede cambiar sus derechos económicos, según la valuación, los riesgos y los acuerdos del negocio.",
+          "change": "La misma base se duplica para comparar B. Sólo se agrega el efectivo de los propietarios; no cambia mágicamente el porcentaje de reparto."
+        },
+        {
+          "label": "Del modelo a los derechos económicos",
+          "spoken": "Primero se modelan ingresos, costos, financiamiento, capital y riesgos. Con ese resultado se negocian honorarios, participación y reglas. La oferta es construir juntos un negocio entendible antes de comprometerlo.",
+          "change": "Las aportaciones y el costo de la fase se reúnen en el modelo; de ahí sale una hoja de derechos por acordar, sin porcentajes ficticios."
+        }
+      ],
+      "narration": "La tierra que corresponda a cada negocio se valúa. El equipo estructura el desarrollo y gestiona las fuentes de recursos. El valor del suelo, el trabajo y el riesgo no se pueden confundir en una sola cifra. En esta alternativa ustedes aportan suelo. El modelo debe definir qué efectivo necesita la fase y cómo se obtendrá: inversionistas, deuda y comercialización, cuando sean viables. Si además desean invertir efectivo, esa aportación se reconoce por separado. Puede cambiar sus derechos económicos, según la valuación, los riesgos y los acuerdos del negocio. Primero se modelan ingresos, costos, financiamiento, capital y riesgos. Con ese resultado se negocian honorarios, participación y reglas. La oferta es construir juntos un negocio entendible antes de comprometerlo.",
+      "takeaway": "Del modelo a los derechos económicos",
+      "draw": "Se abre una cuenta de aportaciones: suelo, desarrollo y fuentes de recursos, identificados por separado.",
+      "motion": "Las aportaciones y el costo de la fase se reúnen en el modelo; de ahí sale una hoja de derechos por acordar, sin porcentajes ficticios.",
+      "caution": "Alternativas aplicables a los complementarios. No se presume que el equipo aportará todo el efectivo ni que el financiamiento está garantizado. PDF pp.3–4.",
+      "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?"
     },
     {
       "id": "reglas",
-      "label": "Cómo se ordena",
+      "label": "Cómo se protege",
       "topic": "risk",
-      "title": "Un plan común. Reglas por negocio.",
-      "takeaway": "Evitar comprometer todo el conjunto sin conocer las obligaciones de cada fase.",
+      "title": "Cada compromiso pasa por una decisión acordada.",
       "page": 4,
       "diagram": "reglas",
-      "narration": "Proponemos un fideicomiso u otro vehículo conveniente. Separar componentes, autorizar presupuestos y garantías, y reportar avances. Buscamos que el riesgo de una fase no comprometa todo, en la medida legal y financiera posible.",
+      "narrativeRole": "Riesgo que evitamos",
       "beats": [
-        "Separar activos y cuentas",
-        "Autorizar presupuestos y garantías",
-        "Reportar el avance de cada componente",
-        "Acordar el vehículo jurídico"
+        "Activos y cuentas identificados",
+        "Presupuesto y facultades antes de actuar",
+        "Deuda y garantías con alcance claro",
+        "Reportes por negocio y reglas comerciales"
       ],
-      "draw": "Las dos capas del terreno se separan levemente. Cada una mantiene su color y recibe su propio marco de cuentas y obligaciones. Una hoja de acuerdos reúne las reglas comunes.",
-      "motion": "Las piezas ordenadas se compactan como expediente. Ese expediente avanzará por las validaciones, sin que aparezcan aprobadas de antemano.",
-      "caution": "Vehículo, garantías y protección jurídica por definir con asesoría; no son protecciones ya constituidas. La hipótesis ≈75% de suelo BTS queda como dato de estudio; no es superficie edificable aprobada.",
-      "question": "¿Queda visible qué se acuerda antes de comprometer activos?",
-      "narrativeRole": "Riesgo que evitamos"
+      "moments": [
+        {
+          "label": "Activos y cuentas identificados",
+          "spoken": "Proponemos identificar superficies, activos, cuentas y obligaciones de las naves frente a los complementarios, con la estructura jurídica conveniente.",
+          "change": "Las bases se separan y cada una recibe su cuenta y expediente."
+        },
+        {
+          "label": "Presupuesto y facultades antes de actuar",
+          "spoken": "Presupuestos, contratación, venta de activos y cambios importantes al plan requieren las facultades y autorizaciones convenidas.",
+          "change": "Una compuerta de aprobación se ubica antes de cada compromiso, no como un candado decorativo sobre el terreno."
+        },
+        {
+          "label": "Deuda y garantías con alcance claro",
+          "spoken": "Se busca evitar que una fase comprometa todo el conjunto, en la medida legal y financiera posible. Cualquier garantía debe revisarse y autorizarse conforme al convenio.",
+          "change": "La obligación se vincula con su componente. El conjunto no aparece blindado ni libre de riesgo."
+        },
+        {
+          "label": "Reportes por negocio y reglas comerciales",
+          "spoken": "Avance, aportaciones, costos, contratos y deudas se reportan por componente. También se acuerdan confidencialidad, registro de prospectos y remuneraciones.",
+          "change": "Los expedientes se abren en un reporte común con cuentas separadas."
+        }
+      ],
+      "narration": "Proponemos identificar superficies, activos, cuentas y obligaciones de las naves frente a los complementarios, con la estructura jurídica conveniente. Presupuestos, contratación, venta de activos y cambios importantes al plan requieren las facultades y autorizaciones convenidas. Se busca evitar que una fase comprometa todo el conjunto, en la medida legal y financiera posible. Cualquier garantía debe revisarse y autorizarse conforme al convenio. Avance, aportaciones, costos, contratos y deudas se reportan por componente. También se acuerdan confidencialidad, registro de prospectos y remuneraciones.",
+      "takeaway": "Reportes por negocio y reglas comerciales",
+      "draw": "Las bases se separan y cada una recibe su cuenta y expediente.",
+      "motion": "Los expedientes se abren en un reporte común con cuentas separadas.",
+      "caution": "Fideicomiso u otro vehículo por definir con asesores. Protección y separación patrimonial sujetas a viabilidad jurídica y financiera.",
+      "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?"
     },
     {
       "id": "validacion",
-      "label": "Qué comprobamos",
+      "label": "Cómo avanzamos",
       "topic": "plan",
-      "title": "La certeza se construye por etapas.",
-      "takeaway": "Interés → diagnóstico → validación → acuerdos → ejecución por fases.",
+      "title": "Cada etapa entrega una base para decidir la siguiente.",
       "page": 5,
       "diagram": "validacion",
-      "narration": "Primero alineamos el interés. Después acreditamos propiedad, usos y servicios; validamos mercado y finanzas; acordamos reglas y contratos. Sólo entonces iniciamos las fases viables aprobadas por las partes.",
+      "narrativeRole": "Plan",
       "beats": [
-        "Información: propiedad, usos y servicios",
-        "Mercado: usuarios y rentas",
-        "Modelo: costos, capital y riesgos",
-        "Acuerdos antes de ejecutar"
+        "Diagnóstico del terreno",
+        "Validación del negocio",
+        "Acuerdos para ejecutar",
+        "Inicio por fases aprobadas"
       ],
-      "draw": "El expediente conserva la nave y los complementarios en miniatura. Pasa por cuatro puertas de comprobación. Se iluminan como temas a estudiar, no como autorizaciones ya obtenidas.",
-      "motion": "Al final el expediente se abre en una hoja de intención. No se convierte en contrato definitivo ni en obra iniciada.",
-      "caution": "Son cinco fases del negocio; no confundir con las tres etapas de producción de esta presentación. Plazos y presupuestos pendientes.",
-      "question": "¿Se distingue lo que podemos explorar hoy de lo que requiere validación?",
-      "narrativeRole": "Plan"
+      "moments": [
+        {
+          "label": "Diagnóstico del terreno",
+          "spoken": "Confirmamos propiedad, superficie, usos, accesos, servicios y restricciones. El entregable es una base técnica y un plan de estudios con alcance y presupuesto.",
+          "change": "El expediente territorial se abre: información que falta, estudio que la resuelve y decisión que permite."
+        },
+        {
+          "label": "Validación del negocio",
+          "spoken": "Prospectamos usuarios, contrastamos rentas y demanda y modelamos costos, capital y riesgos por componente. El resultado es una propuesta de fases que se pueda evaluar.",
+          "change": "La nave y los complementarios ingresan al expediente de mercado y modelo; todavía no se marcan viables."
+        },
+        {
+          "label": "Acuerdos para ejecutar",
+          "spoken": "Con esas bases se pactan contratos, honorarios, aportaciones, participaciones, garantías y decisiones reservadas. Cada parte entiende qué compromete y qué recibe.",
+          "change": "Las piezas económicas se ensamblan en acuerdos sujetos a firma."
+        },
+        {
+          "label": "Inicio por fases aprobadas",
+          "spoken": "Se ejecutan únicamente las fases con viabilidad técnica, comercial, jurídica y financiera aprobada por las partes. La alianza sigue coordinando y reportando el alcance contratado.",
+          "change": "Una fase se eleva; las siguientes permanecen como estudio. El avance no se confunde con autorización de todo el proyecto."
+        }
+      ],
+      "narration": "Confirmamos propiedad, superficie, usos, accesos, servicios y restricciones. El entregable es una base técnica y un plan de estudios con alcance y presupuesto. Prospectamos usuarios, contrastamos rentas y demanda y modelamos costos, capital y riesgos por componente. El resultado es una propuesta de fases que se pueda evaluar. Con esas bases se pactan contratos, honorarios, aportaciones, participaciones, garantías y decisiones reservadas. Cada parte entiende qué compromete y qué recibe. Se ejecutan únicamente las fases con viabilidad técnica, comercial, jurídica y financiera aprobada por las partes. La alianza sigue coordinando y reportando el alcance contratado.",
+      "takeaway": "Inicio por fases aprobadas",
+      "draw": "El expediente territorial se abre: información que falta, estudio que la resuelve y decisión que permite.",
+      "motion": "Una fase se eleva; las siguientes permanecen como estudio. El avance no se confunde con autorización de todo el proyecto.",
+      "caution": "Ruta posterior a la alineación de interés. No hay plazos ni presupuesto de estudios aprobado en la propuesta.",
+      "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?"
     },
     {
       "id": "decision",
-      "label": "El siguiente paso",
+      "label": "Qué decidimos hoy",
       "topic": "action",
-      "title": "Acordar cómo estudiar la alianza.",
-      "takeaway": "Conservar BTS + explorar asociación + estudiar ambas alternativas de capital.",
+      "title": "Acordar el estudio de una alianza con propósito claro.",
       "page": 5,
       "diagram": "decision",
-      "narration": "Si coincidimos en estas tres ideas, el siguiente paso es una carta de intención y acordar el periodo de estudios y negociación. Esto no transfiere el terreno ni genera garantías automáticas.",
+      "narrativeRole": "Siguiente paso",
       "beats": [
-        "Conservar BTS como patrimonio",
+        "Conservar el patrimonio industrial",
         "Explorar la asociación complementaria",
-        "Estudiar alternativas de aportación",
+        "Estudiar tierra o tierra más capital",
         "Carta de intención y periodo de estudio"
       ],
-      "draw": "La misma hoja se despliega como resumen del conjunto: nave industrial, complemento y opción de capital. Una línea de decisión enmarca la decisión de avanzar al estudio.",
-      "motion": "El recorrido desemboca en un resumen sencillo. La etapa de ofertas se diseñará después con alcance y condiciones aprobados.",
-      "caution": "Documento preliminar no vinculante. Derechos y obligaciones sólo mediante acuerdos definitivos firmados. No se cotizan servicios ni se activan descuentos o recordatorios en este storyboard.",
-      "question": "¿Este cierre facilita conversar con los demás propietarios?",
-      "narrativeRole": "Siguiente paso"
+      "moments": [
+        {
+          "label": "Conservar el patrimonio industrial",
+          "spoken": "Primero confirmemos si compartimos el objetivo de conservar las naves como patrimonio y desarrollar una estrategia para atraer usuarios.",
+          "change": "El activo industrial regresa al resumen con su beneficio buscado: rentas de largo plazo."
+        },
+        {
+          "label": "Explorar la asociación complementaria",
+          "spoken": "Después, si les interesa negociar una asociación para desarrollar los otros negocios, validando cada producto y su forma de participación.",
+          "change": "La segunda plataforma se integra al resumen, conservando su cuenta y sus condiciones."
+        },
+        {
+          "label": "Estudiar tierra o tierra más capital",
+          "spoken": "Podemos analizar ambas alternativas de aportación para que decidan con números y obligaciones claros. No hace falta inventar hoy un reparto que todavía no hemos calculado.",
+          "change": "A y B se reúnen como alternativas a comparar, no como elecciones ya firmadas."
+        },
+        {
+          "label": "Carta de intención y periodo de estudio",
+          "spoken": "Si coincidimos, proponemos documentar una carta de intención y acordar el periodo, alcance y presupuesto de estudios y negociación. Sin transferencias ni garantías automáticas sobre el terreno.",
+          "change": "El conjunto se resume en tres acuerdos de intención y un siguiente paso concreto. No se activa una oferta comercial sin condiciones aprobadas."
+        }
+      ],
+      "narration": "Primero confirmemos si compartimos el objetivo de conservar las naves como patrimonio y desarrollar una estrategia para atraer usuarios. Después, si les interesa negociar una asociación para desarrollar los otros negocios, validando cada producto y su forma de participación. Podemos analizar ambas alternativas de aportación para que decidan con números y obligaciones claros. No hace falta inventar hoy un reparto que todavía no hemos calculado. Si coincidimos, proponemos documentar una carta de intención y acordar el periodo, alcance y presupuesto de estudios y negociación. Sin transferencias ni garantías automáticas sobre el terreno.",
+      "takeaway": "Carta de intención y periodo de estudio",
+      "draw": "El activo industrial regresa al resumen con su beneficio buscado: rentas de largo plazo.",
+      "motion": "El conjunto se resume en tres acuerdos de intención y un siguiente paso concreto. No se activa una oferta comercial sin condiciones aprobadas.",
+      "caution": "Documento preliminar y no vinculante. Derechos y obligaciones sólo mediante acuerdos definitivos. El storyboard se revisa antes de producir la etapa dos.",
+      "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?"
     }
   ],
   "strategy": "Conservar patrimonio industrial, explicar participación y facilitar una decisión informada de estudio.",
