@@ -1,7 +1,7 @@
 {
   "model_revision": "2026-10-19.storyboard-github.1",
   "proposal_id": "CHG-PRESENTATION-STORYBOARD-GITHUB-20261019",
-  "summary": "SB05: 10 escenas/40 momentos, morfología conceptual recuperada y mapa OSM; kernel Hairline MIT existente. Repara outbox de chinches con canje single-flight, reintento visible y plazo60s. Mantiene CTR-PRESENTATION-PINS-INGEST, Portero/Sala y etapa1; sin backend, permisos, Sheets ni cron nuevos.",
+  "summary": "SB06: diagramas específicos por relación, guía de seis funciones y cierre para formalizar asociación según instrucción vigente. Mantiene etapa1, acceso Portero, chinches Sala y transporte SB05; sin backend, permisos, Sheets ni cron nuevos.",
   "components": [
     "SYS-INVERSION",
     "SYS-YOD-OS",

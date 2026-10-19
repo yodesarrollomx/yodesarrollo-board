@@ -37,3 +37,11 @@ Atlas: CHG-PRESENTATION-STORYBOARD-GITHUB-20261019. Reversión: revertir fronten
 Verificación Portero single-flight por credencial; outbox al entrar, volver, reconectar y cada60s con página visible. Solicitudes Sala con plazo60s; no se confunde esta cadencia con un editor automático. Estado visible arriba e historial privado accesible. Se conserva ID, captura y original de versiones anteriores. Pruebas de conexión fallida antes de POST, recarga con entrega automática y verificaciones concurrentes añadidas.
 
 Sonda real de Sala 39300005312: contrato disponible con rol agente; no acredita canje Google del dueño ni recibo de sus notas. El circuito conserva el último recibo confirmado y no reenvía POST ambiguos. La lectura actual de Sala expone30 registros recientes; una nota antigua fuera de esa ventana requiere conciliación central y no se marca falsamente recibida.
+
+## SB06 · Diagramas con significado y asociación
+
+La instrucción vigente de Alejandro es **formalizar la asociación**. Sustituye el cierre limitado a carta de intención del PDF, sin dar por acordados porcentajes, honorarios, valuaciones o garantías. El cierre muestra aportaciones, modalidades tierra/tierra más capital, términos por cerrar y ruta de firma. Las respuestas del cierre son guion revisable; no registran aceptación contractual.
+
+`meaning.js` construye gramáticas distintas: bifurcación patrimonial, red de responsabilidades, requisitos que dimensionan la nave, flujos separados de rentas/honorarios, necesidad-producto, aportaciones A/B, compartimentos de obligaciones, secuencia de firma y acuerdo de asociación. Hairline se usa donde la forma de una nave aporta significado. Cada escena declara qué debe entenderse.
+
+La guía visible explica seis funciones, sus preguntas de evaluación y el contexto neutro. Cada momento del guion tiene función propia. No se obliga a usar seis colores en cada escena ni se trata su cantidad como calificación. La oferta tiene chinche privada y conserva el transporte de SB05. Pruebas añadidas: guía accesible en horizontal, cierre de asociación y visibilidad completa del último momento.
