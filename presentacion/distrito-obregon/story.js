@@ -113,7 +113,7 @@ export const story={
       "narration": "La asociación se centra en los productos complementarios: plaza y servicios, hotel, centro de negocios, Industrial Club y bodegas pocket. Son posibilidades que el mercado y la factibilidad deben confirmar.",
       "beats": [
         "Volver al conjunto sin perder la nave",
-        "Abrir la reserva de complementarios",
+        "Abrir la reserva de productos complementarios",
         "Reconocer servicios, hotel y negocios",
         "Estudiar club y bodegas pocket"
       ],
@@ -201,7 +201,7 @@ export const story={
         "Estudiar alternativas de aportación",
         "Carta de intención y periodo de estudio"
       ],
-      "draw": "La misma hoja se despliega como resumen del conjunto: nave industrial, complemento verde y opción de capital. Una línea de decisión enmarca la decisión de avanzar al estudio.",
+      "draw": "La misma hoja se despliega como resumen del conjunto: nave industrial, complemento y opción de capital. Una línea de decisión enmarca la decisión de avanzar al estudio.",
       "motion": "El recorrido desemboca en un resumen sencillo. La etapa de ofertas se diseñará después con alcance y condiciones aprobados.",
       "caution": "Documento preliminar no vinculante. Derechos y obligaciones sólo mediante acuerdos definitivos firmados. No se cotizan servicios ni se activan descuentos o recordatorios en este storyboard.",
       "question": "¿Este cierre facilita conversar con los demás propietarios?",

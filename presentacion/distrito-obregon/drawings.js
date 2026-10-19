@@ -26,7 +26,7 @@ case 4:a.land=p(left,y+40,.8);a.nave=p(left,y-5,.55,.45);a.complementos=p(left+3
 case 5:a.land=p(cx,y+50,m?1.05:1.65,.45);a.nave=p(left,y,.8);a.complementos=p(right,y,.75);a.documento=p(cx,y+130,.6);break;
 case 6:a.land=p(cx,y+80,.65,.25);a.nave=p(cx-24,y+90,.35);a.complementos=p(cx+50,y+105,.3);a.documento=p(cx,y-30,1.25);break;
 case 7:a.land=p(cx,y+70,.7,.35);a.nave=p(left,y+20,.65);a.complementos=p(right,y+20,.65);a.capital=p(right+12,y+110,.5,.65);a.documento=p(cx,y-80,.9);break;}
-return a;}
+if(!m)a.land[1]=Math.min(a.land[1],480-a.land[2]*107);return a;}
 const ease=t=>t*t*(3-2*t),mix=(a,b,t)=>a+(b-a)*t;
 export function paint(story,position,mobile){if(!svg||lastM!==mobile)mount(host,mobile);const W=mobile?480:1000,H=mobile?710:640,max=story.scenes.length-1,idx=Math.min(max,Math.floor(position/4)),local=position-idx*4,scene=story.scenes[idx],t=idx===max?0:ease(Math.max(0,Math.min(1,(local-3)/1))),a=pose(idx,mobile),b=pose(Math.min(max,idx+1),mobile);svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('aria-label',scene.title+' '+scene.takeaway);
 for(const id in groups){let q=a[id].map((v,i)=>mix(v,b[id][i],t));if(idx===0&&id==='nave')q[3]*=Math.min(1,.15+local*.75);if(idx===0&&id==='complementos')q[3]*=Math.max(0,Math.min(1,local-1.5));if(idx===1&&['documento','personas'].includes(id))q[3]*=Math.min(1,.15+local*.65);if(idx===2&&id==='documento')q[3]*=Math.max(.1,Math.min(1,local-1.5));if(idx===3&&id==='complementos')q[3]*=Math.min(1,.3+local*.35);if(idx===5&&id==='documento')q[3]*=Math.max(.15,Math.min(1,local-1.5));if(idx===4&&id==='capital')q[3]*=Math.max(.15,Math.min(1,(local-1)*.9));groups[id].setAttribute('transform',`translate(${q[0]} ${q[1]}) scale(${q[2]})`);groups[id].setAttribute('opacity',q[3]);}
