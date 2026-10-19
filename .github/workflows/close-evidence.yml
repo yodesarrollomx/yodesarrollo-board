@@ -3,35 +3,23 @@ on:
   push:
     branches: [codex/presentation-close-evidence]
 permissions:
-  actions: read
   contents: read
 jobs:
-  evidence:
+  published:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
-      - name: Read selected synthetic screenshots from completed review
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Verify published assets match merged revision
         run: |
           python3 - <<'PY'
-          import urllib.request, os, zipfile, io, base64
-          u="https://api.github.com/repos/yodesarrollomx/yodesarrollo-board/actions/artifacts/12166386840/zip"
-          class SafeRedirect(urllib.request.HTTPRedirectHandler):
-              def redirect_request(self,req,fp,code,msg,headers,newurl):
-                  redirected=super().redirect_request(req,fp,code,msg,headers,newurl)
-                  if redirected is not None: redirected.remove_header("Authorization")
-                  return redirected
-          opener=urllib.request.build_opener(SafeRedirect())
-          q=urllib.request.Request(u,headers={"Authorization":"Bearer "+os.environ["GH_TOKEN"],"Accept":"application/vnd.github+json"})
-          with opener.open(q,timeout=60) as r: z=zipfile.ZipFile(io.BytesIO(r.read()))
-          for filename in ["webkit-320x568-14.png","anchor-0.png","anchor-14.png","audit.json"]:
-              matches=[n for n in z.namelist() if n.endswith("/"+filename) or n==filename]
-              assert len(matches)==1,(filename,matches)
-              data=z.read(matches[0])
-              if filename.endswith(".json"):
-                  print("AUDIT "+data.decode())
-              else:
-                  encoded=base64.b64encode(data).decode()
-                  for i in range(0,len(encoded),1600): print("REVIEW_IMAGE",filename,i//1600,encoded[i:i+1600])
+          import urllib.request, hashlib, time
+          revision="9cec280cb0104bb4cccc602212f629a3276bc30c"
+          for path in ["presentacion/index.html","presentacion/intent.js","brokers.html"]:
+              expected=urllib.request.urlopen("https://raw.githubusercontent.com/yodesarrollomx/yodesarrollo-board/"+revision+"/"+path,timeout=30).read()
+              for attempt in range(8):
+                  actual=urllib.request.urlopen("https://yodesarrollomx.github.io/yodesarrollo-board/"+path+"?verify="+revision+"&attempt="+str(attempt),timeout=30).read()
+                  if actual==expected: break
+                  time.sleep(10)
+              assert actual==expected,path+" differs from merged revision"
+              print("PUBLISHED_MATCH",path,hashlib.sha256(actual).hexdigest())
           PY
