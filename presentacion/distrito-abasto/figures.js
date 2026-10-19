@@ -1,5 +1,5 @@
 // Original Hairline kernel; narrative labels and colors are outside the solids.
-import {HL} from './vendor/hairline-kernel.mjs?v=YOD-AB01';
+import {HL} from './vendor/hairline-kernel.mjs?v=YOD-AB02';
 const {Cam,proj,facing,rings,prism,poly,hull,ringAt,open,run,rrect,circ}=HL;
 const C=Cam(45,.5,1),P=proj(C),front=facing(C);
 const path=(d,cls='sil')=>`<path class="${cls}" d="${d}"/>`;

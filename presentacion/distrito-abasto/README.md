@@ -1,4 +1,4 @@
-# Distrito Abasto Sonora · guion visual YOD-AB01
+# Distrito Abasto Sonora · presentación YOD-AB02
 
 URL canónica: https://yodesarrollomx.github.io/yodesarrollo-board/presentacion/distrito-abasto/
 
@@ -27,3 +27,11 @@ Validado el 19 de octubre de 2026: sintaxis de los seis módulos, 16 contratos d
 La propuesta original fue inspeccionada visualmente en sus cinco páginas. Sus condiciones de oferta, plazo, hitos de pago, exclusiones y participación variable se contrastaron de forma separada. No se publica el PDF ni las conversaciones de trabajo.
 
 El historial de revisiones es local y se filtra por cuenta, proyecto y URL; no es un lector central entre dispositivos. Google real de Dirección y dictado en iPhone físico no quedan acreditados por estas pruebas. Publicación exacta de Pages se registra en el cierre del encargo.
+
+## Corrección territorial AB02
+
+Instrucción directa del 19 de octubre: recuperar mapa y terreno reales, usar Hairline, dejar listo para presentar y enviar el enlace al chat personal del solicitante. La autorización habilita el modo presentación sin cambiar el circuito de revisión.
+
+Se sustituyen las bases genéricas en escenas 1, 2 y 7 por los mismos polígonos persistentes. Cartografía contextual OSM incluida en el bundle, atribuida y disponible sin solicitudes de mapas externas. `parcel.js` conserva los cuadros de construcción; `map-source.md` documenta la procedencia, datum pendiente y diferencia de 1.90 m² del cálculo de 5-5. No se ajusta la geometría para ocultarla. Reserva 5-4 como colindancia, sin contorno inventado. Volúmenes interiores ilustrativos, no programa aprobado ni topografía.
+
+`?presentar=1` abre el recorrido limpio; botones y teclado permiten avanzar y volver. El guion, las fuentes y las chinches siguen disponibles fuera de ese modo. Identificadores de escenas, cuenta, historial privado y contratos de transporte se conservan.

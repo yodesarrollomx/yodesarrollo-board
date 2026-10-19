@@ -2,17 +2,17 @@
 const moment=(label,spoken,change)=>({label,spoken,change});
 const scene=(id,label,topic,title,page,moments,caution,question,motion)=>({id,label,topic,title,page,moments,beats:moments.map(m=>m.label),narrativeRole:{problema:'Problema',solucion:'Solución',plan:'Plan',riesgo:'Riesgo que evitamos',resultado:'Resultado esperado',accion:'Acción'}[topic],caution,question,motion,diagram:id});
 export const story={
- version:'YOD-AB01',stage:'storyboard',production:'requires_explicit_instruction',title:'Distrito Abasto Sonora',subtitle:'Central de Abastos · del potencial a una decisión informada',
+ version:'YOD-AB02',stage:'presentation',production:'authorized_2026-10-19',title:'Distrito Abasto Sonora',subtitle:'Central de Abastos · del potencial a una decisión informada',
  source:{title:'Propuesta Integral · Distrito Abasto Sonora',date:'octubre de 2026',pages:5},
  paletteStatus:'El color expresa la función del mensaje. La forma y los rótulos identifican cada objeto.',
  palette:{problema:{name:'Problema',color:'#ad4c46'},solucion:{name:'Solución',color:'#806397'},plan:{name:'Plan',color:'#866143'},riesgo:{name:'Riesgo que evitamos',color:'#987419'},resultado:{name:'Resultado esperado',color:'#297e94'},accion:{name:'Acción',color:'#517a43'}},
  scenes:[
- scene('potencial','01 · El potencial','problema','El terreno necesita una ruta de negocio.','1–2',[
- moment('Un activo con potencial','Distrito Abasto Sonora parte de un terreno con potencial para reunir comercio, almacenamiento y distribución. El reto del propietario es convertir esa posibilidad en una inversión que pueda sostenerse.','Aparece una base de terreno esquemática; todavía no tiene edificios.'),
- moment('Una imagen abre la conversación','El concepto permite imaginar el destino. Para decidir cuánto construir y en qué momento necesitamos comprobar mercado, condiciones físicas, costos e ingresos.','Sobre la base aparecen las siluetas del distrito, aún sin consolidarse.'),
- moment('La incertidumbre tiene costo','Una mala mezcla de productos, una fase demasiado grande o infraestructura subestimada puede inmovilizar capital. Esas preguntas se resuelven antes de comprometer la ejecución.','Cuatro interrogantes rodean el activo: demanda, producto, inversión y tiempo.'),
- moment('Primero validar; después invertir','La propuesta es establecer una ruta de validación y autorizaciones. El propietario conserva el control de la siguiente inversión en cada etapa.','El terreno queda frente a una compuerta de decisión; se abre el expediente de estudio.')
- ],'La imagen conceptual de la propuesta no es un master plan aprobado. La superficie y la intensidad de construcción deberán conciliarse y validarse.','¿Qué debe comprobarse para que el propietario pueda decidir con confianza?','La nave conceptual permanece y se convierte en parte de un sistema de abasto.'),
+ scene('potencial','01 · El terreno','problema','El terreno real. La oportunidad concreta.','1–2',[
+ moment('Hermosillo · salida sur','La base inicial se ubica en la salida sur de Hermosillo, junto al bulevar Manuel J. Clouthier, sobre el corredor de la carretera a Guaymas. Partimos de una ubicación y un terreno identificados.','El mapa real de OpenStreetMap sitúa el polígono frente al corredor MEX 15.'),
+ moment('Dos polígonos · una base inicial','Los planos 5-5 y 5-6 declaran 37,830.45 y 110,546.80 metros cuadrados. Juntos integran la base inicial de 148,377.25 metros cuadrados. La colindancia 5-4 queda al norte como reserva del conjunto.','El mapa se acerca a los vértices de los planos; aparecen el límite compartido y las superficies.'),
+ moment('Conservar la forma del terreno','La longitud, el frente y la forma del predio condicionan la circulación, los servicios y las etapas. Esta misma geometría se transforma en la base tridimensional del distrito.','El polígono gira y se eleva con Hairline, sin sustituirlo por un rectángulo.'),
+ moment('El concepto se estudia sobre esa base','Sobre el terreno podemos organizar una primera hipótesis de comercio, almacenamiento y distribución. La demanda, los accesos, los servicios y la inversión determinarán el programa que convenga desarrollar.','Volúmenes conceptuales aparecen dentro del mismo perímetro; su implantación se definirá en los estudios.')
+ ],'Contorno reconstruido de los cuadros de construcción. Ubicación interpretada en UTM 12N/WGS84; datum por confirmar. Superficies declaradas en planos. El lindero completo 5-4 no se representa. Los volúmenes son conceptuales.','¿Cómo convertimos esta ubicación y su geometría en una ventaja operativa?','El mismo suelo permanece para explicar el sistema de abasto.'),
  scene('operacion','02 · El distrito','solucion','Un sistema de abasto que debe funcionar.','1–2',[
  moment('Recibir producto','El distrito se entiende desde la operación: recibir mercancía, almacenarla o transferirla y acercarla a quien la necesita. La circulación debe servir a esos movimientos.','Un camión de carga llega por un recorrido esquemático a la nave.'),
  moment('Almacenar y transferir','Almacenamiento, distribución y logística controlada requieren espacios y servicios diferentes. La mezcla debe responder al producto y a los usuarios que podamos validar.','La nave abre su frente de andenes y aparece un módulo diferenciado de frío.'),
@@ -84,7 +84,7 @@ export const story={
 
 // Narrative function belongs to the spoken moment, not to a building or actor.
 const roles=[
- ['contexto','problema','riesgo','accion'],['solucion','solucion','solucion','plan'],
+ ['contexto','contexto','plan','solucion'],['solucion','solucion','solucion','plan'],
  ['solucion','solucion','plan','resultado'],['contexto','contexto','solucion','plan'],
  ['plan','plan','riesgo','resultado'],['plan','plan','plan','riesgo'],
  ['plan','plan','plan','resultado'],['plan','plan','resultado','resultado'],
@@ -92,7 +92,7 @@ const roles=[
  ['accion','contexto','plan','riesgo'],['accion','accion','accion','resultado']
 ];
 const understand=[
- 'El concepto abre una posibilidad; la inversión se decide después de validar.',
+ 'La base inicial tiene ubicación, forma y dos superficies documentadas; el programa se valida sobre ese suelo.',
  'La mezcla inmobiliaria debe responder a cómo circulan el producto y sus usuarios.',
  'El equipo coordina el desarrollo y el propietario conserva las autorizaciones.',
  'Venta, renta y mezcla exigen compromisos distintos; se comparan con los mismos criterios.',
@@ -114,3 +114,5 @@ story.colorReview={criteria:{
  resultado:'Explica qué podría obtener el propietario si las condiciones se cumplen: información, control, colocación o patrimonio. No promete rentabilidad.',
  accion:'Pide un siguiente paso concreto y proporcionado: revisar, aclarar o formalizar la primera contratación. No equivale a una aceptación automática.'
 }};
+
+story.scenes[0].source='Planos ACTUAL POLIGONO 5-5 y 5-6 · recibidos 14/10/2026; Plan Maestro · 17/10/2026. Cartografía © OpenStreetMap contributors, 19/10/2026.';
