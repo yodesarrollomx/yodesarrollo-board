@@ -111,7 +111,7 @@ jobs:
           YOD_PUBLIC_SOURCE_SNAPSHOT_DIR: ${{ runner.temp }}/yod-public-source-${{ github.run_id }}-${{ github.run_attempt }}
         run: |
           node tests/obregon-storyboard-browser.cjs
-          node tests/abasto-storyboard-browser.cjs
+          QA_DIR=abasto-review-artifacts node tests/abasto-storyboard-browser.cjs
           node tests/brokers-pin-delivery-browser.cjs
           node tests/brokers-pins-browser.cjs
           node tests/brokers-intent-browser.cjs
@@ -140,6 +140,7 @@ jobs:
             atlas-*.jpg
             intent-*.jpg
             offer-review-artifacts/
+            abasto-review-artifacts/
             mobile-*.jpg
             pin-*.jpg
             pin-*.png

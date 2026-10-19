@@ -1,7 +1,7 @@
 {
   "model_revision": "2026-10-19.storyboard-github.1",
   "proposal_id": "CHG-PRESENTATION-STORYBOARD-GITHUB-20261019",
-  "summary": "YOD-AB01: consumidor adicional Distrito Abasto Sonora, 12 escenas/48 momentos y geometría Hairline MIT. Aplica el patrón de storyboard existente con Portero y CTR-PRESENTATION-PINS-INGEST; separación por proyecto, fuente editorial preliminar y sin modificar backend, permisos ni PPP.",
+  "summary": "YOD-AB01: consumidor adicional Distrito Abasto Sonora, 12 escenas/48 momentos y geometría Hairline MIT. Aplica el patrón de storyboard existente con Portero y CTR-PRESENTATION-PINS-INGEST; separación por proyecto, fuente editorial preliminar y sin modificar backend, permisos ni PPP. Conserva íntegra la actualización concurrente de Obregón SB06.",
   "components": [
     "SYS-INVERSION",
     "SYS-YOD-OS",
@@ -13,6 +13,7 @@
   "tests": [
     "node --test tests/brokers-pin-delivery.test.cjs: transporte privado existente.",
     "node tests/abasto-storyboard-browser.cjs: 12 escenas, persistencia visual, 3 viewports, canje fresco, captura offline y recibo sin duplicar; todos los servicios simulados.",
+    "Regresión de Obregón SB06 conservada en su prueba existente.",
     "Sintaxis de módulos nuevos, git diff --check y verificación de impacto contra atlas fijado.",
     "Pages: comprobar archivos servidos tras despliegue. Google real de Dirección y dictado en iPhone físico se acreditan aparte."
   ],
