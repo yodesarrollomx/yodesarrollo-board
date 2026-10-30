@@ -3,8 +3,8 @@
 // Revelado: G(0) operación y cinco necesidades · G(1) plaza y oficinas · G(2) hotel, club y bodegas pocket · G(3) filtro, ruta y siguiente paso.
 // Las figuras Hairline (nave, plaza, office, hotel, club, pocket) las coloca drawings.js: nave (150,380); plaza, office, hotel, club y pocket en x=620, filas y=250/318/386/454/522.
 // Solo se muestra la cifra «250 a 500 m²» del guion; sin porcentajes ni montos. Fuentes: [story.js complementos m1…m4].
-import {K,E,T,P,G,A,B} from './diagram-kit.js?v=YOD-SB10';
-import {icon} from './icons.js?v=YOD-SB10';
+import {K,E,T,P,G,A,B} from './diagram-kit.js?v=YOD-SB11';
+import {icon} from './icons.js?v=YOD-SB11';
 
 const RULE='#d6ddcf';
 // Íconos y trazos de conexión llevan marca propia (data-icon, data-link) para poder revisarlos.

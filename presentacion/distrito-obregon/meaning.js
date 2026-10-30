@@ -1,9 +1,10 @@
 // A different diagram grammar for each relationship. Figures are not placeholders.
-import {K,T,P,G,A,H,B} from './diagram-kit.js?v=YOD-SB10';
-import {participacion} from './network.js?v=YOD-SB10';
-import {retribucion} from './flows.js?v=YOD-SB10';
-import {complementos} from './districts.js?v=YOD-SB10';
-import {capital} from './capital.js?v=YOD-SB10';
+import {K,T,P,G,A,H,B} from './diagram-kit.js?v=YOD-SB11';
+import {participacion} from './network.js?v=YOD-SB11';
+import {retribucion} from './flows.js?v=YOD-SB11';
+import {complementos} from './districts.js?v=YOD-SB11';
+import {capital} from './capital.js?v=YOD-SB11';
+import {demanda} from './demand.js?v=YOD-SB11';
 export function meaning(index,m){const W=m?480:1100,C=W/2,L=m?122:285,R=m?358:815,S=m?17:23,small=m?14:18;let o='';
  if(index===1){
  // Patrimonio SB07: BTS y complementos. Las figuras Hairline (nave, plaza, office, hotel, club, pocket) las coloca drawings.js; aquí solo texto y guías.
@@ -39,13 +40,7 @@ export function meaning(index,m){const W=m?480:1100,C=W/2,L=m?122:285,R=m?358:81
  }
  }
  if(index===2)o+=participacion(m);
- if(index===3){
- o+=T(C,190,'LA NAVE DEBE ENCAJAR CON UN USUARIO',m?17:23,K.problem);
- const req=['Operación y carga','Alturas y maniobras','Servicios y plazo'];req.forEach((s,j)=>o+=T(L,250+j*35,s,m?15:21,K.ink));
- o+=G(1,P(`M${m?215:460} 270 H${m?248:590}`,K.plan,2)+T(m?265:640,252,'Define',small,K.plan)+T(R,438,'Una nave a la medida',m?16:22,K.solution));
- o+=G(2,B(C,480,m?420:840,88,K.risk)+T(C,511,'Contrato del usuario + presupuesto + capital',m?17:24,K.risk)+T(C,541,'Las tres condiciones deben sostener la misma operación.',m?13:19));
- o+=G(3,A(C,580,C,615,K.action)+T(C,647,'Invertir en la fase que sí tiene fundamento',m?18:27,K.action));
- }
+ if(index===3)o+=demanda(m);
  if(index===4)o+=retribucion(m);
  if(index===5)o+=complementos(m);
  if(index===6)o+=capital(m);

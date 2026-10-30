@@ -6,8 +6,9 @@ const root=path.resolve(__dirname,'..'),base='https://yodesarrollomx.github.io/y
 // ---- SB08 · (#348) red de integrantes (participacion) y tabla de flujos (retribucion): ver sb08Scenes ----
 // ---- SB09 · (#349) «Por qué un distrito» (complementos): cadena operación → necesidad → producto → filtro → ruta → siguiente paso: ver sb09Scenes ----
 // ---- SB10 · (#350) escena «capital» como ecuación de aportaciones A/B, reveal inverso (data-until) y piel del proyecto: ver sb10Scenes ----
+// ---- SB11 · (#351) escena «demanda» como hilo con objetos (empresa → carta de intención y requisitos → compuerta → nave sólida) y nave en contorno (clase ghost): ver sb11Scenes ----
 // Las fallas de estas aserciones se acumulan en `problems` y se reportan juntas al final (todos los viewports, con texto/escena/paso).
-const VERSION='YOD-SB10',OVERLAP_PX=2,SAMPLES=[.5]/* t dentro del paso: la cámara ya llegó y la capa semántica está revelada */;
+const VERSION='YOD-SB11',OVERLAP_PX=2,SAMPLES=[.5]/* t dentro del paso: la cámara ya llegó y la capa semántica está revelada */;
 const problems=[];
 const diskStory=JSON.parse(fs.readFileSync(path.join(root,'presentacion/distrito-obregon/story.js'),'utf8').replace(/^\s*export const story\s*=\s*/,'').replace(/;\s*$/,''));
 const sceneIndex=id=>{const i=diskStory.scenes.findIndex(s=>s.id===id);assert(i>=0,'Escena inexistente en story.js: '+id);return i};
@@ -214,10 +215,10 @@ async function sb10Scenes(p,viewport){
   const vp=viewport.width+'x'+viewport.height,ck=(ok,msg)=>{if(!ok)problems.push('['+vp+'] '+msg)},phone=viewport.width<=650,round=n=>Math.round(n*100)/100;
   const cp=sceneIndex('capital');assert.equal(cp,6,'capital debe ser la escena de índice 6');
   const landNow=()=>p.evaluate(()=>{const e=document.querySelector('[data-object="land"]'),m=e&&/translate\(([-\d.e]+) ([-\d.e]+)\) scale\(([-\d.e]+)\)/.exec(e.getAttribute('transform')||'');return m?{x:+m[1],y:+m[2],s:+m[3],op:Number(getComputedStyle(e).opacity)}:null});
-  // a) El terreno persistente es el héroe durante el paso 1 (24.0, 24.6 y 24.8), viaja al empezar el paso 2 y está en la fila A en 25.5; es el mismo nodo todo el tiempo.
+  // a) El terreno persistente es el héroe durante el paso 1 (24.0, 24.4 y 24.6), viaja a la fila A antes de la parada 25.0 (empieza en 24.6) y está en ella en 25.0 y 25.5; es el mismo nodo todo el tiempo.
   await setProgress(p,cp*4);await p.evaluate(()=>{window.__landSb10=document.querySelector('[data-object="land"]')});
   const rowA=phone?{x:50,y:250,s:.26}:{x:150,y:300,s:.38};
-  for(const pos of [cp*4,cp*4+.6,cp*4+.8]){await setProgress(p,pos);const l=await landNow();
+  for(const pos of [cp*4,cp*4+.4,cp*4+.6]){await setProgress(p,pos);const l=await landNow();
     ck(!!l,'capital (progreso '+round(pos)+'): no se pudo leer la transformación de [data-object="land"]');if(!l)continue;
     ck(l.op>=.95,'capital (progreso '+round(pos)+'): el terreno tiene opacidad '+round(l.op)+' (se espera ≥ .95)');
     ck(l.s>=(phone?.9:1.5),'capital (progreso '+round(pos)+'): el terreno tiene escala '+round(l.s)+' (se espera ≥ '+(phone?.9:1.5)+' como héroe)')}
@@ -227,6 +228,16 @@ async function sb10Scenes(p,viewport){
    if(l){ck(l.op>=.95,'capital (progreso 25.5): el terreno tiene opacidad '+round(l.op)+' (se espera ≥ .95)');
     ck(Math.abs(l.x-rowA.x)<=4&&Math.abs(l.y-rowA.y)<=4,'capital (progreso 25.5): el terreno está en ('+round(l.x)+', '+round(l.y)+'), se espera la fila A ('+rowA.x+', '+rowA.y+') ± 4');
     ck(Math.abs(l.s-rowA.s)<=.05,'capital (progreso 25.5): el terreno tiene escala '+round(l.s)+', se espera '+rowA.s+' ± .05')}}
+  // a1) Parada 25.0 (entero): el terreno ya está en la fila A y la fila A se ve completa; parada 26.0: la fila B se ve completa.
+  await setProgress(p,cp*4+1);
+  {const l=await landNow();
+   ck(!!l,'capital (parada 25.0): no se pudo leer la transformación de [data-object="land"]');
+   if(l){ck(l.op>=.95,'capital (parada 25.0): el terreno tiene opacidad '+round(l.op)+' (se espera ≥ .95)');
+    ck(Math.abs(l.x-rowA.x)<=4&&Math.abs(l.y-rowA.y)<=4,'capital (parada 25.0): el terreno está en ('+round(l.x)+', '+round(l.y)+'), se espera la fila A ('+rowA.x+', '+rowA.y+') ± 4');
+    ck(Math.abs(l.s-rowA.s)<=.05,'capital (parada 25.0): el terreno tiene escala '+round(l.s)+', se espera '+rowA.s+' ± .05')}}
+  for(const [pos,row] of [[cp*4+1,'A'],[cp*4+2,'B']]){await setProgress(p,pos);
+   const ops=await p.evaluate(r=>[...document.querySelectorAll('#semantic-layer [data-row="'+r+'"],#semantic-layer [data-row="'+r+'"] [data-gives]')].map(e=>{let op=1;for(let n=e;n&&n.nodeType===1;n=n.parentNode){const cs=getComputedStyle(n);if(cs.display==='none'||cs.visibility==='hidden'){op=0;break}op*=Number(cs.opacity);if(n.tagName==='svg')break}return op}),row);
+   ck(ops.length>0&&ops.every(o=>o>=.95),'capital (parada '+round(pos)+'): la fila '+row+' no se ve completa; opacidades '+JSON.stringify(ops.map(round))+' (se espera ≥ .95)')}
   ck(await p.evaluate(()=>window.__landSb10===document.querySelector('[data-object="land"]')),'capital: el objeto "land" dejó de ser el mismo nodo del DOM');
   // a2) La fila A (suelo, trabajo, capital y modelo) ya se ve completa en 25.5.
   {const ops=await p.evaluate(()=>[...document.querySelectorAll('#semantic-layer [data-row="A"],#semantic-layer [data-row="A"] [data-gives]')].map(e=>{let op=1;for(let n=e;n&&n.nodeType===1;n=n.parentNode){const cs=getComputedStyle(n);if(cs.display==='none'||cs.visibility==='hidden'){op=0;break}op*=Number(cs.opacity);if(n.tagName==='svg')break}return op}));
@@ -237,7 +248,7 @@ async function sb10Scenes(p,viewport){
     for(const i of scan.items||[]){if(i.pin)continue;const ox=Math.min(r.r,i.r)-Math.max(r.l,i.l),oy=Math.min(r.b,i.b)-Math.max(r.t,i.t);
       if(ox>OVERLAP_PX&&oy>OVERLAP_PX)ck(false,'capital (progreso '+round(pos)+'): el terreno (x '+Math.round(r.l)+'–'+Math.round(r.r)+', y '+Math.round(r.t)+'–'+Math.round(r.b)+') se encima con '+fmt(i)+' (traslape '+Math.round(ox*10)/10+' × '+Math.round(oy*10)/10+' px)')}}
   // a4) Al llegar a la fila A (25.2, 25.35 y 25.5; desktop y teléfono) el terreno no tapa ningún texto, ni siquiera apenas visible (opacidad efectiva > .05).
-  for(const pos of [cp*4+1.2,cp*4+1.35,cp*4+1.5]){await setProgress(p,pos);
+  for(const pos of [cp*4+1,cp*4+1.2,cp*4+1.35,cp*4+1.5]){await setProgress(p,pos);
     const q=await p.evaluate(()=>{const svg=document.querySelector('#stage svg'),e=document.querySelector('[data-object="land"]').getBoundingClientRect(),out=[];
       for(const sel of ['#semantic-layer','#scene-labels','#territory']){const layer=svg.querySelector(sel);if(!layer)continue;
         for(const t of layer.querySelectorAll('text')){const text=t.textContent.replace(/\s+/g,' ').trim();if(!text)continue;let op=1;
@@ -265,13 +276,13 @@ async function sb10Scenes(p,viewport){
   ck(c.formula>=1,'capital paso 4: falta [data-formula]');
   ck(!c.hidden.length,'capital paso 4: hay aportaciones, "recibe" o fórmula sin verse (opacidad efectiva ≤ .5): '+c.hidden.join(', '));
   ck(c.action.length===1,'capital paso 4: hay '+c.action.length+' textos visibles en el color de acción #517a43 (se espera 1): '+JSON.stringify(c.action));
-  // c) data-until: lo del paso 1 existe, se ve completo (≥ .95) en 24.0, 24.4 y 24.8 y desde 25.2 ya no se ve (opacidad efectiva < .1).
+  // c) data-until: lo del paso 1 existe, se ve completo (≥ .95) en 24.0, 24.25 y 24.5 (hasta u = .5) y desde 24.7 ya no se ve (opacidad efectiva < .1), también en las paradas 25.0 y siguientes.
   const untilState=()=>p.evaluate(()=>[...document.querySelectorAll('#semantic-layer [data-until]')].map(e=>{let op=1;for(let n=e;n&&n.nodeType===1;n=n.parentNode){const cs=getComputedStyle(n);if(cs.display==='none'||cs.visibility==='hidden'){op=0;break}op*=Number(cs.opacity);if(n.tagName==='svg')break}return op}));
-  for(const pos of [cp*4,cp*4+.4,cp*4+.8]){await setProgress(p,pos);const ops=await untilState();
+  for(const pos of [cp*4,cp*4+.25,cp*4+.5]){await setProgress(p,pos);const ops=await untilState();
     ck(ops.length>0,'capital (progreso '+round(pos)+'): no hay elementos con data-until (los rótulos del paso 1 deben desvanecerse)');
     ck(ops.every(o=>o>=.95),'capital (progreso '+round(pos)+'): hay elementos con data-until que no se ven completos; opacidades '+JSON.stringify(ops.map(round))+' (se espera ≥ .95)')}
-  for(const pos of [UNTIL_AT,cp*4+1.5,cp*4+3.5]){await setProgress(p,pos);const ops=await untilState();
-    ck(ops.every(o=>o<.1),'capital (progreso '+round(pos)+'): lo marcado con data-until sigue visible; opacidades '+JSON.stringify(ops.map(round))+' (se espera < .1 desde 25.2)')}
+  for(const pos of [cp*4+.7,cp*4+.8,cp*4+1,UNTIL_AT,cp*4+1.5,cp*4+3.5]){await setProgress(p,pos);const ops=await untilState();
+    ck(ops.every(o=>o<.1),'capital (progreso '+round(pos)+'): lo marcado con data-until sigue visible; opacidades '+JSON.stringify(ops.map(round))+' (se espera < .1 desde 24.7)')}
   // d) Sin porcentajes, montos ni «50/50» en la escena (pasos 1–4).
   for(let k=0;k<4;k++){await setProgress(p,cp*4+k+.5);
     const all=await p.evaluate(()=>document.querySelector('#semantic-layer')?document.querySelector('#semantic-layer').textContent.replace(/\s+/g,' '):'');
@@ -313,6 +324,96 @@ async function sb10Scenes(p,viewport){
   ck(JSON.stringify(back)===JSON.stringify(on),'piel: al volver a poner la clase el estado no se restaura: '+JSON.stringify(back)+' ≠ '+JSON.stringify(on));
   await setProgress(p,0);
 }
+// ---- SB11 ------------------------------------------------------------------------------------------------------------------------
+const OLD_VERSIONS=/YOD-SB(0[0-9]|10)\b/;
+// Aserciones SB11 (#351), escena «demanda» (índice 3, progreso 12.0–15.99): hilo con objetos terreno → empresa → carta de intención y requisitos → compuerta → nave sólida. No lanzan: acumulan en `problems`.
+async function sb11Scenes(p,viewport){
+  const vp=viewport.width+'x'+viewport.height,ck=(ok,msg)=>{if(!ok)problems.push('['+vp+'] '+msg)},phone=viewport.width<=650,round=n=>Math.round(n*100)/100;
+  const dm=sceneIndex('demanda');assert.equal(dm,3,'demanda debe ser la escena de índice 3');
+  // Elementos de #semantic-layer con el atributo dado y su opacidad efectiva (producto de los ancestros; display/visibility ocultos = 0).
+  const hook=attr=>p.evaluate(a=>[...document.querySelectorAll('#semantic-layer ['+a+']')].map(e=>{let op=1;for(let n=e;n&&n.nodeType===1;n=n.parentNode){const cs=getComputedStyle(n);if(cs.display==='none'||cs.visibility==='hidden'){op=0;break}op*=Number(cs.opacity);if(n.tagName==='svg')break}return {val:e.getAttribute(a),op}}),attr);
+  const naveState=()=>p.evaluate(()=>{const e=document.querySelector('[data-object="nave"]'),m=e&&/translate\(([-\d.e]+) ([-\d.e]+)\) scale\(([-\d.e]+)\)/.exec(e.getAttribute('transform')||'');return e?{ghost:e.classList.contains('ghost'),pos:m?{x:+m[1],y:+m[2],s:+m[3]}:null}:null});
+  // a) Estructura: cuatro pasos (1 a 4), una compuerta, tres condiciones (contrato, costo, efectivo), seis requisitos y cuatro aprobaciones.
+  await setProgress(p,dm*4+3.5);
+  const steps=await hook('data-step'),gate=await hook('data-gate'),cond=await hook('data-condition'),req=await hook('data-requirement'),appr=await hook('data-approval');
+  ck(steps.length===4,'demanda: [data-step] = '+steps.length+' (se esperan 4)');
+  ck(JSON.stringify(steps.map(s=>s.val).sort())===JSON.stringify(['1','2','3','4']),'demanda: valores de data-step = '+JSON.stringify(steps.map(s=>s.val))+' (se espera 1, 2, 3 y 4)');
+  ck(gate.length>=1,'demanda: falta [data-gate]');
+  ck(cond.length===3,'demanda: [data-condition] = '+cond.length+' (se esperan 3)');
+  ck(JSON.stringify(cond.map(s=>s.val).sort())===JSON.stringify(['contrato','costo','efectivo']),'demanda: valores de data-condition = '+JSON.stringify(cond.map(s=>s.val))+' (se espera contrato, costo y efectivo)');
+  ck(req.length===6,'demanda: [data-requirement] = '+req.length+' (se esperan 6)');
+  ck(appr.length===4,'demanda: [data-approval] = '+appr.length+' (se esperan 4)');
+  // b) [data-gate] solo se ve en el paso 3: completo en la parada 14.0 y a mitad (14.5); en los pasos 1, 2 y 4 no se ve (< .1), y en la parada 15.0 ya no está (< .05).
+  for(const pos of [dm*4+.5,dm*4+1.5,dm*4+3,dm*4+3.5]){await setProgress(p,pos);const g=await hook('data-gate');
+    ck(g.every(x=>x.op<.1),'demanda (progreso '+round(pos)+'): [data-gate] se ve fuera del paso 3; opacidades '+JSON.stringify(g.map(x=>round(x.op)))+' (se espera < .1)')}
+  await setProgress(p,dm*4+3);{const g=await hook('data-gate');ck(g.every(x=>x.op<.05),'demanda (parada 15.0): [data-gate] sigue visible; opacidades '+JSON.stringify(g.map(x=>round(x.op)))+' (se espera < .05)')}
+  await setProgress(p,dm*4+2);{const g=await hook('data-gate');ck(g.length>=1&&g.some(x=>x.op>=.95),'demanda (parada 14.0): [data-gate] no se ve completo; opacidades '+JSON.stringify(g.map(x=>round(x.op)))+' (se espera ≥ .95)')}
+  await setProgress(p,dm*4+2.5);{const g=await hook('data-gate');ck(g.some(x=>x.op>.5),'demanda paso 3 (progreso 14.5): [data-gate] no se ve; opacidades '+JSON.stringify(g.map(x=>round(x.op)))+' (se espera > .5)')}
+  // c) Las tres condiciones se ven completas en la parada 14.0 y siguen vistas a mitad del paso 3.
+  for(const [pos,min] of [[dm*4+2,.95],[dm*4+2.5,.5]]){await setProgress(p,pos);const c=await hook('data-condition');
+    ck(c.length===3&&c.every(x=>x.op>=min),'demanda (progreso '+round(pos)+'): las 3 condiciones no se ven; opacidades '+JSON.stringify(c.map(x=>[x.val,round(x.op)]))+' (se espera ≥ '+min+')')}
+  // d) Los seis requisitos se ven completos en la parada 13.0 y a mitad del paso 2 (la nave sigue en contorno).
+  for(const [pos,min] of [[dm*4+1,.95],[dm*4+1.5,.5]]){await setProgress(p,pos);
+    const r=await hook('data-requirement');ck(r.length===6&&r.every(x=>x.op>=min),'demanda (progreso '+round(pos)+'): los 6 requisitos no se ven; opacidades '+JSON.stringify(r.map(x=>round(x.op)))+' (se espera ≥ '+min+')')}
+  // e) Las cuatro aprobaciones se ven completas en la parada 15.0 y a mitad del paso 4.
+  for(const [pos,min] of [[dm*4+3,.95],[dm*4+3.5,.5]]){await setProgress(p,pos);
+    const a=await hook('data-approval');ck(a.length===4&&a.every(x=>x.op>=min),'demanda (progreso '+round(pos)+'): las 4 aprobaciones no se ven; opacidades '+JSON.stringify(a.map(x=>[x.val,round(x.op)]))+' (se espera ≥ '+min+')')}
+  // f) La nave es un contorno (clase ghost) hasta que sale de la compuerta (t < 2.6: presente en 13.0, 14.0 y 14.5) y deja de serlo después (ausente desde 14.7, también en 14.9 y en la parada 15.0).
+  for(const pos of [13,14,14.5]){await setProgress(p,pos);const n=await naveState();
+    ck(!!n&&n.ghost,'demanda (progreso '+pos+'): la nave debe llevar la clase ghost (contorno) hasta salir de la compuerta')}
+  for(const pos of [14.7,14.9,15,15.3,15.6,15.9]){await setProgress(p,pos);const n=await naveState();
+    ck(!!n&&!n.ghost,'demanda (progreso '+pos+'): la nave no debe llevar la clase ghost después de la compuerta')}
+  // g) En la parada 15.0 y en 15.6 la nave sólida está en su terreno: (110, 315) en desktop, (55, 310) en teléfono, ± 4 px.
+  for(const pos of [15,15.6]){await setProgress(p,pos);
+   const n=await naveState(),want=phone?{x:55,y:310}:{x:110,y:315};
+   ck(!!n&&!!n.pos,'demanda (progreso '+pos+'): no se pudo leer la transformación de [data-object="nave"]');
+   if(n&&n.pos)ck(Math.abs(n.pos.x-want.x)<=4&&Math.abs(n.pos.y-want.y)<=4,'demanda (progreso '+pos+'): la nave está en ('+round(n.pos.x)+', '+round(n.pos.y)+'), se espera ('+want.x+', '+want.y+') ± 4')}
+  // h) Ninguna escena 1, 5 o 6 muestra la nave en contorno.
+  for(const idx of [1,5,6])for(let k=0;k<4;k++)for(const s of [0,.5,.99]){const pos=idx*4+k+s;await setProgress(p,pos);const n=await naveState();
+    ck(!!n&&!n.ghost,'escena '+idx+' (progreso '+round(pos)+'): la nave lleva la clase ghost; solo la escena demanda en los pasos 1 a 3 debe tenerla')}
+  // i) Sin dígitos en el texto de la escena (pasos 1–4).
+  for(let k=0;k<4;k++){await setProgress(p,dm*4+k+.5);
+    const all=await p.evaluate(()=>document.querySelector('#semantic-layer')?document.querySelector('#semantic-layer').textContent.replace(/\s+/g,' '):'');
+    const m=all.match(/\d/);ck(!m,'demanda paso '+(k+1)+': el texto contiene un dígito «'+(m&&all.slice(Math.max(0,m.index-12),m.index+12))+'» (la escena no lleva cifras)');
+    ck(all.trim().length>0,'demanda paso '+(k+1)+': #semantic-layer sin texto')}
+  // j) Solapamiento de textos, íconos y líneas, pasos 1–4.
+  for(let k=0;k<4;k++)for(const s of [0,...SAMPLES]){const pos=dm*4+k+s;await setProgress(p,pos);
+    const scan=await p.evaluate(scanTexts),shapes=await p.evaluate(scanShapes),where='demanda paso '+(k+1)+' (progreso '+pos+')';
+    if(!scan.error)ck(scan.items.filter(i=>i.layer==='#semantic-layer').length>0,where+': no hay textos visibles en #semantic-layer');
+    ck(shapes.icons.length>0,where+': no hay íconos visibles ([data-icon])');
+    for(const m of overlapsIn(scan,where))problems.push('['+vp+'] '+m);
+    for(const m of shapeProblems(scan.items||[],shapes,where))problems.push('['+vp+'] '+m);}
+  // k) El terreno (land) y la nave no se encimen con ningún texto visible (opacidad efectiva > .5). La nave se revisa mientras es visible (opacidad > .05).
+  for(const pos of [12.5,13,13.5,14,14.5,15,15.3,15.6]){await setProgress(p,pos);
+    const q=await p.evaluate(()=>{const svg=document.querySelector('#stage svg'),eff=e=>{let op=1;for(let n=e;n&&n.nodeType===1;n=n.parentNode){const cs=getComputedStyle(n);if(cs.display==='none'||cs.visibility==='hidden')return 0;op*=Number(cs.opacity);if(n===svg)break}return op};
+      return ['land','nave'].map(id=>{const e=svg.querySelector('[data-object="'+id+'"]'),r=e&&e.getBoundingClientRect();return r&&r.width?{id,op:eff(e),l:r.left,t:r.top,r:r.right,b:r.bottom}:{id,op:0}})}),scan=await p.evaluate(scanTexts);
+    ck(q[0].op>.05,'demanda (progreso '+pos+'): el terreno no se ve (opacidad efectiva '+round(q[0].op)+')');
+    for(const o of q){if(!(o.op>.05))continue;
+      for(const i of scan.items||[]){if(i.pin)continue;const ox=Math.min(o.r,i.r)-Math.max(o.l,i.l),oy=Math.min(o.b,i.b)-Math.max(o.t,i.t);
+        if(ox>OVERLAP_PX&&oy>OVERLAP_PX)ck(false,'demanda (progreso '+pos+'): '+(o.id==='land'?'el terreno':'la nave')+' (x '+Math.round(o.l)+'–'+Math.round(o.r)+', y '+Math.round(o.t)+'–'+Math.round(o.b)+') se encima con '+fmt(i)+' (traslape '+Math.round(ox*10)/10+' × '+Math.round(oy*10)/10+' px)')}}}
+  await setProgress(p,0);
+}
+// ---- Paradas enteras en TODAS las escenas -----------------------------------------------------------------------------------------
+// La navegación se detiene en posiciones enteras (app.js: set(Math.floor(position)+1)). En cada parada p (escena s=floor(p/4), paso b=p−4s) lo que ya
+// entró (data-reveal=n con n ≤ b) debe verse completo (opacidad efectiva ≥ .95) y lo que ya salió (data-until=u con u ≤ b) no debe verse (< .05).
+// Un elemento con data-reveal dentro de un grupo con data-until ya vencido se omite: esa salida es intencional.
+async function stopsEverywhere(p,viewport){
+  const vp=viewport.width+'x'+viewport.height,n=diskStory.scenes.length;let checked=0;
+  for(let pos=0;pos<n*4;pos++){const b=pos%4,s=Math.floor(pos/4);await setProgress(p,pos);
+    const r=await p.evaluate(b=>{const L=document.querySelector('#semantic-layer'),svg=document.querySelector('#stage svg');if(!L)return {reveal:0,until:0,bad:[]};
+      const eff=e=>{let op=1;for(let x=e;x&&x.nodeType===1;x=x.parentNode){const cs=getComputedStyle(x);if(cs.display==='none'||cs.visibility==='hidden')return 0;op*=Number(cs.opacity);if(x===svg)break}return op};
+      const gone=e=>{for(let x=e;x&&x!==L.parentNode&&x.nodeType===1;x=x.parentNode)if(x.dataset&&x.dataset.until!==undefined&&Number(x.dataset.until)<=b)return true;return false};
+      const name=e=>e.tagName.toLowerCase()+'['+[...e.attributes].filter(a=>/^data-(reveal|until|span|step|row|gate|condition|requirement|approval|icon|link)/.test(a.name)).map(a=>a.name+'="'+a.value+'"').join(' ')+']'+(e.textContent.replace(/\s+/g,' ').trim().slice(0,28)?' «'+e.textContent.replace(/\s+/g,' ').trim().slice(0,28)+'»':'');
+      const out={reveal:0,until:0,bad:[]};
+      for(const e of L.querySelectorAll('[data-reveal]')){if(!(Number(e.dataset.reveal)<=b))continue;out.reveal++;if(gone(e))continue;const o=eff(e);if(!(o>=.95))out.bad.push('data-reveal='+e.dataset.reveal+' '+name(e)+' tiene opacidad '+Math.round(o*100)/100+' (se espera ≥ .95)')}
+      for(const e of L.querySelectorAll('[data-until]')){if(!(Number(e.dataset.until)<=b))continue;out.until++;const o=eff(e);if(!(o<.05))out.bad.push('data-until='+e.dataset.until+' '+name(e)+' tiene opacidad '+Math.round(o*100)/100+' (se espera < .05)')}
+      return out},b);
+    checked+=r.reveal+r.until;
+    for(const m of r.bad)problems.push('['+vp+'] parada '+pos+' (escena '+s+' «'+diskStory.scenes[s].id+'», paso '+(b+1)+'): '+m);}
+  if(process.env.SB07_DEBUG)console.error(vp,'paradas enteras: elementos revisados:',checked);
+  assert(checked>0,'paradas enteras: no se revisó ningún elemento data-reveal/data-until');
+  await setProgress(p,0);
+}
 // d) Versión cargada y e) red: se llama al final de cada viewport.
 async function sb07Runtime(p,viewport,{requested,blocked}){
   const vp=viewport.width+'x'+viewport.height,ck=(ok,msg)=>{if(!ok)problems.push('['+vp+'] '+msg)};
@@ -320,15 +421,15 @@ async function sb07Runtime(p,viewport,{requested,blocked}){
   const tag=await p.locator('.eyebrow .tag').innerText(),version=await p.evaluate(async v=>(await import('./story.js?v='+v)).story.version,VERSION);
   ck(tag.includes(VERSION),'la etiqueta de la lámina dice "'+tag+'", se espera '+VERSION);
   ck(version===VERSION,'story.js cargado en el navegador declara '+version+', se espera '+VERSION);
-  const stale=[...new Set(requested.filter(u=>u.includes('/distrito-obregon/')&&!u.includes('/vendor/')&&/YOD-SB0[0-9]\b/.test(u)))];
+  const stale=[...new Set(requested.filter(u=>u.includes('/distrito-obregon/')&&!u.includes('/vendor/')&&OLD_VERSIONS.test(u)))];
   ck(!stale.length,'se pidieron módulos con versión anterior a '+VERSION+' (carga doble de módulos): '+stale.map(u=>u.replace(/^.*\/distrito-obregon\//,'')).join(', '));
-  const mods=['app.js','drawings.js','story.js','access.js','meaning.js','territory.js','diagram-kit.js','network.js','flows.js','districts.js','icons.js','capital.js'].filter(f=>!requested.some(u=>u.includes('/'+f+'?v=')&&u.includes(VERSION)&&!/YOD-SB0[0-9]\b/.test(u)));
+  const mods=['app.js','drawings.js','story.js','access.js','meaning.js','territory.js','diagram-kit.js','network.js','flows.js','districts.js','icons.js','capital.js','demand.js'].filter(f=>!requested.some(u=>u.includes('/'+f+'?v=')&&u.includes(VERSION)&&!OLD_VERSIONS.test(u)));
   ck(!mods.length,'estos módulos no se pidieron con ?v=…'+VERSION+': '+mods.join(', '));
   // e) Ninguna llamada de red real: todo se sirve desde el repo o desde dobles; lo que no coincide se aborta y se registra en `blocked`.
   if(process.env.SB07_DEBUG)console.error(vp,'solicitudes abortadas:',[...new Set(blocked)]);
   const external=blocked.filter(l=>!/^\S+ https:\/\/yodesarrollomx\.github\.io\/(yodesarrollo-board|yod-portal|potenciales-yod)\//.test(l)&&!/^POST https:\/\/script\.google\.com\//.test(l));
   ck(!external.length,'solicitudes de red no previstas (teselas/Overpass/CDN…; deben ir empaquetadas): '+[...new Set(external)].slice(0,8).join(' | '));
 }
-(async()=>{const browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_EXECUTABLE_PATH?{executablePath:process.env.CHROMIUM_EXECUTABLE_PATH}:{})});let posts=[];const results=[];try{for(const viewport of [{width:390,height:844},{width:844,height:390},{width:1365,height:900}]){const ctx=await browser.newContext({viewport,hasTouch:true}),p=await ctx.newPage();let authenticated=false,role='admin',email='owner@example.invalid',rows=[],errors=[],connection=true,canjes=0,blocked=[],requested=[];p.on('pageerror',e=>errors.push(e.message));p.on('request',r=>requested.push(r.url()));await ctx.addInitScript(()=>{const original=crypto.subtle.digest.bind(crypto.subtle);crypto.subtle.digest=async(algorithm,data)=>new TextDecoder().decode(data)==='owner@example.invalid'?Uint8Array.from('c27e8a6088a74a82ad2c14ef7ed0d2b4b69d80c4c7bb841c95822980a28c9bad'.match(/../g),h=>parseInt(h,16)).buffer:original(algorithm,data)});await ctx.route('**/*',async route=>{const req=route.request(),u=new URL(req.url());if(['data:','blob:'].includes(u.protocol))return route.continue();if(u.pathname.endsWith('/yod-acceso.js'))return route.fulfill({contentType:'text/javascript',body:'window.YOD_PORTERO={original:"https://script.google.com/portero-mock"}'});if(u.pathname.endsWith('/portero.js'))return route.fulfill({contentType:'text/javascript',body:'window.YODPortero={entrar(){}}'});if(u.hostname==='script.google.com'){if(u.pathname==='/portero-mock'){canjes++;return route.fulfill({json:{ok:authenticated,token:'SYNTHETIC',rol:role,correo:email},headers:{'Access-Control-Allow-Origin':'*'}});}if(req.method()==='POST'){const data=JSON.parse(req.postData());if(data.accion==='presentaciones')return route.fulfill({json:{ok:false,error:'backend_not_ready'},headers:{'Access-Control-Allow-Origin':'*'}});posts.push(data);rows.push(data);return route.abort();}return route.fulfill({json:{produccion:rows,cache:false},headers:{'Access-Control-Allow-Origin':'*'}});}if(u.pathname==='/sala-edicion/presentation-reviews.json'){if(!connection)return route.abort();return route.fulfill({json:{contract:'sala-presentation-reviews-v1',privateProjection:true,receipt:'id-sha256'}});}if(u.pathname.startsWith('/yodesarrollo-board/')){let file=path.join(root,u.pathname.slice('/yodesarrollo-board/'.length));if(file.endsWith('/'))file+='index.html';if(fs.existsSync(file)){const ext=path.extname(file),type={'.js':'text/javascript','.mjs':'text/javascript','.webp':'image/webp','.css':'text/css','.html':'text/html','.png':'image/png','.woff2':'font/woff2'}[ext]||'application/octet-stream';return route.fulfill({contentType:type,body:fs.readFileSync(file)})}}blocked.push(req.method()+' '+req.url());return route.abort()});await p.goto(base);await p.locator('#stage svg').waitFor();assert.equal(await p.locator('#stages button').count(),10);assert.equal(await p.locator('#topics span').count(),6);await p.locator('#colorGuide').click();assert.equal(await p.locator('#colorCriteria article').count(),6);assert((await p.locator('#colorsDialog').innerText()).includes('función de la frase'));await p.locator('#colorsDialog [data-close]').click();assert.equal(await p.locator('#pin').isVisible(),false);await p.evaluate(()=>{sessionStorage.setItem('pyod_rol','admin')});await p.reload();assert.equal(await p.locator('#pin').isVisible(),false,'Cached role cannot grant access');await p.waitForFunction(()=>document.querySelector('#stage [data-object="nave"]'));await p.evaluate(()=>window.__nave=document.querySelector('[data-object="nave"]'));for(let n=0;n<10;n++){await p.locator('#stages button').nth(n).click();assert(await p.evaluate(()=>window.__nave===document.querySelector('[data-object="nave"]')),'Same object across scenes');assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal page overflow');}await p.locator('#progress').evaluate(e=>{e.value=39;e.dispatchEvent(new Event('input'))});assert.equal(await p.locator('#offerReview').isVisible(),true);assert((await p.locator('#narration').innerText()).includes('formalizar la asociación'));assert.equal(await p.locator('#semantic-layer [data-reveal="3"]').getAttribute('opacity'),'1');await p.locator('#rotor').focus();await p.keyboard.press('End');await p.waitForFunction(()=>Number(document.querySelector('#progress').value)>38.9);await p.keyboard.press('ArrowUp');await p.waitForFunction(()=>Number(document.querySelector('#progress').value)<38.5);await p.locator('#stages button').first().click();await sb07Scenes(p,viewport);await sb08Scenes(p,viewport);await sb09Scenes(p,viewport);await sb10Scenes(p,viewport);
+(async()=>{const browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_EXECUTABLE_PATH?{executablePath:process.env.CHROMIUM_EXECUTABLE_PATH}:{})});let posts=[];const results=[];try{for(const viewport of [{width:390,height:844},{width:844,height:390},{width:1365,height:900}]){const ctx=await browser.newContext({viewport,hasTouch:true}),p=await ctx.newPage();let authenticated=false,role='admin',email='owner@example.invalid',rows=[],errors=[],connection=true,canjes=0,blocked=[],requested=[];p.on('pageerror',e=>errors.push(e.message));p.on('request',r=>requested.push(r.url()));await ctx.addInitScript(()=>{const original=crypto.subtle.digest.bind(crypto.subtle);crypto.subtle.digest=async(algorithm,data)=>new TextDecoder().decode(data)==='owner@example.invalid'?Uint8Array.from('c27e8a6088a74a82ad2c14ef7ed0d2b4b69d80c4c7bb841c95822980a28c9bad'.match(/../g),h=>parseInt(h,16)).buffer:original(algorithm,data)});await ctx.route('**/*',async route=>{const req=route.request(),u=new URL(req.url());if(['data:','blob:'].includes(u.protocol))return route.continue();if(u.pathname.endsWith('/yod-acceso.js'))return route.fulfill({contentType:'text/javascript',body:'window.YOD_PORTERO={original:"https://script.google.com/portero-mock"}'});if(u.pathname.endsWith('/portero.js'))return route.fulfill({contentType:'text/javascript',body:'window.YODPortero={entrar(){}}'});if(u.hostname==='script.google.com'){if(u.pathname==='/portero-mock'){canjes++;return route.fulfill({json:{ok:authenticated,token:'SYNTHETIC',rol:role,correo:email},headers:{'Access-Control-Allow-Origin':'*'}});}if(req.method()==='POST'){const data=JSON.parse(req.postData());if(data.accion==='presentaciones')return route.fulfill({json:{ok:false,error:'backend_not_ready'},headers:{'Access-Control-Allow-Origin':'*'}});posts.push(data);rows.push(data);return route.abort();}return route.fulfill({json:{produccion:rows,cache:false},headers:{'Access-Control-Allow-Origin':'*'}});}if(u.pathname==='/sala-edicion/presentation-reviews.json'){if(!connection)return route.abort();return route.fulfill({json:{contract:'sala-presentation-reviews-v1',privateProjection:true,receipt:'id-sha256'}});}if(u.pathname.startsWith('/yodesarrollo-board/')){let file=path.join(root,u.pathname.slice('/yodesarrollo-board/'.length));if(file.endsWith('/'))file+='index.html';if(fs.existsSync(file)){const ext=path.extname(file),type={'.js':'text/javascript','.mjs':'text/javascript','.webp':'image/webp','.css':'text/css','.html':'text/html','.png':'image/png','.woff2':'font/woff2'}[ext]||'application/octet-stream';return route.fulfill({contentType:type,body:fs.readFileSync(file)})}}blocked.push(req.method()+' '+req.url());return route.abort()});await p.goto(base);await p.locator('#stage svg').waitFor();assert.equal(await p.locator('#stages button').count(),10);assert.equal(await p.locator('#topics span').count(),6);await p.locator('#colorGuide').click();assert.equal(await p.locator('#colorCriteria article').count(),6);assert((await p.locator('#colorsDialog').innerText()).includes('función de la frase'));await p.locator('#colorsDialog [data-close]').click();assert.equal(await p.locator('#pin').isVisible(),false);await p.evaluate(()=>{sessionStorage.setItem('pyod_rol','admin')});await p.reload();assert.equal(await p.locator('#pin').isVisible(),false,'Cached role cannot grant access');await p.waitForFunction(()=>document.querySelector('#stage [data-object="nave"]'));await p.evaluate(()=>window.__nave=document.querySelector('[data-object="nave"]'));for(let n=0;n<10;n++){await p.locator('#stages button').nth(n).click();assert(await p.evaluate(()=>window.__nave===document.querySelector('[data-object="nave"]')),'Same object across scenes');assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal page overflow');}await p.locator('#progress').evaluate(e=>{e.value=39;e.dispatchEvent(new Event('input'))});assert.equal(await p.locator('#offerReview').isVisible(),true);assert((await p.locator('#narration').innerText()).includes('formalizar la asociación'));assert.equal(await p.locator('#semantic-layer [data-reveal="3"]').getAttribute('opacity'),'1');await p.locator('#rotor').focus();await p.keyboard.press('End');await p.waitForFunction(()=>Number(document.querySelector('#progress').value)>38.9);await p.keyboard.press('ArrowUp');await p.waitForFunction(()=>Number(document.querySelector('#progress').value)<38.5);await p.locator('#stages button').first().click();await sb07Scenes(p,viewport);await sb08Scenes(p,viewport);await sb09Scenes(p,viewport);await sb10Scenes(p,viewport);await sb11Scenes(p,viewport);await stopsEverywhere(p,viewport);
 if(viewport.width===390){authenticated=true;await p.evaluate(()=>localStorage.setItem('pyod_clave_v1','SYNTHETIC'));await p.reload();await p.locator('#pin').waitFor({state:'visible'});const beforeCanje=canjes;await p.evaluate(async v=>{const {access}=await import('./access.js?v='+v);await Promise.all(Array.from({length:12},()=>access.verify()))},VERSION);assert.equal(canjes-beforeCanje,1,'Concurrent saves/focus share one fresh verification');connection=false;await p.locator('#pin').click();await p.locator('#stage').click({position:{x:160,y:230}});await p.locator('.chn-txt').fill('SYNTHETIC REVIEW — PRIVATE');await p.locator('.chn-btn[data-ok]').click();await p.waitForFunction(()=>document.querySelector('#toast').textContent.includes('sin conexión con Sala'));assert.equal(posts.length,0,'Disconnected note must stay in outbox');connection=true;await p.reload();try{await p.waitForFunction(()=>document.querySelector('#toast').textContent.startsWith('Recibida en Sala'),null,{timeout:20000});}catch(e){console.log({toast:await p.locator('#toast').innerText(),posts:posts.length,errors,packet:await p.evaluate(async()=>{const q=indexedDB.open('yodChinche',1);const db=await new Promise(r=>q.onsuccess=()=>r(q.result));const read=(s)=>new Promise(r=>{const q=db.transaction(s).objectStore(s).getAll();q.onsuccess=()=>r(q.result)});const ch=(await read('chinches'))[0],f=(await read('fotos'))[0];try{await YodPinDelivery.packet(ch,f?.full||f?.mini,{provider:'github',repository:'yodesarrollomx/yodesarrollo-board',path:'presentacion/distrito-obregon/'});return 'ok'}catch(e){return {error:e.message,photo:typeof f?.full,keys:Object.keys(f||{})}}})});throw e;}assert.equal(posts.length,1);assert.equal(await p.locator('dialog[open]').count(),0,'No navigation or blocking saved modal');const payload=JSON.parse(posts[0].detalle);assert.equal(payload.objeto.revision.comment,'SYNTHETIC REVIEW — PRIVATE');assert(payload.objeto.revision.capture.data.length>100);await p.reload();await p.locator('#reviews').waitFor({state:'visible'});await p.locator('#reviews').click();await p.locator('#reviewsDialog[open]').waitFor();assert((await p.locator('#reviewList').innerText()).includes('Recibida en Sala'));assert.equal(posts.length,1,'No duplicate after reload');await p.locator('#reviewsDialog [data-close]').click();role='viewer';await p.locator('#access').click();await p.locator('#pin').waitFor({state:'hidden'});assert.equal(await p.locator('#pin').isVisible(),false);assert.equal(await p.locator('#reviewList').innerText(),'');await p.locator('#accessDialog [data-close]').click();}
-if(process.env.QA_DIR){fs.mkdirSync(process.env.QA_DIR,{recursive:true});await p.locator('#stages button').nth(3).click();await p.screenshot({path:path.join(process.env.QA_DIR,viewport.width+'.png'),fullPage:true});}await sb07Runtime(p,viewport,{requested,blocked});assert.deepEqual(errors,[]);results.push({viewport,scenes:10,colors:6,persistentObjects:true,publicNoEdit:true});await ctx.close();}if(problems.length)throw new Error('SB07/SB08/SB09/SB10: '+problems.length+' aserciones fallaron:\n - '+problems.join('\n - '));console.log(JSON.stringify({status:'PASS',results,salaSyntheticPosts:posts.length}));}finally{await browser.close()}})().catch(e=>{console.error(e);process.exit(1)});
+if(process.env.QA_DIR){fs.mkdirSync(process.env.QA_DIR,{recursive:true});await p.locator('#stages button').nth(3).click();await p.screenshot({path:path.join(process.env.QA_DIR,viewport.width+'.png'),fullPage:true});}await sb07Runtime(p,viewport,{requested,blocked});assert.deepEqual(errors,[]);results.push({viewport,scenes:10,colors:6,persistentObjects:true,publicNoEdit:true});await ctx.close();}if(problems.length)throw new Error('SB07/SB08/SB09/SB10/SB11 y paradas: '+problems.length+' aserciones fallaron:\n - '+problems.join('\n - '));console.log(JSON.stringify({status:'PASS',results,salaSyntheticPosts:posts.length}));}finally{await browser.close()}})().catch(e=>{console.error(e);process.exit(1)});
