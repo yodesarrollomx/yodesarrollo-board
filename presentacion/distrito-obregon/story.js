@@ -1,5 +1,5 @@
 export const story={
-  "version": "YOD-SB08",
+  "version": "YOD-SB09",
   "stage": "storyboard",
   "production": "requires_explicit_instruction",
   "title": "Distrito Obregón Industrial",
@@ -300,36 +300,36 @@ export const story={
         {
           "label": "Operación industrial como punto de partida",
           "spoken": "La propuesta complementaria tiene sentido si atiende necesidades reales del entorno industrial. No es llenar el terreno de productos: cada negocio debe demostrar a quién sirve y cómo se sostiene.",
-          "change": "Dos encabezados distinguen necesidad industrial y producto que podría responder.",
+          "change": "La nave aparece primero; de ella salen cinco necesidades de quienes operan en el distrito. Llenar el terreno queda tachado.",
           "role": "problem"
         },
         {
           "label": "Servicios y espacios para trabajar",
           "spoken": "Plaza y servicios pueden atender la actividad cotidiana; oficinas flex y showrooms, a proveedores y empresas. Su escala depende de demanda, competencia y operación.",
-          "change": "Servicios cotidianos y visitas de trabajo se conectan con comercio y hotel.",
+          "change": "Plaza y servicios, y oficinas flex y showrooms, responden a las dos primeras necesidades.",
           "role": "solution"
         },
         {
           "label": "Estancia, encuentro y bodegas pequeñas",
           "spoken": "El hotel, el Industrial Club y bodegas pocket de 250 a 500 metros cuadrados completan las posibilidades. No todos tienen que desarrollarse juntos ni bajo el mismo modelo.",
-          "change": "Reuniones, encuentros y operaciones pequeñas se vinculan con oficinas, club y bodegas pequeñas.",
+          "change": "Hotel, Industrial Club y bodegas pocket de 250 a 500 m² responden a las otras tres, cada uno por separado.",
           "role": "solution"
         },
         {
           "label": "Seleccionar producto, operador y fase",
           "spoken": "Para cada componente elegimos, con estudios, si conviene desarrollar, vender, arrendar o integrar un operador. La asociación se define para ese negocio; no con un porcentaje general sin sustento.",
-          "change": "Una condición común filtra todas las opciones: demanda, operador y viabilidad.",
+          "change": "Los cinco pasan por el mismo filtro de estudios y salen a una ruta y una asociación propias; siguiente paso: el estudio.",
           "role": "plan"
         }
       ],
       "narration": "La propuesta complementaria tiene sentido si atiende necesidades reales del entorno industrial. No es llenar el terreno de productos: cada negocio debe demostrar a quién sirve y cómo se sostiene. Plaza y servicios pueden atender la actividad cotidiana; oficinas flex y showrooms, a proveedores y empresas. Su escala depende de demanda, competencia y operación. El hotel, el Industrial Club y bodegas pocket de 250 a 500 metros cuadrados completan las posibilidades. No todos tienen que desarrollarse juntos ni bajo el mismo modelo. Para cada componente elegimos, con estudios, si conviene desarrollar, vender, arrendar o integrar un operador. La asociación se define para ese negocio; no con un porcentaje general sin sustento.",
       "takeaway": "Seleccionar producto, operador y fase",
-      "draw": "Dos encabezados distinguen necesidad industrial y producto que podría responder.",
-      "motion": "Una condición común filtra todas las opciones: demanda, operador y viabilidad.",
+      "draw": "La nave aparece primero; de ella salen cinco necesidades de quienes operan en el distrito. Llenar el terreno queda tachado.",
+      "motion": "Los cinco pasan por el mismo filtro de estudios y salen a una ruta y una asociación propias; siguiente paso: el estudio.",
       "caution": "Productos propuestos, sujetos a factibilidad. Las relaciones de uso son hipótesis de diseño comercial; no acreditan mercado, operador o dimensiones definitivas.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
-      "understand": "Vincular cada producto complementario con una necesidad y demanda por validar.",
-      "visualMeaning": "Relación necesidad–producto: actividad industrial → necesidades → negocios que podrían responder."
+      "understand": "Entender por qué existiría cada complemento y cómo se decide si se hace.",
+      "visualMeaning": "Cadena causal: operación → necesidad → producto → filtro (demanda, operador, viabilidad) → ruta y asociación por producto → siguiente paso."
     },
     {
       "id": "capital",

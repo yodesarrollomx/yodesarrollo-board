@@ -1,7 +1,8 @@
 // A different diagram grammar for each relationship. Figures are not placeholders.
-import {K,T,P,G,A,H,B} from './diagram-kit.js?v=YOD-SB08';
-import {participacion} from './network.js?v=YOD-SB08';
-import {retribucion} from './flows.js?v=YOD-SB08';
+import {K,T,P,G,A,H,B} from './diagram-kit.js?v=YOD-SB09';
+import {participacion} from './network.js?v=YOD-SB09';
+import {retribucion} from './flows.js?v=YOD-SB09';
+import {complementos} from './districts.js?v=YOD-SB09';
 export function meaning(index,m){const W=m?480:1100,C=W/2,L=m?122:285,R=m?358:815,S=m?17:23,small=m?14:18;let o='';
  if(index===1){
  // Patrimonio SB07: BTS y complementos. Las figuras Hairline (nave, plaza, office, hotel, club, pocket) las coloca drawings.js; aquí solo texto y guías.
@@ -45,12 +46,7 @@ export function meaning(index,m){const W=m?480:1100,C=W/2,L=m?122:285,R=m?358:81
  o+=G(3,A(C,580,C,615,K.action)+T(C,647,'Invertir en la fase que sí tiene fundamento',m?18:27,K.action));
  }
  if(index===4)o+=retribucion(m);
- if(index===5){
- o+=T(C,190,'DE LA NECESIDAD AL PRODUCTO',m?19:25,K.solution)+T(L,225,'La actividad necesita…',m?15:21,K.problem)+T(R,225,'Podría resolverse con…',m?14:21,K.solution);
- const rows=[['Servicios cotidianos','Comercio y servicios'],['Visitas de trabajo','Hotel de negocios'],['Reuniones y representación','Oficinas / showrooms'],['Relaciones y encuentros','Industrial Club'],['Operaciones más pequeñas','Bodegas de 250–500 m²']];
- rows.forEach((a,j)=>{const y=280+j*62,n=j<2?1:2;o+=G(n,T(L,y,a[0],m?13:20)+P(`M${m?223:490} ${y-5} H${m?252:610}`,K.solution,2)+P(`M${m?247:604} ${y-10} l6 5 -6 5`,K.solution)+T(R,y,a[1],m?13:20,K.solution)+P(`M${m?28:100} ${y+21} H${W-(m?28:100)}`, '#d6ddcf',1));});
- o+=G(3,B(C,610,m?420:900,58,K.plan)+T(C,645,'Cada producto debe probar demanda, operador y viabilidad.',m?13:22,K.plan));
- }
+ if(index===5)o+=complementos(m);
  if(index===6){
  o+=T(L,190,'A · TIERRA',m?23:30,K.solution)+T(R,190,'B · TIERRA + CAPITAL',m?18:30,K.solution);
  for(const x of[L,R])o+=B(x,220,m?194:380,65,K.ink)+T(x,247,'Suelo delimitado',S)+T(x,272,'Valuación acordada',small,K.muted);

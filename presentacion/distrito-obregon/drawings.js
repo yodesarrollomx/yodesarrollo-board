@@ -1,6 +1,6 @@
-import {meaning,reveal} from './meaning.js?v=YOD-SB08';
-import {figure} from './figures.js?v=YOD-SB08';
-import {territoryMarkup,paintTerritory,parcelScreen,parcelFigurePath} from './territory.js?v=YOD-SB08';
+import {meaning,reveal} from './meaning.js?v=YOD-SB09';
+import {figure} from './figures.js?v=YOD-SB09';
+import {territoryMarkup,paintTerritory,parcelScreen,parcelFigurePath} from './territory.js?v=YOD-SB09';
 export const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ink='#253e3b',muted='#6b7972';
 const text=(x,y,s,size=18,color=ink,anchor='middle')=>`<text x="${x}" y="${y}" font-size="${size}" fill="${color}" text-anchor="${anchor}">${esc(s)}</text>`;
@@ -15,7 +15,10 @@ function state(i,t,m){const W=m?480:1100,C=W/2,R=m?358:815,a={};for(const id in 
  if(i===1){const e=ease((t-1.2)/.8);a.land=m?[240,188,.22,1]:[550,165,.30,1];
   a.nave=m?[86,335,.72,1]:[160,430,1.15,1];
   ['plaza','office','hotel','club','pocket'].forEach((id,k)=>a[id]=m?[40,[469,497,525,553,581][k],k<4?.26:.30,e]:[612,[298,359,423,473,536][k],k<4?.40:.48,e]);}
- if(i===3)a.nave=[R,355,m?1.25:1.8,ease(t-.8)];return a;
+ if(i===3)a.nave=[R,355,m?1.25:1.8,ease(t-.8)];
+ if(i===5){a.nave=m?[60,215,.45,1]:[150,380,.95,1];
+  ['plaza','office','hotel','club','pocket'].forEach((id,k)=>{const e=ease((t-(k<2?0:1)-.2)/.8);a[id]=m?[40,[270,322,374,426,478][k],.26,0]:[620,[250,318,386,454,522][k],.40,e]})}
+ return a;
 }
 // Contorno plano del terreno (objeto land en i<=1). En la escena 0 imita el trazo del mapa (relevo invisible) y se asienta en la escena 1.
 const mixHex=(a,b,t)=>'#'+[1,3,5].map(k=>Math.round(mix(parseInt(a.substr(k,2),16),parseInt(b.substr(k,2),16),t)).toString(16).padStart(2,'0')).join('');
