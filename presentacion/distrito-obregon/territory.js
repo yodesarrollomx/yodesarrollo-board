@@ -1,6 +1,6 @@
-import {roads,source as mapSource} from './basemap.js?v=YOD-SB08';
-import {parcel} from './parcel.js?v=YOD-SB08';
-import {mapLabels} from './map-labels.js?v=YOD-SB08';
+import {roads,source as mapSource} from './basemap.js?v=YOD-SB09';
+import {parcel} from './parcel.js?v=YOD-SB09';
+import {mapLabels} from './map-labels.js?v=YOD-SB09';
 // Escena "ubicacion": traza OSM empaquetada (metros locales, X este, Y abajo) + contorno del terreno.
 // Las calles se crean UNA vez en metros dentro de #map-world; la cámara solo cambia un transform.
 // Rótulos de calle, colindancias, chinchetas y columna de datos: ver paintMapLabels().

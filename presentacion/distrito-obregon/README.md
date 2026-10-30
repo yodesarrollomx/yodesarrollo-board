@@ -1,4 +1,4 @@
-# Distrito Obregón · storyboard YOD-SB08
+# Distrito Obregón · storyboard YOD-SB09
 
 Etapa uno: guion visual para revisión. La presentación de producción, sincronización de audiencia y cierre comercial no se habilitan hasta recibir instrucción explícita sobre el guion corregido.
 
@@ -78,7 +78,7 @@ La guía visible explica seis funciones, sus preguntas de evaluación y el conte
 
 **Íconos (`icons.js`).** Tabler Icons 3.24.0 (outline, MIT, © Paweł Kuna), el mismo estilo de línea de la barra lateral de YOD OS. Las rutas son copia literal de los SVG originales; la licencia va en la cabecera del archivo. `diagram-kit.js` agrupa los primitivos de dibujo que antes vivían en `meaning.js`.
 
-**Pruebas.** `tests/obregon-storyboard-browser.cjs` añade para las escenas 3 y 5: 11 nodos, 3 de la alianza y al menos 6 por seleccionar; 5 flujos; cautela en los pasos 1 a 4; ausencia de cifras (`/\d\s*%|\$\s*\d|MXN|USD|\d{2,}\s*(años|meses)/`); y solapamiento de textos, cajas de íconos y líneas. La versión esperada es YOD-SB08.
+**Pruebas.** `tests/obregon-storyboard-browser.cjs` añade para las escenas 3 y 5: 11 nodos, 3 de la alianza y al menos 6 por seleccionar; 5 flujos; cautela en los pasos 1 a 4; ausencia de cifras (`/\d\s*%|\$\s*\d|MXN|USD|\d{2,}\s*(años|meses)/`); y solapamiento de textos, cajas de íconos y líneas. La versión esperada la fija la constante `VERSION` de la prueba.
 
 **Pendientes de Dirección (Q1–Q7).**
 - Q1: si Avermont Real Estate forma parte de la alianza en Obregón y con qué rol.
@@ -90,3 +90,38 @@ La guía visible explica seis funciones, sus preguntas de evaluación y el conte
 - Q7: si los íconos Tabler son el «estilo de logos» pedido en la chinche #351.
 
 Revisión visual y aceptación de la chinche #348 por Dirección pendientes.
+
+## SB09 · Por qué un distrito
+
+**Origen.** Chinche #349 de Dirección sobre la lámina «Por qué un distrito» (`complementos`, escena 6 de 10, índice 5): «Entiendo los números, pero no tiene mucha lógica». La versión anterior era una tabla genérica «De la necesidad al producto», sin la operación que genera las necesidades, sin criterio para confiar y sin siguiente paso. No se cambió ningún texto hablado (`spoken`, `narration`, `title`, `beats`, `caution`); solo `change`, `draw`, `motion`, `visualMeaning`, `understand` y `version` de esa escena.
+
+**Qué responde.** `patrimonio` responde «qué es cada negocio»; `complementos` responde «por qué existiría cada uno y cómo se decide si se hace». No repite los ejemplos del catálogo de `patrimonio`.
+
+**Cadena.** Operación industrial (la nave) → cinco necesidades → cinco productos que podrían responder → mismo filtro de estudios (demanda, operador, viabilidad) → ruta por producto y asociación propia → siguiente paso. Llenar el terreno de productos aparece tachado como la alternativa descartada. `districts.js` dibuja la escena (`complementos(m)`, desktop y móvil) y `meaning.js` solo delega en él. Las figuras Hairline de la nave y de los cinco productos son los mismos objetos persistentes de `patrimonio`; `drawings.js` los coloca y en móvil los oculta.
+
+Marcas para revisión: `data-need` (servicios, reuniones, visitas, encuentros, pequenas), `data-product` (plaza, office, hotel, club, pocket), `data-gate`, `data-route`, `data-next`, `data-strike`, `data-icon` y `data-link`.
+
+**Mapeo al Método YOD v3.0.0.**
+
+| Regla del Método | Cómo se aplica |
+|---|---|
+| Una escena responde una pregunta de la audiencia | «¿Por qué desarrollar algo además de las naves, y cómo sabremos cuál conviene?» |
+| Un mensaje por paso | 1 la operación trae necesidades · 2 dos respuestas para quienes trabajan ahí · 3 tres más, que no tienen que ir juntas · 4 todos pasan el mismo filtro y el siguiente paso es estudiar |
+| El objeto antes que la etiqueta | La nave aparece primero; después las líneas y los textos de las necesidades. Cada producto es una figura con su propio nombre y su propia línea, sin llave que los agrupe |
+| Un color por función | Necesidad = problema, producto = solución, filtro y ruta = plan, siguiente paso = acción (único texto verde de la escena) |
+| Razones para confiar | Cada negocio debe mostrar demanda, operador y viabilidad antes de comprometer tierra o capital |
+| Reducir esfuerzo e incertidumbre | No todos se desarrollan juntos ni bajo el mismo modelo; la asociación se define para ese negocio |
+| Siguiente paso | «Estudiar demanda, operador y viabilidad de cada producto» |
+
+**Íconos (`icons.js`).** Ocho nuevos de Tabler Icons 3.24.0, copia literal: `tools-kitchen-2`, `presentation`, `luggage`, `package`, `chart-line`, `calculator`, `file-search` y `arrows-split`.
+
+**Sin cifras nuevas.** Ni porcentajes, montos, plazos ni superficies; la única cifra es «250 a 500 m²» de las bodegas pocket, ya presente en el guion.
+
+**Pruebas.** `tests/obregon-storyboard-browser.cjs` añade para la escena 5: cinco `[data-need]` y cinco `[data-product]`, presencia de filtro, ruta y siguiente paso, un solo texto «Siguiente paso»; productos con opacidad menor a .1 en el paso 1; ausencia de porcentajes, montos y de la superficie del terreno; opacidad de la nave y de las figuras por paso (en móvil las cinco figuras ocultas); y solapamiento de textos, íconos y líneas en los pasos 1 a 4 (el tachado solo se ignora contra su propio texto). Versión esperada: SB09. Verificación local de sintaxis y `git diff --check`; no demuestran funcionamiento en producción.
+
+**Pendientes (no son pruebas).**
+- Título opcional: «La industria crea necesidades alrededor.» afirma una causalidad que no se ha medido; se propone «Otros negocios, sólo si la operación los necesita.». No se aplica sin visto bueno de Dirección.
+- Hotel: «Hotel de negocios» (guion) frente a «Hotel de cadena comercial» (lámina conceptual). Se usa el del guion.
+- Estudio de mercado: si hay uno cotizado o en curso que pueda nombrarse como siguiente paso (quién y cuándo, sin montos). Mientras tanto, «estudio por producto».
+- Ejemplos de la lámina conceptual en `patrimonio` («restaurantes, bancos…», «gimnasio, alberca…»): decidir si se quitan o se aprueban como texto público.
+- Revisión visual y aceptación de la chinche #349 por Dirección.
