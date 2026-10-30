@@ -1,17 +1,17 @@
 {
   "model_revision": "2026-10-20.masterdeveloper-pizarra.1",
-  "proposal_id": "CHG-MASTERDEVELOPER-PIZARRA-20261020",
-  "summary": "Nombre Master Developer para Dirección y Master Broker para otras cuentas autorizadas; entrada por brokers y recorrido canónico por proyecto. Pizarra separada con carátulas, posición, zoom, montones, carpetas, búsqueda y deshacer. Estado personal privado por actor verificado en GAS-SALA existente, revisión esperada y recibo idempotente. Conservar CRM, IDs, fuentes, permisos, versiones, chinches y URLs; no inferir avance comercial del tipo de oportunidad.",
+  "proposal_id": "CHG-MASTERBROKERS-MINI-CRM",
+  "summary": "Quinta pestaña «Historia · Hoy · Plan» en el detalle de cada caso de Brokers: con una fecha de consulta (por defecto hoy) muestra, en sólo lectura, el historial hasta esa fecha, el estado respaldado y los planes vigentes, derivados de las actividades existentes (sobre YOD-CRM v1). Sin backend, sin contrato nuevo, sin datos ni permisos nuevos y sin escrituras. Sólo frontend, pruebas y CI.",
   "components": [
     "SYS-INVERSION",
     "SYS-YOD-OS"
   ],
   "tests": [
-    "Roles y separación de carteras con snapshots sintéticos.",
-    "Pizarra: mover, agrupar, sacar, recargar, deshacer, móvil y teclado.",
-    "Persistencia: identidad, CAS, ACK perdido, reintento idéntico y conflicto sin sobrescribir.",
-    "Regresiones existentes y comparación de archivos publicados; sesiones reales separadas de pruebas sintéticas."
+    "node --test tests/brokers*.test.cjs: CRM.temporal con eventos sintéticos (historial por fecha ocurrida, reemplazos y cancelaciones por fecha de registro, vencido sin cambiar estado, hoy contra fecha pasada, fecha inválida).",
+    "node tests/brokers-temporal-browser.cjs: Chromium 320/390/1440 con servicios sintéticos; paneles, pestañas con teclado, navegación de fecha, vacíos explícitos y cero desbordamiento.",
+    "Sólo lectura: cero llamadas brokers_save y snapshot sin cambios al cambiar la fecha o volver a hoy.",
+    "Regresiones: node --check de brokers.js y brokers-crm.js y navegadores existentes de Brokers sin cambios de contrato."
   ],
-  "rollback": "Revertir PR de interfaz/servidor manteniendo archivos de organización, expedientes, recibos, permisos y originales.",
+  "rollback": "Revertir el PR; no toca datos ni recibos",
   "model_commit": "505d6b6f540e3b0a704659c665e64be1e4e698a1"
 }

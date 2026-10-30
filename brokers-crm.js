@@ -54,6 +54,29 @@
     const replaced=new Set(events.filter(e=>e.replaces&&e.id!==e.replaces&&byId.get(e.replaces)?.opportunity_id===e.opportunity_id&&String(e.recorded_at)>=String(byId.get(e.replaces)?.recorded_at)&&['Programado','Propuesto'].includes(byId.get(e.replaces)?.status)).map(e=>e.replaces));
     return events.filter(e=>e.day&&e.status!=='Cancelado'&&!replaced.has(e.id));
   }
+  // Read-only projection of the append-only history as it stood on one day. Never writes and never invents a date:
+  // a missing fact stays '' or null. A result, reschedule or cancellation only counts once it had been recorded by asOf.
+  function temporal(rows,asOfDay,current){
+    const now=day(new Date().toISOString()),asOf=day(asOfDay)||now,isToday=asOf===now,cur=current&&typeof current==='object'?current:null;
+    const events=history(Array.isArray(rows)?rows:[]),byId=new Map(events.map(e=>[e.id,e]));
+    const recorded=e=>day(e.recorded_at),known=e=>{const d=recorded(e);return d!==''&&d<=asOf;};
+    const replaced=new Set(events.filter(e=>known(e)&&e.replaces&&e.id!==e.replaces).filter(e=>{
+      const target=byId.get(e.replaces);return !!target&&target.opportunity_id===e.opportunity_id&&['Programado','Propuesto'].includes(target.status)&&String(e.recorded_at)>=String(target.recorded_at);
+    }).map(e=>e.replaces));
+    const decorate=e=>({...e,recordedLater:recorded(e)>asOf,correctsId:e.replaces&&e.replaces!==e.id?e.replaces:''});
+    const past=events.filter(e=>e.day&&e.day<=asOf).map(decorate),lastFact=past.find(e=>e.status==='Realizado')||null,staged=past.find(e=>e.status==='Realizado'&&e.stage)||null;
+    // A plan only exists on a day once it had been recorded; later captures never rewrite that day.
+    const plans=events.filter(e=>e.day&&known(e)&&['Programado','Propuesto'].includes(e.status)&&!replaced.has(e.id)).map(e=>({...decorate(e),overdue:e.day<asOf}))
+      .sort((a,b)=>a.day.localeCompare(b.day)||String(a.recorded_at).localeCompare(String(b.recorded_at))||a.id.localeCompare(b.id));
+    let lastRecordedAt='',latest=-Infinity;
+    for(const e of events){const t=Date.parse(e.recorded_at);if(known(e)&&Number.isFinite(t)&&t>latest){latest=t;lastRecordedAt=e.recorded_at;}}
+    const live=isToday&&cur;
+    return {asOf,isToday,history:past,
+      today:{lastFact,stage:live?String(cur.stage||''):(staged?staged.stage:''),nextAction:live?String(cur.next_action||''):String(lastFact?.next_action||''),nextDate:live?String(cur.next_date||''):String(lastFact?.next_date||''),
+        decision:live?cur.decision===true:false,source:lastFact?.source||'',sourceUrl:lastFact?.source_url||'',lastRecordedAt,blocker:null},
+      plan:{commitments:plans.filter(e=>e.status==='Programado'),proposals:plans.filter(e=>e.status==='Propuesto'),
+        currentStep:live&&(cur.next_action||cur.next_date)?{text:String(cur.next_action||''),date:String(cur.next_date||'')}:null}};
+  }
   function monthGrid(month,rows){
     if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(month))throw Error('Mes inválido.');
     const [year,n]=month.split('-').map(Number),first=new Date(Date.UTC(year,n-1,1)),days=new Date(Date.UTC(year,n,0)).getUTCDate();
@@ -113,5 +136,5 @@
     }
     return {read,invalidate};
   }
-  return {marker,caseMarker,pppStates,caseInfo,encodeCase,types,statuses,day,encode,decode,history,calendarEvents,monthGrid,shiftMonth,pppReference,savedPPP,createPPPClient};
+  return {marker,caseMarker,pppStates,caseInfo,encodeCase,types,statuses,day,encode,decode,history,calendarEvents,temporal,monthGrid,shiftMonth,pppReference,savedPPP,createPPPClient};
 });

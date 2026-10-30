@@ -172,3 +172,39 @@ body:has(#brokers){background:#f7f9f7;color:#213b34;color-scheme:light}
 
 .md-team{width:100%;display:grid;gap:0;border:1px solid var(--line,#d8ded8);border-radius:14px;overflow:hidden;background:var(--surface,#fff)}
 .md-broker-row{display:flex;align-items:center;gap:16px;width:100%;padding:22px;text-align:left;border:0;border-bottom:1px solid #d8ded8;border-radius:0;background:transparent;color:inherit;min-height:88px}.md-broker-row:last-child{border-bottom:0}.md-broker-row>span:nth-child(2){flex:1}.md-broker-row strong,.md-broker-row small{display:block}.md-broker-row small{margin-top:7px;opacity:.7}.md-broker-row:hover,.md-broker-row:focus-visible{background:#f1f5ec}.case-progress{display:block;font-size:12px;opacity:.75;margin:6px 0}@media(max-width:600px){.md-broker-row{padding:16px 12px;gap:10px}}
+/* T-057 · Historia · Hoy · Plan (consulta por fecha, solo lectura). Colores del sistema; cada estado lleva texto, nunca solo color. */
+.temporal{min-width:0}
+.temporal-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0 0 14px}
+.temporal-toolbar label{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:12px;color:var(--ink)}
+.temporal-toolbar input[type=date]{width:auto;max-width:100%;min-width:0;padding:6px 8px}
+.temporal-toolbar .text-button:disabled{color:var(--muted);cursor:default}
+.temporal-note{flex-basis:100%;margin:0;font-size:11px;color:var(--muted)}
+.temporal-tabs{display:flex;gap:4px;margin:0 0 14px;border-bottom:1px solid var(--line)}
+.temporal-tabs [role=tab]{flex:1 1 0;min-width:0;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--ink);padding:10px 2px;font-size:12px;line-height:1.3;text-align:center;overflow-wrap:anywhere}
+.temporal-tabs [role=tab][aria-selected=true]{border-bottom-color:var(--accent);color:var(--accent);font-weight:600}
+.temporal-grid{display:grid;gap:12px;min-width:0}
+.temporal-grid>[role=tabpanel]{display:none;min-width:0;padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.temporal-grid[data-pane=history]>[data-pane=history],.temporal-grid[data-pane=today]>[data-pane=today],.temporal-grid[data-pane=plan]>[data-pane=plan]{display:block}
+.temporal h3{font-size:15px;font-weight:600;line-height:1.35;margin:0 0 10px;overflow-wrap:anywhere}
+.temporal h4{font-size:12px;font-weight:600;margin:16px 0 6px;color:var(--ink)}
+.temporal-facts{margin:0}
+.temporal-facts>div{padding:9px 0;border-bottom:1px solid var(--line)}
+.temporal-facts>div:last-child{border-bottom:0}
+.temporal-facts dt{font-weight:600;font-size:11px;color:var(--muted)}
+.temporal-facts dd{margin:4px 0 0;line-height:1.55;overflow-wrap:anywhere}
+.temporal .empty-note{color:var(--muted);font-style:italic}
+.temporal .empty-cell{padding:12px 2px;text-align:left}
+.temporal .status{display:inline-block;max-width:100%;padding:2px 7px;border-radius:4px;background:var(--soft);font-size:10px;line-height:1.5;white-space:normal}
+.temporal .status-late{border:1px solid var(--warning);background:transparent;color:var(--warning)}
+.temporal .status-note{border:1px dashed var(--muted);background:transparent;color:var(--ink)}
+.temporal .timeline{padding-left:6px}
+.temporal .timeline li{padding-left:16px}
+.temporal .timeline-meta{align-items:center;gap:6px 10px}
+.temporal .timeline p,.temporal .event-provenance,.temporal .event-next{overflow-wrap:anywhere}
+.temporal .record-status{padding:6px 0 0;gap:6px 12px;font-size:12px}
+.temporal-current{padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}
+.temporal-current h4{margin:0 0 6px}
+@media(min-width:1024px){.temporal-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr);align-items:start}.temporal-grid>[role=tabpanel]{display:block}.temporal-tabs{display:none}}
+
+/* T-057 · En pantallas angostas las pestañas del expediente envuelven para que la quinta («Historia · Hoy · Plan») quede visible sin desplazamiento horizontal. */
+@media(max-width:600px){#brokers .detail-tabs{flex-wrap:wrap;gap:2px 14px;overflow:visible}#brokers .detail-tabs>button{padding:8px 0}}
