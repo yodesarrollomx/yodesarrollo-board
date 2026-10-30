@@ -1,5 +1,5 @@
 export const story={
-  "version": "YOD-SB06",
+  "version": "YOD-SB07",
   "stage": "storyboard",
   "production": "requires_explicit_instruction",
   "title": "Distrito Obregón Industrial",
@@ -55,36 +55,36 @@ export const story={
         {
           "label": "Ciudad Obregón · Sonora",
           "spoken": "Partimos de la propiedad que ustedes conocen, en Ciudad Obregón, sobre la carretera Federal 15. Primero ubicamos el lugar; después explicamos el negocio.",
-          "change": "La traza urbana ubica el punto documental junto a Federal15; el color de contexto permanece neutro.",
+          "change": "La traza urbana de Ciudad Obregón ubica el predio sobre la Federal 15; norte y escala visibles.",
           "role": "context"
         },
         {
           "label": "24.7584 hectáreas de referencia",
           "spoken": "La propuesta considera 247,584 metros cuadrados. El terreno adicional al sur queda fuera de esta base. La forma se toma de la presentación conceptual original; el levantamiento confirmará linderos y accesos.",
-          "change": "El mapa reduce su escala y aparece el contorno de la presentación junto a la superficie documental.",
+          "change": "La cámara se acerca al predio: contorno a escala, calle de frente y colindancias rotuladas.",
           "role": "context"
         },
         {
           "label": "Suelo, accesos y servicios",
           "spoken": "La ubicación por sí sola no define qué cabe. Accesos de carga, servicios, usos de suelo y superficie útil determinarán el plan maestro.",
-          "change": "Accesos, servicios y superficie útil aparecen como preguntas de capacidad, no como aprobaciones.",
+          "change": "Cuatro preguntas numeradas sobre el contorno: accesos, servicios, uso de suelo y superficie útil.",
           "role": "problem"
         },
         {
           "label": "Una propiedad. Dos estrategias de negocio.",
           "spoken": "Sobre esta misma propiedad proponemos separar dos decisiones: conservar las naves industriales como patrimonio y asociarnos para desarrollar los productos complementarios.",
-          "change": "El predio permanece como referencia y anticipa dos estrategias económicas, sin dibujar una lotificación.",
+          "change": "El predio queda como una sola propiedad y sube para abrir las dos estrategias; sin lotificación.",
           "role": "solution"
         }
       ],
       "narration": "Partimos de la propiedad que ustedes conocen, en Ciudad Obregón, sobre la carretera Federal 15. Primero ubicamos el lugar; después explicamos el negocio. La propuesta considera 247,584 metros cuadrados. El terreno adicional al sur queda fuera de esta base. La forma se toma de la presentación conceptual original; el levantamiento confirmará linderos y accesos. La ubicación por sí sola no define qué cabe. Accesos de carga, servicios, usos de suelo y superficie útil determinarán el plan maestro. Sobre esta misma propiedad proponemos separar dos decisiones: conservar las naves industriales como patrimonio y asociarnos para desarrollar los productos complementarios.",
       "takeaway": "Una propiedad. Dos estrategias de negocio.",
-      "draw": "La traza urbana ubica el punto documental junto a Federal15; el color de contexto permanece neutro.",
-      "motion": "El predio permanece como referencia y anticipa dos estrategias económicas, sin dibujar una lotificación.",
-      "caution": "Ubicación documental: 27°28′30.0″N, 109°55′17.4″W. Contorno trazado desde la presentación conceptual original, sin georreferenciación catastral. La base comercial no sustituye un levantamiento.",
+      "draw": "La traza urbana de Ciudad Obregón ubica el predio sobre la Federal 15; norte y escala visibles.",
+      "motion": "El predio queda como una sola propiedad y sube para abrir las dos estrategias; sin lotificación.",
+      "caution": "Ubicación documental: 27°28′30.0″N, 109°55′17.4″W. Contorno trazado desde la presentación conceptual original, sin georreferenciación catastral. La base comercial no sustituye un levantamiento. Forma conceptual escalada a 247,584 m² y colocada sobre cartografía OpenStreetMap; posición aproximada hasta recibir el KMZ.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
       "understand": "Ubicar la propiedad y distinguir superficie conocida de capacidad por estudiar.",
-      "visualMeaning": "Geografía: punto de ubicación + contorno documental. No pretende validar cabida."
+      "visualMeaning": "Geografía: traza OSM georreferenciada + contorno a escala de la superficie. No pretende validar cabida."
     },
     {
       "id": "patrimonio",
@@ -104,25 +104,25 @@ export const story={
         {
           "label": "Naves a la medida de un arrendatario",
           "spoken": "Una nave a la medida —Built-To-Suit o BTS— se proyecta para las necesidades de una empresa. La estrategia propuesta es conservar ese inmueble y recibir rentas a largo plazo.",
-          "change": "Una bifurcación abre el negocio de las naves a la medida desde una propiedad común.",
+          "change": "La propiedad abre dos ramas; en la de BTS aparece la nave y la cadena empresa → nave → contrato → rentas.",
           "role": "solution"
         },
         {
           "label": "Patrimonio industrial para los propietarios",
           "spoken": "El beneficio patrimonial de las naves permanece del lado de ustedes, sujeto a los acuerdos jurídicos y financieros. Conseguir un usuario no convierte automáticamente al equipo en dueño.",
-          "change": "La rama BTS conduce a inmuebles y rentas del propietario.",
+          "change": "La cadena BTS termina en el inmueble y las rentas de los propietarios.",
           "role": "outcome"
         },
         {
           "label": "Otros negocios, con asociación propia",
           "spoken": "Los servicios, hotel, negocios, club y bodegas pequeñas se estudian como negocios complementarios. Ahí proponemos una asociación desarrolladora con reglas por producto.",
-          "change": "La otra rama muestra negocios complementarios y asociación por producto.",
+          "change": "La rama de complementos muestra cinco negocios, cada uno con la necesidad que atiende.",
           "role": "solution"
         },
         {
           "label": "Cada negocio necesita su propia cuenta",
           "spoken": "El objetivo no es vender las naves para pagar todo lo demás. Cada componente debe justificar su demanda, capital, obligaciones y resultado.",
-          "change": "Una separación y una condición de financiamiento impiden confundir los flujos de ambos negocios.",
+          "change": "Una banda separa las cuentas: las naves no financian lo demás.",
           "role": "risk"
         }
       ],
@@ -133,7 +133,7 @@ export const story={
       "caution": "Propuesta preliminar. El plan maestro definirá superficies y número de edificios; las maquetas representan modelos de negocio, no cabida.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
       "understand": "Distinguir qué patrimonio se conserva y en qué negocios se propone asociarse.",
-      "visualMeaning": "Bifurcación: una propiedad, dos destinos económicos; no es una lotificación."
+      "visualMeaning": "Bifurcación con figuras: una propiedad, patrimonio BTS a un lado y negocios complementarios al otro; no es lotificación."
     },
     {
       "id": "participacion",
