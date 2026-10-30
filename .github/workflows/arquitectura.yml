@@ -21,7 +21,7 @@ permissions:
 jobs:
   impacto:
     name: Arquitectura YOD
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # Playwright 1.58.2 no soporta Chromium en ubuntu-latest (26.04)
     steps:
       - name: Validar referencias manuales
         env:
