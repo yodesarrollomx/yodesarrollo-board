@@ -1,4 +1,4 @@
-# Distrito Obregón · storyboard YOD-SB10
+# Distrito Obregón · storyboard YOD-SB11
 
 Etapa uno: guion visual para revisión. La presentación de producción, sincronización de audiencia y cierre comercial no se habilitan hasta recibir instrucción explícita sobre el guion corregido.
 
@@ -178,6 +178,47 @@ Marcas para revisión: `data-row` (A, B), `data-gives` (suelo, trabajo, capital,
 - Q5: qué parte de lo platicado se cuenta en público; hoy no está en el guion.
 - Q6: orden de la revisión: `capital`, `validacion`, `decision`.
 
-**Pruebas.** `tests/obregon-storyboard-browser.cjs` añade para la escena 6: el terreno como héroe en 24.0 y 24.6 (opacidad y escala) y en la fila A en 25.0, mismo nodo; en el paso 4, filas A y B con cuatro aportaciones cada una, cuatro «recibe», fórmula y un solo texto en el color de acción; lo marcado con `data-until` se ve al inicio y desaparece; ausencia de porcentajes, montos y «50/50»; solapamiento de textos, íconos y líneas en los pasos 1 a 4; y la piel (título en `rgb(5, 37, 67)` con la clase y en la tinta anterior sin ella, sin residuos). Versión esperada: SB10. Verificación local de sintaxis y `git diff --check`; no demuestran funcionamiento en producción.
+**Pruebas.** `tests/obregon-storyboard-browser.cjs` añade para la escena 6: el terreno como héroe en 24.0 y 24.6 (opacidad y escala) y en la fila A en 25.0, mismo nodo; en el paso 4, filas A y B con cuatro aportaciones cada una, cuatro «recibe», fórmula y un solo texto en el color de acción; lo marcado con `data-until` se ve al inicio y desaparece; ausencia de porcentajes, montos y «50/50»; solapamiento de textos, íconos y líneas en los pasos 1 a 4; y la piel (título en `rgb(5, 37, 67)` con la clase y en la tinta anterior sin ella, sin residuos). Versión esperada: SB11. Verificación local de sintaxis y `git diff --check`; no demuestran funcionamiento en producción.
 
 **Pendientes (no son pruebas).** Revisión visual y aceptación de la chinche #350 por Dirección; respuestas a Q1 a Q6.
+
+## SB11 · Primero una empresa
+
+**Origen.** Chinche #351 de Dirección sobre la lámina «Cómo nace una nave» (`demanda`, escena 4 de 10, índice 3). El dibujo anterior no mostraba actores: una nave aislada, tres rótulos flotantes y una caja con texto. No se cambió ningún texto hablado (`spoken`, `narration`, `title`, `beats`, `caution`); cambian `change`, `draw`, `motion`, `visualMeaning`, `understand` y la versión.
+
+**Herramientas.** Las figuras vienen del kernel Hairline (`vendor/hairline-kernel.mjs`), ya empacado en `figures.js`; los pictogramas, de Tabler Icons 3.24.0 (copia literal, `icons.js`). `demand.js` dibuja la escena (`demanda(m)`, desktop y móvil) y `meaning.js` solo delega en él.
+
+**Pregunta de la familia (eje del dibujo).** ¿Quién tiene que decir que sí, y en qué orden, antes de que se construya algo en nuestro terreno?
+
+**Decisiones de diseño.** El control de la familia queda como ficha visible en el paso 4 («Ustedes conservan las decisiones que se pacten»); el efectivo que falta se identifica antes de construir; una sola nave sólida al final como resultado tangible. La pregunta de la familia es el eje y el hilo tiene cuatro pasos; la compuerta del paso 3 muestra sus tres condiciones y la cautela queda visible en una línea pequeña. La familia es protagonista y el terreno el ancla fija; el riesgo se lee como hilo (candado tenue antes del paso 4), sin rojos saturados ni tachados.
+
+Lo que se descartó: afirmar que la tierra no se compromete hasta cierto punto (no está en el guion) y una ficha de «siguiente paso» (vive en `validacion` y `decision`).
+
+**Pasos.**
+
+| Paso | Mensaje |
+|---|---|
+| 1 · Encontrar al usuario adecuado | La alianza sale del terreno a buscar una empresa que encaje con la ubicación |
+| 2 · Convertir interés en requerimientos y acuerdos | Carta de intención («aún no es arrendamiento»); seis requisitos dibujan la nave, todavía en contorno (clase `ghost`) |
+| 3 · Comprobar costo, contrato y capital | Contrato, costo y efectivo entran a una compuerta: deben ser compatibles |
+| 4 · Ejecutar sólo la fase que se sostiene | Con cuatro aprobaciones (técnicas, comerciales, legales, financieras) la compuerta queda atrás y una nave sólida llega a su terreno |
+
+Objetos persistentes de `drawings.js`: `land`, `team`, `office`, `document`, `nave`, `gate` y `capital`. La nave se mantiene como el mismo nodo; en los pasos 1 a 3 lleva la clase `ghost` (trazo punteado, sin relleno), definida en `style.css`.
+
+Marcas para revisión: `data-step` (1 a 4), `data-gate`, `data-condition` (contrato, costo, efectivo), `data-requirement` (seis), `data-approval` (cuatro), `data-caution`, `data-icon` y `data-link`. Sin cifras en pantalla (ni dígitos).
+
+**Íconos (`icons.js`).** Diez nuevos de Tabler Icons 3.24.0: `dimensions`, `arrow-autofit-height`, `truck`, `truck-loading`, `bolt`, `clock`, `lock`, `lock-open`, `circle-check` y `arrow-back-up`.
+
+**Textos pendientes de visto bueno de Dirección.** Están detrás de constantes en `demand.js`, apagadas (`false`); mientras tanto se muestra el texto público:
+
+| Constante | Texto público actual | Texto propuesto |
+|---|---|---|
+| `VB_BANCO` (VB-1) | Se estudia el financiamiento | El banco decide con sus propios criterios |
+| `VB_AJUSTE` (VB-2) | Flecha de retorno sin rótulo | «si no son compatibles, se ajusta el proyecto» |
+| `VB_PREGUNTA` (VB-3) | Sin la pregunta en pantalla | «¿Qué tiene que pasar antes de construir en su terreno?» |
+
+**Pruebas.** `tests/obregon-storyboard-browser.cjs` añade para la escena 3: cuatro `[data-step]`; `[data-gate]` visible solo en el paso 3; tres `[data-condition]`; seis `[data-requirement]`; cuatro `[data-approval]`; la nave con clase `ghost` antes del paso 4 y sin ella desde 15.0; la nave a ±4 px de su terreno en 15.6; cero dígitos; sin solapes de textos, íconos y líneas; el terreno y la nave no tapan textos visibles; ninguna escena 1, 5 o 6 con nave en contorno. Versión esperada: SB11 (incluye `demand.js`). Verificación local de sintaxis y `git diff --check`; no demuestran funcionamiento en producción.
+
+**Paradas enteras (corrección de #350, incluida en SB11).** La navegación se detiene en posiciones enteras y cada parada debe mostrar su paso completo. En SB10, en las paradas 25.0 y 26.0 de `capital` las filas A y B aún no se veían; ahora la fila A entra de 24.7 a 25.0 (`GS(1,.3)`), la fila B de 25.7 a 26.0 (`GS(2,.3)`), el grupo del paso 1 sale con `data-until=".5"` y el terreno viaja a la fila A entre 24.6 y 24.9. La misma regla se aplicó a `demanda`. La prueba genérica `stopsEverywhere` recorre las paradas 0 a 39 en los tres tamaños: todo `data-reveal` ya alcanzado debe estar a opacidad ≥ .95 y todo `data-until` ya vencido, a < .05. Por la forma de `reveal()`, un `data-until` debe quedar al menos .2 antes de la parada en la que debe estar oculto.
+
+**Pendientes (no son pruebas).** Revisión visual y aceptación de la chinche #351 por Dirección; visto bueno de VB-1, VB-2 y VB-3.

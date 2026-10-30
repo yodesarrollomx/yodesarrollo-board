@@ -1,5 +1,5 @@
 export const story={
-  "version": "YOD-SB10",
+  "version": "YOD-SB11",
   "stage": "storyboard",
   "production": "requires_explicit_instruction",
   "title": "Distrito Obregón Industrial",
@@ -202,36 +202,36 @@ export const story={
         {
           "label": "Encontrar al usuario adecuado",
           "spoken": "Prospectamos empresas cuya operación encaje con la ubicación. Hay que entender qué producen, almacenan o distribuyen, qué superficie requieren y qué renta puede sostener su negocio.",
-          "change": "Los requerimientos del usuario aparecen antes de cualquier volumen construido.",
+          "change": "La alianza sale del terreno a buscar una empresa que encaje con la ubicación.",
           "role": "problem"
         },
         {
           "label": "Convertir interés en requerimientos y acuerdos",
           "spoken": "Con el usuario definimos superficie, altura, patios, andenes, energía y plazo. Una carta de intención permite avanzar en la negociación; todavía no es un arrendamiento definitivo.",
-          "change": "Los requerimientos definen la nave que aparece a su lado.",
+          "change": "Empresa y alianza firman una carta de intención; seis requisitos dibujan la nave, todavía en contorno.",
           "role": "plan"
         },
         {
           "label": "Comprobar costo, contrato y capital",
           "spoken": "El proyecto y su costo deben ser compatibles con el arrendamiento. Con contratos y garantías se estudia el financiamiento; también se identifica el efectivo que hará falta.",
-          "change": "La nave se completa y se añade la condición conjunta: contrato, presupuesto y capital.",
+          "change": "Contrato, costo y efectivo entran a una compuerta: deben ser compatibles.",
           "role": "risk"
         },
         {
           "label": "Ejecutar sólo la fase que se sostiene",
           "spoken": "La fase comienza cuando sus condiciones técnicas, comerciales, legales y financieras estén aprobadas. Así se construye para una operación concreta y con una estructura de inversión conocida.",
-          "change": "La condición conduce a invertir en la fase que la operación puede sostener.",
+          "change": "Con cuatro aprobaciones la compuerta queda atrás y una nave sólida llega a su terreno.",
           "role": "outcome"
         }
       ],
       "narration": "Prospectamos empresas cuya operación encaje con la ubicación. Hay que entender qué producen, almacenan o distribuyen, qué superficie requieren y qué renta puede sostener su negocio. Con el usuario definimos superficie, altura, patios, andenes, energía y plazo. Una carta de intención permite avanzar en la negociación; todavía no es un arrendamiento definitivo. El proyecto y su costo deben ser compatibles con el arrendamiento. Con contratos y garantías se estudia el financiamiento; también se identifica el efectivo que hará falta. La fase comienza cuando sus condiciones técnicas, comerciales, legales y financieras estén aprobadas. Así se construye para una operación concreta y con una estructura de inversión conocida.",
       "takeaway": "Ejecutar sólo la fase que se sostiene",
-      "draw": "Los requerimientos del usuario aparecen antes de cualquier volumen construido.",
-      "motion": "La condición conduce a invertir en la fase que la operación puede sostener.",
+      "draw": "La alianza sale del terreno a buscar una empresa que encaje con la ubicación.",
+      "motion": "Con cuatro aprobaciones la compuerta queda atrás y una nave sólida llega a su terreno.",
       "caution": "No se presume demanda contratada, financiamiento aprobado ni rentabilidad. Requerimientos y condiciones por usuario.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
-      "understand": "Entender por qué los requerimientos y el contrato del usuario preceden a la inversión.",
-      "visualMeaning": "Encaje: requisitos del usuario → nave adecuada → contrato y presupuesto → inversión."
+      "understand": "Ver quién dice que sí, y en qué orden, antes de construir en su terreno.",
+      "visualMeaning": "Hilo con objetos: terreno → empresa → carta de intención y requisitos → compuerta (contrato, costo, efectivo) → nave sólida en el terreno."
     },
     {
       "id": "retribucion",

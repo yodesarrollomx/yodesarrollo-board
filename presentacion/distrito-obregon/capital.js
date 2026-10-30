@@ -1,15 +1,15 @@
 // Escena «Qué aporta cada quien» (índice 6): ecuación de aportaciones A/B con objetos, sin cifras.
 // Devuelve el SVG de la capa semántica para desktop (m=false, 1100×730) o móvil (m=true, 480×740).
-// Revelado: G(0) el suelo se valúa; suelo, trabajo y riesgo son tres valores (data-until="1": dura todo su paso y se desvanece al entrar el siguiente) ·
-// fila A (data-reveal="1.5" data-span="0.3") · fila B y su diferencia (data-reveal="2.5" data-span="0.3"): primero A, luego B · G(3) fórmula y siguiente paso.
+// Revelado: G(0) el suelo se valúa; suelo, trabajo y riesgo son tres valores (data-until=".5": visible hasta el progreso .5 y oculto desde .7, antes de que el terreno viaje a la fila A) ·
+// fila A (data-reveal="1" data-span="0.3": entra de .7 a 1) · fila B y su diferencia (data-reveal="2" data-span="0.3": entra de 1.7 a 2): primero A, luego B · G(3) fórmula y siguiente paso.
 // Colores por función: aportación = K.solution · valuación y modelo = K.plan · lo que reciben = K.outcome · tachado = K.risk · siguiente paso = K.action.
 // Objetos: el terreno de la fila A es el objeto persistente `land` de drawings.js (héroe en el paso 1, fila A desde el paso 2);
 // aquí solo se dibujan sus copias estáticas de la fila B y el resto de figuras Hairline (coordination, capital, document).
 // Fuentes: [story.js capital m1…m4], [story.js capital caution], [story.js decision m1], [story.js validacion m1], [meaning.js SB08 capital].
-import {K,E,T,P,G,B} from './diagram-kit.js?v=YOD-SB10';
-import {icon} from './icons.js?v=YOD-SB10';
-import {figure} from './figures.js?v=YOD-SB10';
-import {parcelFigurePath} from './territory.js?v=YOD-SB10';
+import {K,E,T,P,G,B} from './diagram-kit.js?v=YOD-SB11';
+import {icon} from './icons.js?v=YOD-SB11';
+import {figure} from './figures.js?v=YOD-SB11';
+import {parcelFigurePath} from './territory.js?v=YOD-SB11';
 
 // Textos alternativos públicos. Las variantes con más detalle quedan apagadas hasta tener autorización.
 const VB_VALUACION=false;
@@ -43,7 +43,7 @@ function desktop(){
 
  // Paso 1: el terreno (objeto persistente, héroe en (550,345)) se valúa; suelo, trabajo y riesgo son tres valores [story.js capital m1].
  const vals=[['map-2','Suelo',380,48],['users-group','Trabajo',550,66],['alert-triangle','Riesgo',720,54]];
- o+=`<g data-until="1">`+G(0,
+ o+=`<g data-until=".5">`+G(0,
   `<g data-valuation="1">${LK(P('M398 304 H492',K.muted,1.2))}${T(390,300,'La tierra de cada negocio',20,K.ink,'end')}${T(390,322,'delimitada',14,K.muted,'end')}`
   +`${LK(P('M688 300 H602',K.plan,1.2))}${IC('certificate',703,292,26,K.plan)}${T(726,292,'Se valúa',20,K.plan,'start')}${T(726,314,TXT_VALUACION.join(' '),14,K.ink,'start')}</g>`
   +`<g data-values="1">`+vals.map(([n,s,x,w])=>{const x0=x-(26+8+w)/2;return `<g data-value="${n}">${IC(n,x0+13,556,26,K.ink)}${T(x0+34,562,s,18,K.ink,'start')}</g>`}).join('')
@@ -68,10 +68,10 @@ function desktop(){
    +`</g>`};
  // «Recibe»: título, detalle y matiz en tres niveles; ícono a la izquierda.
  const recv=(who,ic,y,l1,l2,l3)=>`<g data-receives="${who}">${IC(ic,800,y-5,22,K.outcome)}${T(820,y,l1,16,K.outcome,'start')}${T(820,y+18,l2,14,K.ink,'start')}${l3.map((t,i)=>T(820,y+35+i*16,t,12,K.muted,'start')).join('')}</g>`;
- o+=GS(1.5,0.3,row('A',300,'A · USTEDES APORTAN SUELO')
+ o+=GS(1,0.3,row('A',300,'A · USTEDES APORTAN SUELO')
   +recv('ustedes','users-group',284,'Ustedes','derechos económicos',['por su suelo valuado'])
   +recv('equipo','chart-arrows',350,NAME,'honorarios y participación',['por producto o fase']));
- o+=GS(2.5,0.3,row('B',470,'B · SUELO + EFECTIVO DE USTEDES')
+ o+=GS(2,0.3,row('B',470,'B · SUELO + EFECTIVO DE USTEDES')
   +recv('ustedes','users-group',446,'Ustedes','derechos por suelo + efectivo',['pueden cambiar según valuación,','riesgos y acuerdos'])
   +recv('equipo','chart-arrows',522,NAME,'honorarios y participación',TXT_EQUIPO_B)
   +`<g data-difference="1">${LK(P('M500 400 V454',K.plan,1.5),P('M496 407 L500 400 L504 407',K.plan,1.5),P('M496 447 L500 454 L504 447',K.plan,1.5))}${T(514,422,'La diferencia:',14,K.plan,'start')}${T(514,440,'quién pone el efectivo',14,K.plan,'start')}</g>`);
@@ -90,7 +90,7 @@ function mobile(){
 
  // Paso 1 [story.js capital m1]: el terreno (héroe en (240,300)) se valúa y se separan tres valores.
  const vals=[['map-2','Suelo',110,38],['users-group','Trabajo',240,50],['alert-triangle','Riesgo',370,40]];
- o+=`<g data-until="1">`+G(0,
+ o+=`<g data-until=".5">`+G(0,
   `<g data-valuation="1">${T(194,292,'La tierra de cada negocio',15,K.ink,'end')}${T(194,310,'delimitada',13,K.muted,'end')}`
   +`${IC('certificate',296,292,20,K.plan)}${T(312,298,'Se valúa',16,K.plan,'start')}${T(286,320,TXT_VALUACION[0],13,K.ink,'start')}${T(286,336,TXT_VALUACION[1],13,K.ink,'start')}</g>`
   +`<g data-values="1">`+vals.map(([n,s,x,w])=>{const x0=x-(20+6+w)/2;return `<g data-value="${n}">${IC(n,x0+10,466,20,K.ink)}${T(x0+26,471,s,14,K.ink,'start')}</g>`}).join('')
@@ -113,8 +113,8 @@ function mobile(){
    +`<g data-receives="ustedes">${IC('users-group',30,y+59,16,K.outcome)}${T(46,y+64,rec,13,K.outcome,'start')}</g>`
    +`<g data-receives="equipo">${IC('chart-arrows',30,y+81,16,K.outcome)}${T(46,y+86,NAME+': honorarios y participación',13,K.outcome,'start')}</g>`
    +`</g>`};
- o+=GS(1.5,0.3,row('A',250,'A · USTEDES APORTAN SUELO','Ustedes: derechos por su suelo'));
- o+=GS(2.5,0.3,row('B',430,'B · SUELO + EFECTIVO DE USTEDES','Ustedes: por suelo + efectivo')
+ o+=GS(1,0.3,row('A',250,'A · USTEDES APORTAN SUELO','Ustedes: derechos por su suelo'));
+ o+=GS(2,0.3,row('B',430,'B · SUELO + EFECTIVO DE USTEDES','Ustedes: por suelo + efectivo')
   +`<g data-difference="1">${LK(P('M282 346 V372',K.plan,1.5),P('M278 353 L282 346 L286 353',K.plan,1.5),P('M278 365 L282 372 L286 365',K.plan,1.5))}${T(294,356,'Diferencia:',13,K.plan,'start')}${T(294,372,'quién pone el efectivo',13,K.plan,'start')}</g>`);
 
  // Paso 4 [story.js capital m4].

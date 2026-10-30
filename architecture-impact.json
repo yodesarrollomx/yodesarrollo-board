@@ -1,15 +1,16 @@
 {
   "model_revision": "2026-10-20.masterdeveloper-pizarra.1",
   "proposal_id": "CHG-PRESENTATION-STORYBOARD-GITHUB-20261019",
-  "summary": "SB10 · chinche #350: escena «Qué aporta cada quien» rediseñada con dibujo: terreno que se valúa, aportaciones A (suelo) y B (suelo + efectivo) con trabajo de la alianza y capital, qué recibe cada parte y la fórmula del guion; sin cifras. Piel del proyecto navy/cobre por CSS, reversible con una clase. reveal() admite data-until y revelado fraccional. Sin backend, permisos, Sheets, cron, tarifas ni porcentajes.",
+  "summary": "SB11 · chinche #351: escena «Primero una empresa. Después su nave.» rediseñada con figuras Hairline y pictogramas Tabler: la alianza busca una empresa que encaje, carta de intención con seis requisitos que dibujan la nave en contorno, compuerta donde contrato, costo y efectivo deben ser compatibles, y una sola nave construida con cuatro aprobaciones. Incluye la corrección de tiempos de #350: en las paradas enteras de `capital` las filas A y B se ven completas. Sin cifras; textos que requieren visto bueno de Dirección quedan apagados. Sin backend, permisos, Sheets ni cron.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "node tests/obregon-storyboard-browser.cjs: SB07–SB09 más escena 6 (filas A/B, 8 aportaciones, 4 «recibe», fórmula, un solo texto de acción, cero cifras, terreno héroe → fila A sin tapar textos, data-until) y piel (aplica y se revierte sin residuos) en 390×844, 844×390 y 1365×900; red externa abortada.",
-    "node --test tests/brokers*.test.cjs: contratos existentes sin regresión.",
+    "node tests/obregon-storyboard-browser.cjs: SB07–SB10 más escena 3 (4 pasos, compuerta solo en el paso 3, 3 condiciones, 6 requisitos, 4 aprobaciones, nave en contorno antes del paso 4, cero dígitos, sin solapes, terreno y nave sin tapar textos), escena 6 con filas A y B completas en 25.0 y 26.0, y prueba genérica de paradas enteras 0–39 (data-reveal alcanzado ≥ .95, data-until vencido < .05) en 390×844, 844×390 y 1365×900; red externa abortada.",
+    "node --test tests/*.test.cjs: contratos existentes sin regresión.",
+    "node tests/presentation-hub-browser.cjs y node tests/abasto-storyboard-browser.cjs: sin regresión.",
     "Íconos: cada trazo comparado byte a byte con @tabler/icons 3.24.0."
   ],
-  "rollback": "Revertir el PR de la presentación (vuelve SB06 y geography.js); no hay datos, registros, permisos ni chinches que restaurar.",
+  "rollback": "Revertir el PR de la presentación (vuelve SB10); no hay datos, registros, permisos ni chinches que restaurar.",
   "model_commit": "505d6b6f540e3b0a704659c665e64be1e4e698a1"
 }

@@ -27,3 +27,6 @@ body.skin-obregon button:focus-visible,body.skin-obregon input:focus-visible,bod
 body.skin-obregon #stages button.active{color:var(--skin-navy)}
 body.skin-obregon .primary{background:var(--skin-navy);border-color:var(--skin-navy)}
 body.skin-obregon .primary:hover{background:#0d3a64}
+
+/* Nave en contorno (aun no es una obra): trazo punteado y sin relleno. */
+#stage [data-object].ghost .sil{fill:none;stroke-dasharray:5 4}#stage [data-object].ghost .crease,#stage [data-object].ghost .detail{opacity:.4}
