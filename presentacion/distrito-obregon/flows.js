@@ -1,7 +1,7 @@
 // Escena «Cómo se retribuye»: tabla de flujos (origen, cuándo se genera, concepto, quién lo recibe).
 // Cada fila lleva data-flow; los grupos G0–G3 revelan una por paso. Sin cifras ni montos.
-import {K,E,T,P,G} from './diagram-kit.js?v=YOD-SB09';
-import {icon} from './icons.js?v=YOD-SB09';
+import {K,E,T,P,G} from './diagram-kit.js?v=YOD-SB10';
+import {icon} from './icons.js?v=YOD-SB10';
 
 const RULE='#d6ddcf';
 // Íconos y líneas llevan marca propia (data-icon, data-link) para poder revisarlos.

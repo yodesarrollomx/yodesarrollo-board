@@ -1,4 +1,4 @@
-# Distrito Obregón · storyboard YOD-SB09
+# Distrito Obregón · storyboard YOD-SB10
 
 Etapa uno: guion visual para revisión. La presentación de producción, sincronización de audiencia y cierre comercial no se habilitan hasta recibir instrucción explícita sobre el guion corregido.
 
@@ -125,3 +125,59 @@ Marcas para revisión: `data-need` (servicios, reuniones, visitas, encuentros, p
 - Estudio de mercado: si hay uno cotizado o en curso que pueda nombrarse como siguiente paso (quién y cuándo, sin montos). Mientras tanto, «estudio por producto».
 - Ejemplos de la lámina conceptual en `patrimonio` («restaurantes, bancos…», «gimnasio, alberca…»): decidir si se quitan o se aprueban como texto público.
 - Revisión visual y aceptación de la chinche #349 por Dirección.
+
+## SB10 · Capital y piel del proyecto
+
+**Origen.** Chinche #350 de Dirección sobre la lámina «Qué aporta cada quien» (`capital`, escena 7 de 10, índice 6). La versión anterior eran dos columnas de rótulos en cajas: no dibujaba terreno ni efectivo y no mostraba quién recibe qué. No se cambió ningún texto hablado (`spoken`, `narration`, `title`, `beats`, `caution`); solo `change`, `draw`, `motion`, `visualMeaning`, `understand` y `version` de esa escena.
+
+**Fórmula del guion (sin cifras).** Suelo valuado + trabajo desarrollador + capital → modelo → honorarios, participación y reglas. `capital.js` dibuja la escena (`capital(m)`, desktop y móvil) y `meaning.js` solo delega en él.
+
+**Pasos.**
+
+| Paso | Mensaje |
+|---|---|
+| 1 · El suelo tiene un valor que reconocer | El terreno (objeto persistente `land`) llega como protagonista y se valúa; suelo, trabajo y riesgo son tres valores distintos y una sola cifra no los mezcla |
+| 2 · A · Aportar tierra | El terreno baja a la fila A: suelo + trabajo + capital por conseguir → modelo. Se ve qué recibe cada parte |
+| 3 · B · Aportar tierra y efectivo | La fila B repite A con el efectivo de ustedes, reconocido por separado. Una llave marca la única diferencia: quién pone el efectivo |
+| 4 · Del modelo a los derechos económicos | Los dos modelos convergen en la fórmula; primero se modela y después se pacta. Único texto verde: «Un negocio entendible antes de comprometerlo.» |
+
+Una etiqueta de contexto siempre visible recuerda que aplica a los negocios complementarios y que las naves BTS siguen siendo patrimonio de la familia. El nombre del equipo queda como «Yo Desarrollo».
+
+Marcas para revisión: `data-row` (A, B), `data-gives` (suelo, trabajo, capital, modelo), `data-receives` (ustedes, equipo), `data-formula`, `data-until`, `data-icon` y `data-link`.
+
+**Reveal inverso.** `reveal()` acepta `data-until="n"`: el elemento se desvanece cuando el progreso local de la escena pasa de `n` (opaco hasta `n`, oculto desde `n + 0.2`). Se combina por producto con `data-reveal`. Lo del paso 1 sale así antes de que el terreno llegue a la fila A.
+
+**Textos pendientes de visto bueno de Dirección.** Están detrás de constantes en `capital.js`, apagadas (`false`), y mientras tanto se muestra el texto público:
+
+| Constante | Texto público actual | Texto propuesto |
+|---|---|---|
+| `VB_VALUACION` (VB-1) | Valuación acordada entre las partes | Por peritos independientes aceptados por la banca |
+| `VB_SPONSOR` (VB-2) | por producto o fase | honorarios preferentes y participación si se superan metas pactadas |
+
+**Sin cifras.** Ni porcentajes, montos, «50/50», tasas ni plazos; el dibujo compara aportaciones.
+
+**Íconos (`icons.js`).** Siete nuevos de Tabler Icons 3.24.0, copia literal: `certificate`, `map-2`, `alert-triangle`, `math-function`, `equal-not`, `coins` y `file-analytics`.
+
+**Piel del proyecto (opcional y reversible).** `body.skin-obregon` en `index.html` aplica con CSS el navy `#052543` y el cobre `#9b6036` de la lámina conceptual: encabezado, línea superior del escenario, títulos de escena, siluetas Hairline, contorno del predio en `ubicacion` (cobre), slider y botones. No toca los colores con función (`K.*`, paleta de 6), el mapa base ni las figuras de producto. Quitar la clase del `<body>` revierte todo; no hay JavaScript de por medio.
+
+**Revisión escena por escena (siguientes).**
+
+| Prioridad | Escena | Defecto | Dirección |
+|---|---|---|---|
+| 1 | `capital` (6) | Rótulos en cajas | Hecha en SB10 |
+| 2 | `validacion` (8) | Lista numerada de texto, buena parte de la pantalla vacía | Escalera con objetos, uno por peldaño: título y superficies, modelo y reglas, convenio firmado, nave por fases; el último peldaño lleva el siguiente paso |
+| 3 | `decision` (9) | Dos columnas de rótulos | Mesa de acuerdo: lado familia y lado alianza se juntan en el convenio; selector A/B visible y cierre «¿Avanzamos a formalizar?» |
+| 4 | `reglas` (7) | Por revisar | Compartimentos con objetos: naves frente a complementos y compuerta de facultades |
+| — | `ubicacion`, `patrimonio`, `participacion`, `retribucion`, `complementos` | Ya rehechas (SB07 a SB09) | Solo la piel |
+
+**Preguntas abiertas.**
+- Q1: colores del cliente (navy y cobre de la lámina conceptual, u otra paleta) y si BTS y complementos se distinguen por forma o trama en lugar del violeta.
+- Q2: cómo debe nombrarse al equipo en la lámina; mientras tanto, «Yo Desarrollo».
+- Q3: VB-1, si puede decirse en público «valuación por peritos independientes aceptados por la banca».
+- Q4: VB-2, si puede decirse que en B el equipo cobra honorarios preferentes y participación si se superan metas pactadas (sin cifras ni umbrales).
+- Q5: qué parte de lo platicado se cuenta en público; hoy no está en el guion.
+- Q6: orden de la revisión: `capital`, `validacion`, `decision`.
+
+**Pruebas.** `tests/obregon-storyboard-browser.cjs` añade para la escena 6: el terreno como héroe en 24.0 y 24.6 (opacidad y escala) y en la fila A en 25.0, mismo nodo; en el paso 4, filas A y B con cuatro aportaciones cada una, cuatro «recibe», fórmula y un solo texto en el color de acción; lo marcado con `data-until` se ve al inicio y desaparece; ausencia de porcentajes, montos y «50/50»; solapamiento de textos, íconos y líneas en los pasos 1 a 4; y la piel (título en `rgb(5, 37, 67)` con la clase y en la tinta anterior sin ella, sin residuos). Versión esperada: SB10. Verificación local de sintaxis y `git diff --check`; no demuestran funcionamiento en producción.
+
+**Pendientes (no son pruebas).** Revisión visual y aceptación de la chinche #350 por Dirección; respuestas a Q1 a Q6.

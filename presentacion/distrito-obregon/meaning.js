@@ -1,8 +1,9 @@
 // A different diagram grammar for each relationship. Figures are not placeholders.
-import {K,T,P,G,A,H,B} from './diagram-kit.js?v=YOD-SB09';
-import {participacion} from './network.js?v=YOD-SB09';
-import {retribucion} from './flows.js?v=YOD-SB09';
-import {complementos} from './districts.js?v=YOD-SB09';
+import {K,T,P,G,A,H,B} from './diagram-kit.js?v=YOD-SB10';
+import {participacion} from './network.js?v=YOD-SB10';
+import {retribucion} from './flows.js?v=YOD-SB10';
+import {complementos} from './districts.js?v=YOD-SB10';
+import {capital} from './capital.js?v=YOD-SB10';
 export function meaning(index,m){const W=m?480:1100,C=W/2,L=m?122:285,R=m?358:815,S=m?17:23,small=m?14:18;let o='';
  if(index===1){
  // Patrimonio SB07: BTS y complementos. Las figuras Hairline (nave, plaza, office, hotel, club, pocket) las coloca drawings.js; aquí solo texto y guías.
@@ -47,13 +48,7 @@ export function meaning(index,m){const W=m?480:1100,C=W/2,L=m?122:285,R=m?358:81
  }
  if(index===4)o+=retribucion(m);
  if(index===5)o+=complementos(m);
- if(index===6){
- o+=T(L,190,'A · TIERRA',m?23:30,K.solution)+T(R,190,'B · TIERRA + CAPITAL',m?18:30,K.solution);
- for(const x of[L,R])o+=B(x,220,m?194:380,65,K.ink)+T(x,247,'Suelo delimitado',S)+T(x,272,'Valuación acordada',small,K.muted);
- o+=G(1,T(L,325,'+ trabajo desarrollador',m?14:21,K.plan)+T(R,325,'+ trabajo desarrollador',m?14:21,K.plan));
- o+=G(2,B(R,350,m?194:380,62,K.outcome)+T(R,376,'+ efectivo del propietario',m?13:21,K.outcome)+T(R,398,'Reconocido por separado',m?12:17)+T(L,376,'Capital de otras fuentes',m?14:21)+T(L,401,'Por conseguir y acordar',m?13:17,K.muted));
- o+=G(3,P(`M${L} 440 V470 H${R} V440 M${C} 470 V500`,K.plan,2)+T(C,532,'Modelo + riesgo + aportaciones + trabajo',m?18:27,K.plan)+T(C,572,'Participaciones y obligaciones pactadas',m?19:28,K.action)+T(C,612,'El dibujo compara componentes; no representa porcentajes.',m?13:18,K.muted));
- }
+ if(index===6)o+=capital(m);
  if(index===7){
  o+=T(C,185,'PROTEGER EL CONJUNTO SIN MEZCLAR LOS RIESGOS',m?15:25,K.risk);
  for(const [x,name]of[[L,'BTS patrimonial'],[R,'Complementos']])o+=B(x,230,m?200:390,245,K.risk)+T(x,266,name,S)+P(`M${x-(m?85:165)} 286 h${m?170:330}`,K.risk)+T(x,322,'Activos identificados',m?14:21)+T(x,355,'Cuentas y obligaciones',m?14:21)+G(1,T(x,402,'Presupuesto propio',m?14:21)+T(x,435,'Reportes por componente',m?13:19));
@@ -72,4 +67,9 @@ export function meaning(index,m){const W=m?480:1100,C=W/2,L=m?122:285,R=m?358:81
  }
  return o;
 }
-export function reveal(root,progress){for(const e of root.querySelectorAll('[data-reveal]')){const n=Number(e.dataset.reveal),x=Math.max(0,Math.min(1,progress-n+1)),t=x*x*(3-2*x);e.setAttribute('opacity',t);e.setAttribute('transform',`translate(0 ${(1-t)*12})`);}}
+// reveal(root, progress): aparición y salida por paso.
+// - data-reveal="n": aparece (opacidad suavizada y desplazamiento vertical de 12 px) cuando el progreso llega a n.
+// - data-span="s" (junto a data-reveal): ancho de la entrada; opacidad = smoothstep((progress − n + s) / s), es decir, aparece entre n − s y n. Sin data-span equivale a s = 1.
+// - data-until="n": se desvanece al avanzar; opacidad = 1 − smoothstep((progress − n) / 0.2), es decir, visible hasta el progreso n y oculto del todo en n + 0.2.
+// - Si el elemento lleva ambos atributos, la opacidad es el producto de las dos; el desplazamiento solo depende de data-reveal.
+export function reveal(root,progress){const smooth=x=>{x=Math.max(0,Math.min(1,x));return x*x*(3-2*x)};for(const e of root.querySelectorAll('[data-reveal],[data-until]')){let t=1;if(e.dataset.reveal!==undefined){const n=Number(e.dataset.reveal),sp=e.dataset.span!==undefined?Number(e.dataset.span):1;t=smooth((progress-n+sp)/sp);e.setAttribute('transform',`translate(0 ${(1-t)*12})`);}if(e.dataset.until!==undefined)t*=1-smooth((progress-Number(e.dataset.until))/0.2);e.setAttribute('opacity',t);}}

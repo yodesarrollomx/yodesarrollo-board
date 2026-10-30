@@ -1,12 +1,12 @@
 {
   "model_revision": "2026-10-20.masterdeveloper-pizarra.1",
   "proposal_id": "CHG-PRESENTATION-STORYBOARD-GITHUB-20261019",
-  "summary": "SB09 · chinche #349: escena «Por qué un distrito» rediseñada con el Método YOD v3.0.0: operación industrial → cinco necesidades → producto que podría responder → se decide con estudios (demanda, operador, viabilidad) → ruta por producto → siguiente paso. Figuras Hairline existentes, íconos Tabler 3.24.0 (MIT) empaquetados; sin cifras nuevas (solo 250 a 500 m²). Sin backend, permisos, Sheets, cron, tarifas ni porcentajes.",
+  "summary": "SB10 · chinche #350: escena «Qué aporta cada quien» rediseñada con dibujo: terreno que se valúa, aportaciones A (suelo) y B (suelo + efectivo) con trabajo de la alianza y capital, qué recibe cada parte y la fórmula del guion; sin cifras. Piel del proyecto navy/cobre por CSS, reversible con una clase. reveal() admite data-until y revelado fraccional. Sin backend, permisos, Sheets, cron, tarifas ni porcentajes.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "node tests/obregon-storyboard-browser.cjs: SB07/SB08 más escena 5 (5 necesidades, 5 productos ocultos en el paso 1, filtro, ruta, un solo «Siguiente paso», sin cifras, figuras por paso y sin solapes de textos, íconos ni líneas) en 390×844, 844×390 y 1365×900; red externa abortada.",
+    "node tests/obregon-storyboard-browser.cjs: SB07–SB09 más escena 6 (filas A/B, 8 aportaciones, 4 «recibe», fórmula, un solo texto de acción, cero cifras, terreno héroe → fila A sin tapar textos, data-until) y piel (aplica y se revierte sin residuos) en 390×844, 844×390 y 1365×900; red externa abortada.",
     "node --test tests/brokers*.test.cjs: contratos existentes sin regresión.",
     "Íconos: cada trazo comparado byte a byte con @tabler/icons 3.24.0."
   ],
