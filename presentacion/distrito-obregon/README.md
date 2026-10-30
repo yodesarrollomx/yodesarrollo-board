@@ -1,4 +1,4 @@
-# Distrito Obregón · storyboard YOD-SB05
+# Distrito Obregón · storyboard YOD-SB07
 
 Etapa uno: guion visual para revisión. La presentación de producción, sincronización de audiencia y cierre comercial no se habilitan hasta recibir instrucción explícita sobre el guion corregido.
 
@@ -8,7 +8,7 @@ URL estable: https://yodesarrollomx.github.io/yodesarrollo-board/presentacion/di
 
 Propuesta Distrito Obregón Industrial, 19 octubre 2026, cinco páginas. Es un snapshot editorial autorizado de la propuesta; no reemplaza datos operativos de Sheets ni constituye un master plan. El código no contiene reuniones, mensajes, notas privadas ni condiciones de otros proyectos.
 
-Diez escenas /40 momentos: ubicación, estrategia patrimonial, alianza, demanda BTS, retribuciones, complementos, capital, reglas, validación y decisión. La forma se traza desde la presentación conceptual original, no desde un levantamiento; la traza vial es OpenStreetMap con atribución. Hairline aporta el kernel geométrico MIT existente en YOD. `story.js` conserva guion, fuente por página, cautelas, dibujo y transición de cada escena.
+Diez escenas /40 momentos: ubicación, estrategia patrimonial, alianza, demanda BTS, retribuciones, complementos, capital, reglas, validación y decisión. La forma se traza desde la presentación conceptual original, no desde un levantamiento; la traza vial es OpenStreetMap con atribución. Hairline aporta el kernel geométrico MIT existente en YOD. `story.js` conserva guion, fuente por página, cautelas, dibujo y transición de cada escena. La geografía de las láminas de terreno vive en `basemap.js` (traza OSM), `parcel.js` (contorno), `map-labels.js` (rótulos), `territory.js` (dibujo del territorio) y `map-source.md` (procedencia y límites); `geography.js` se eliminó en SB07.
 
 La auditoría del guion usa las seis funciones narrativas explicadas por Luis Ramos en su resumen de Donald Miller: https://www.youtube.com/watch?v=06iMqtU_xwM. Transcripción en español consultada mediante vidIQ. No se ha inspeccionado el video generado en NotebookLM ni se atribuyen a ese video movimientos visuales no observados. Los colores expresan funciones del mensaje; los activos se distinguen por forma y rótulo.
 
@@ -45,3 +45,25 @@ La instrucción vigente de Alejandro es **formalizar la asociación**. Sustituye
 `meaning.js` construye gramáticas distintas: bifurcación patrimonial, red de responsabilidades, requisitos que dimensionan la nave, flujos separados de rentas/honorarios, necesidad-producto, aportaciones A/B, compartimentos de obligaciones, secuencia de firma y acuerdo de asociación. Hairline se usa donde la forma de una nave aporta significado. Cada escena declara qué debe entenderse.
 
 La guía visible explica seis funciones, sus preguntas de evaluación y el contexto neutro. Cada momento del guion tiene función propia. No se obliga a usar seis colores en cada escena ni se trata su cantidad como calificación. La oferta tiene chinche privada y conserva el transporte de SB05. Pruebas añadidas: guía accesible en horizontal, cierre de asociación y visibilidad completa del último momento.
+
+## SB07 · Terreno sobre traza y estrategia explicada
+
+**Origen.** Corrección privada de Dirección sobre la lámina de terreno: pidió traza urbana real, calle de frente y de atrás, morfología, explicación de BTS y complementos para pantalla grande. La nota no se copia aquí.
+
+**Cartografía.** `basemap.js` empaqueta OpenStreetMap (© OpenStreetMap contributors, ODbL) georreferenciado en UTM 12N, extracción del 29-oct-2026. Se genera con `scripts/prepare-obregon-map.cjs` (reproducible con `--offline`, resultado idéntico byte a byte) con presupuesto de 200 KB o menos. No hay teselas ni servicios en línea en ejecución. Procedencia, ejes, simplificación y límites: [map-source.md](map-source.md).
+
+**Contorno (caso conceptual, sin KMZ).** `parcel.js` usa la forma de la presentación conceptual escalada a 247,584 m² y colocada por búsqueda restringida: frente a 60 m o menos de la Federal 15, sin cruzar autopista ni vía férrea. Cruza ≈647 m de calles de OSM (Calle Cereza 308 m, Calle Piña 83, Calle Mandarina 74, otras menores y un servicio sin nombre). Por eso se rotula "forma conceptual · posición aproximada": no son linderos ni deslinde. Colindancias según OSM: frente Federal 15 / MEX 15D; poniente Calle Valle Colorado; oriente Calle Raigoza. Que la autopista sea de cuota no acredita acceso de carga.
+
+**Cómo pasar al KMZ.** `node scripts/prepare-obregon-parcel.cjs --kml doc.kml` lee solo las coordenadas del primer Polygon (nunca la descripción ni nombres) y marca `status:"kmz"`; el área calculada se reporta sin ajustar. No se publica el KMZ ni su descripción. Publicar los vértices reales requiere autorización de Alejandro. Con el contorno real, la cautela y el texto hablado de la forma necesitan redacción autorizada antes de cambiarse.
+
+**Escena patrimonio.** Define BTS (Built-To-Suit) y muestra la cadena empresa, nave, contrato de arrendamiento y rentas a largo plazo, con los propietarios conservando el inmueble. Presenta cinco complementos con su necesidad y, en pantalla grande, ejemplos tomados de la presentación conceptual. Sin cuadro de áreas ni porcentajes: no es lotificación ni cabida.
+
+**Textos tomados de la presentación conceptual.** Las flechas «← Hermosillo» y «Navojoa →» en el mapa, la línea «Patios de maniobra · andenes · infraestructura para gran escala» bajo Built-To-Suit y las terceras líneas de los complementos (por ejemplo «Restaurantes · bancos · cafetería · farmacia · conveniencia») provienen de `assets/concepto-fuente.webp`. Se incluyen como material complementario, sujeto al visto bueno de Dirección al revisar la chinche; no están en el guion hablado. Las terceras líneas de complementos solo se muestran en pantalla grande.
+
+**Pruebas.** `tests/obregon-storyboard-browser.cjs` añade comprobaciones de traza, contorno, rótulos y solapamiento de textos, con red simulada. Verificación local de sintaxis y `git diff --check`; no demuestran funcionamiento en producción.
+
+**Pendientes (no son pruebas).**
+- KMZ del terreno y regeneración de `parcel.js`.
+- Autorización de Alejandro para publicar vértices reales.
+- Prueba en pantalla real de 80".
+- Aceptación de la chinche #347 por Dirección.

@@ -1,7 +1,7 @@
-import {mount,paint,esc} from './drawings.js?v=YOD-SB06';
-import {story as publicStory} from './story.js?v=YOD-SB06';
-import {access} from './access.js?v=YOD-SB06';
-import {reviews} from './reviews.js?v=PMD-1.0.0-YOD-SB06';
+import {mount,paint,esc} from './drawings.js?v=YOD-SB07';
+import {story as publicStory} from './story.js?v=YOD-SB07';
+import {access} from './access.js?v=YOD-SB07';
+import {reviews} from './reviews.js?v=PMD-1.0.0-YOD-SB07';
 let presentationRuntime=null,remotePosition=false;
 const $=s=>document.querySelector(s);let story,position=0,target=0,lastTime=0,sceneIndex=-1,beatIndex=-1,mobile=matchMedia('(max-width:650px)').matches,pinning=false,paused=false,draft=null,reviewRows=[];let toastTimer;
 function toast(text){$('#toast').textContent=text;$('#toast').classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('visible'),6500)}

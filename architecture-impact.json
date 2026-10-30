@@ -1,17 +1,16 @@
 {
   "model_revision": "2026-10-20.masterdeveloper-pizarra.1",
-  "proposal_id": "CHG-MASTERDEVELOPER-PIZARRA-20261020",
-  "summary": "Nombre Master Developer para Dirección y Master Broker para otras cuentas autorizadas; entrada por brokers y recorrido canónico por proyecto. Pizarra separada con carátulas, posición, zoom, montones, carpetas, búsqueda y deshacer. Estado personal privado por actor verificado en GAS-SALA existente, revisión esperada y recibo idempotente. Conservar CRM, IDs, fuentes, permisos, versiones, chinches y URLs; no inferir avance comercial del tipo de oportunidad.",
+  "proposal_id": "CHG-PRESENTATION-STORYBOARD-GITHUB-20261019",
+  "summary": "SB07 · chinche #347: escena de ubicación con traza OpenStreetMap georreferenciada (UTM 12N, empaquetada; sin servicios en ejecución), contorno conceptual a escala de 247,584 m² en posición aproximada, calles de frente/poniente/sur rotuladas, norte y escala; escena de estrategia explica BTS y complementos con figuras. Sin backend, permisos, Sheets, cron ni cambios de transporte de chinches.",
   "components": [
-    "SYS-INVERSION",
-    "SYS-YOD-OS"
+    "SYS-INVERSION"
   ],
   "tests": [
-    "Roles y separación de carteras con snapshots sintéticos.",
-    "Pizarra: mover, agrupar, sacar, recargar, deshacer, móvil y teclado.",
-    "Persistencia: identidad, CAS, ACK perdido, reintento idéntico y conflicto sin sobrescribir.",
-    "Regresiones existentes y comparación de archivos publicados; sesiones reales separadas de pruebas sintéticas."
+    "node tests/obregon-storyboard-browser.cjs: traza (>300 vías), contorno data-status, rótulo Federal 15, escala, norte, atribución, «posición aproximada», figuras BTS/complementos visibles y sin solapamiento de textos en 390×844, 844×390 y 1365×900; red externa abortada.",
+    "node --test tests/brokers*.test.cjs: contratos existentes sin regresión.",
+    "node scripts/prepare-obregon-map.cjs --offline: salida determinista y prueba UTM contra los vértices documentados de Abasto (error ≤0.05 m).",
+    "node scripts/prepare-obregon-parcel.cjs --kml con KML sintético de 500×500 m: 250,000 m²."
   ],
-  "rollback": "Revertir PR de interfaz/servidor manteniendo archivos de organización, expedientes, recibos, permisos y originales.",
+  "rollback": "Revertir el PR de la presentación (vuelve SB06 y geography.js); no hay datos, registros, permisos ni chinches que restaurar.",
   "model_commit": "505d6b6f540e3b0a704659c665e64be1e4e698a1"
 }

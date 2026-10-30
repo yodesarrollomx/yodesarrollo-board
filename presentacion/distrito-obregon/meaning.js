@@ -9,11 +9,37 @@ const H=(x,y,w,c)=>P(`M${x-w/2} ${y} q${w/2} 4 ${w} 0`,c,2.5);
 const B=(x,y,w,h,c)=>`<rect x="${x-w/2}" y="${y}" width="${w}" height="${h}" rx="14" fill="${c}08" stroke="${c}" stroke-width="1.2"/>`;
 export function meaning(index,m){const W=m?480:1100,C=W/2,L=m?122:285,R=m?358:815,S=m?17:23,small=m?14:18;let o='';
  if(index===1){
- o+=T(C,190,'UNA PROPIEDAD · DOS DESTINOS ECONÓMICOS',m?17:22,K.solution)+P(`M${C} 210 V235 H${L} V265 M${C} 235 H${R} V265`,K.solution,2);
- o+=T(L,290,'Naves a la medida',S)+T(L,316,'BTS · arrendamiento',small,K.muted)+H(L,332,m?180:320,K.outcome);
- o+=G(1,A(L,342,L,395,K.outcome)+T(L,420,'Inmuebles + rentas',S,K.outcome)+T(L,446,'Beneficio de la familia',small));
- o+=G(2,T(R,290,'Complementos',S)+T(R,316,'Negocios por desarrollar',small,K.muted)+H(R,332,m?180:320,K.solution)+A(R,342,R,395,K.solution)+T(R,420,'Asociación por producto',m?16:S,K.solution)+T(R,446,'Tierra + desarrollo + capital',m?13:small));
- o+=G(3,P(`M${C} 270 V490`,K.muted,1,'4 7')+B(C,535,m?420:820,85,K.risk)+T(C,566,'Cada negocio necesita su financiamiento.',m?18:25,K.risk)+T(C,595,'Conservar las BTS no equivale a venderlas para pagar el resto.',m?13:19));
+ // Patrimonio SB07: BTS y complementos. Las figuras Hairline (nave, plaza, office, hotel, club, pocket) las coloca drawings.js; aquí solo texto y guías.
+ // Textos tomados de las escenas patrimonio, demanda, retribución y complementos (story.js); la tercera línea de cada fila viene de assets/concepto-fuente.webp y solo se muestra en desktop.
+ // Franja reservada: drawings.js pinta la etiqueta del paso en y=H-42 (tope ≈ H-63 en desktop, H-58 en móvil) y «GUION VISUAL» en H-12; todo este bloque termina ≥ 6 px arriba (desktop y ≤ 661, móvil y ≤ 676).
+ const sub='#6b7972',BT=K.outcome,CO=K.solution;
+ o+=T(m?262:585,m?196:172,'Una propiedad · 24.7584 ha',m?15:18,sub,'start');
+ if(!m){
+ // Eje del panel BTS: x=392 (encabezado, definición, patios y cadena comparten eje, a la derecha de la nave en x=160). La conclusión G1 abarca todo el panel (eje 285).
+ // Filas de complementos: nombre y0 (19), necesidad y0+19.5 (15), tercera línea y0+36 (13); y0 = 285 + 58.5·fila. Figuras (origen, x=612): 298, 359, 423, 473, 536.
+ const cx=392,rows=[['Plaza y servicios','Servicios cotidianos de la zona','Restaurantes · bancos · cafetería · farmacia · conveniencia'],['Oficinas flex y showrooms','Proveedores y empresas','Showrooms industriales · oficinas · salas de juntas'],['Hotel de negocios','Visitas de trabajo','Para viajeros de negocios y visitantes'],['Industrial Club','Relaciones y encuentros','Restaurante · gimnasio · alberca · pádel/tenis · spa · salas de juntas'],['Bodegas pocket de 250 a 500 m²','Operaciones más pequeñas','Módulos flexibles y funcionales']];
+ o+=P(`M550 198 V206 H${cx} V214 M550 206 H815 V214`,CO,2);
+ o+=G(0,T(cx,240,'NAVES A LA MEDIDA · BTS',22,BT)+T(cx,262,'Built-To-Suit: se proyecta para las',16)+T(cx,282,'necesidades de una empresa.',16)+T(cx,299,'Patios de maniobra · andenes ·',13,sub)+T(cx,316,'infraestructura para gran escala',13,sub)
+  +T(cx,346,'Una empresa necesita una nave',19)+T(cx,366,'superficie, altura, andenes, energía y plazo',15,sub)
+  +A(cx,375,cx,391,BT)+T(cx,416,'Se proyecta a su medida',19)
+  +A(cx,426,cx,442,BT)+T(cx,468,'Contrato de arrendamiento',19)
+  +A(cx,478,cx,494,BT)+T(cx,520,'Rentas a largo plazo',19,BT));
+ o+=G(1,H(L,544,440,BT)+T(L,571,'Los propietarios conservan el inmueble y sus rentas.',19,BT)+T(L,595,'Conseguir un usuario no convierte al equipo en dueño.',15,sub));
+ o+=G(2,T(R,240,'COMPLEMENTOS',22,CO)+T(R,262,'Negocios que atienden necesidades del entorno industrial.',16)
+  +rows.map((a,j)=>{const y=285+j*58.5;return T(650,y,a[0],19,K.ink,'start')+T(650,y+19.5,a[1],15,sub,'start')+T(650,y+36,a[2],13,sub,'start')}).join('')
+  +T(R,579,'Asociación desarrolladora con reglas por producto',18,CO)+T(R,598,'Cada uno debe probar demanda, operador y viabilidad.',15));
+ o+=G(3,P('M550 226 V603',K.muted,1,'4 7')+B(C,609,1000,52,K.risk)+T(C,633,'Cada negocio necesita su propia cuenta.',20,K.risk)+T(C,653,'No se venden las naves para pagar lo demás: cada componente justifica su demanda, capital, obligaciones y resultado.',15));
+ }else{
+ // Móvil: todo ≥15 (≥12 px en 390 de ancho); se omiten las necesidades grises. Filas cada 28 (y = 474…586); figuras (origen, x=40) 5 px sobre cada fila: 469, 497, 525, 553, 581.
+ const rows=['Plaza y servicios','Oficinas flex y showrooms','Hotel de negocios','Industrial Club','Bodegas pocket de 250 a 500 m²'];
+ o+=P('M240 212 V217',CO,2);
+ o+=G(0,T(C,236,'NAVES A LA MEDIDA · BTS',16,BT)+T(C,255,'Built-To-Suit: se proyecta para las necesidades de una empresa.',15)
+  +T(160,280,'Una empresa necesita una nave',15,K.ink,'start')+A(166,288,166,296,BT)+T(160,314,'Se proyecta a su medida',15,K.ink,'start')+A(166,322,166,330,BT)+T(160,348,'Contrato de arrendamiento',15,K.ink,'start')+A(166,356,166,364,BT)+T(160,382,'Rentas a largo plazo',15,BT,'start'));
+ o+=G(1,H(C,397,360,BT)+T(C,421,'Los propietarios conservan el inmueble y sus rentas.',15,BT));
+ o+=G(2,T(C,450,'COMPLEMENTOS',16,CO)+rows.map((a,j)=>T(70,474+j*28,a,15,K.ink,'start')).join('')
+  +T(C,607,'Asociación desarrolladora con reglas por producto',15,CO)+T(C,626,'Cada uno debe probar demanda, operador y viabilidad.',15));
+ o+=G(3,B(C,642,440,34,K.risk)+T(C,664,'Cada negocio necesita su propia cuenta.',16,K.risk));
+ }
  }
  if(index===2){
  o+=T(C,190,'Familia Parada · propietarios',m?25:31)+T(C,218,'Conserva las decisiones y autoriza compromisos',m?15:20,K.outcome)+A(C,235,C,273,K.solution);
