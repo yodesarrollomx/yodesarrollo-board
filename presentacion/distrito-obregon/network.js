@@ -2,8 +2,8 @@
 // Árbol ortogonal: propietarios → núcleo de la alianza → bus → especialistas en dos grupos.
 // Línea continua = integrante de la alianza; línea punteada = especialista por seleccionar o confirmar.
 // Revelado: G(0) familia y núcleo · G(1) grupo de mercado y finanzas con leyenda · G(2) proyecto, permisos, obra y operación · G(3) cierre.
-import {K,E,T,P,G,B} from './diagram-kit.js?v=YOD-SB09';
-import {icon} from './icons.js?v=YOD-SB09';
+import {K,E,T,P,G,B} from './diagram-kit.js?v=YOD-SB10';
+import {icon} from './icons.js?v=YOD-SB10';
 
 // El aporte de cada miembro se publica solo cuando se aprueben las frases; mientras tanto, solo nombres.
 const SHOW_MEMBER_ROLES=false;

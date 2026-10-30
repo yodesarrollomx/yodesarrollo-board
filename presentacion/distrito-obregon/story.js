@@ -1,5 +1,5 @@
 export const story={
-  "version": "YOD-SB09",
+  "version": "YOD-SB10",
   "stage": "storyboard",
   "production": "requires_explicit_instruction",
   "title": "Distrito Obregón Industrial",
@@ -349,36 +349,36 @@ export const story={
         {
           "label": "El suelo tiene un valor que reconocer",
           "spoken": "La tierra que corresponda a cada negocio se valúa. El equipo estructura el desarrollo y gestiona las fuentes de recursos. El valor del suelo, el trabajo y el riesgo no se pueden confundir en una sola cifra.",
-          "change": "Dos modalidades comparten una misma aportación de suelo delimitado y valuado.",
+          "change": "El terreno aparece primero y se valúa; suelo, trabajo y riesgo quedan como tres valores separados.",
           "role": "plan"
         },
         {
           "label": "A · Aportar tierra",
           "spoken": "En esta alternativa ustedes aportan suelo. El modelo debe definir qué efectivo necesita la fase y cómo se obtendrá: inversionistas, deuda y comercialización, cuando sean viables.",
-          "change": "El trabajo desarrollador se añade en ambas modalidades.",
+          "change": "El terreno baja a la fila A: suelo + trabajo + capital por conseguir → modelo; cada parte ve lo que recibe.",
           "role": "plan"
         },
         {
           "label": "B · Aportar tierra y efectivo",
           "spoken": "Si además desean invertir efectivo, esa aportación se reconoce por separado. Puede cambiar sus derechos económicos, según la valuación, los riesgos y los acuerdos del negocio.",
-          "change": "Se distingue efectivo opcional del propietario de capital externo por conseguir.",
+          "change": "La fila B repite A con el efectivo de ustedes; una llave marca la única diferencia.",
           "role": "plan"
         },
         {
           "label": "Del modelo a los derechos económicos",
           "spoken": "Primero se modelan ingresos, costos, financiamiento, capital y riesgos. Con ese resultado se negocian honorarios, participación y reglas. La oferta es construir juntos un negocio entendible antes de comprometerlo.",
-          "change": "Las aportaciones confluyen en un modelo y una negociación de participaciones, sin porcentajes gráficos.",
+          "change": "Ambos modelos convergen en la fórmula: aportaciones valuadas → modelo → honorarios, participación y reglas.",
           "role": "risk"
         }
       ],
       "narration": "La tierra que corresponda a cada negocio se valúa. El equipo estructura el desarrollo y gestiona las fuentes de recursos. El valor del suelo, el trabajo y el riesgo no se pueden confundir en una sola cifra. En esta alternativa ustedes aportan suelo. El modelo debe definir qué efectivo necesita la fase y cómo se obtendrá: inversionistas, deuda y comercialización, cuando sean viables. Si además desean invertir efectivo, esa aportación se reconoce por separado. Puede cambiar sus derechos económicos, según la valuación, los riesgos y los acuerdos del negocio. Primero se modelan ingresos, costos, financiamiento, capital y riesgos. Con ese resultado se negocian honorarios, participación y reglas. La oferta es construir juntos un negocio entendible antes de comprometerlo.",
       "takeaway": "Del modelo a los derechos económicos",
-      "draw": "Dos modalidades comparten una misma aportación de suelo delimitado y valuado.",
-      "motion": "Las aportaciones confluyen en un modelo y una negociación de participaciones, sin porcentajes gráficos.",
+      "draw": "El terreno aparece primero y se valúa; suelo, trabajo y riesgo quedan como tres valores separados.",
+      "motion": "Ambos modelos convergen en la fórmula: aportaciones valuadas → modelo → honorarios, participación y reglas.",
       "caution": "Alternativas aplicables a los complementarios. No se presume que el equipo aportará todo el efectivo ni que el financiamiento está garantizado. PDF pp.3–4.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
-      "understand": "Distinguir suelo, efectivo, trabajo desarrollador y fuentes externas antes de repartir.",
-      "visualMeaning": "Composición de aportaciones: tierra, desarrollo y capital; modalidades A/B comparables."
+      "understand": "Ver qué aporta y qué recibe cada parte en A y en B, y que primero se valúa y se modela.",
+      "visualMeaning": "Ecuación de aportaciones A/B con objetos: suelo, trabajo, capital y modelo; lo que recibe cada parte, sin cifras."
     },
     {
       "id": "reglas",
