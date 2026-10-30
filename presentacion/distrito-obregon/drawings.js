@@ -1,6 +1,6 @@
-import {meaning,reveal} from './meaning.js?v=YOD-SB07';
-import {figure} from './figures.js?v=YOD-SB07';
-import {territoryMarkup,paintTerritory,parcelScreen,parcelFigurePath} from './territory.js?v=YOD-SB07';
+import {meaning,reveal} from './meaning.js?v=YOD-SB08';
+import {figure} from './figures.js?v=YOD-SB08';
+import {territoryMarkup,paintTerritory,parcelScreen,parcelFigurePath} from './territory.js?v=YOD-SB08';
 export const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ink='#253e3b',muted='#6b7972';
 const text=(x,y,s,size=18,color=ink,anchor='middle')=>`<text x="${x}" y="${y}" font-size="${size}" fill="${color}" text-anchor="${anchor}">${esc(s)}</text>`;
