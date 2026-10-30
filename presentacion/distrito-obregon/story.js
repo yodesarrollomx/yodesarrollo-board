@@ -1,5 +1,5 @@
 export const story={
-  "version": "YOD-SB07",
+  "version": "YOD-SB08",
   "stage": "storyboard",
   "production": "requires_explicit_instruction",
   "title": "Distrito Obregón Industrial",
@@ -153,36 +153,36 @@ export const story={
         {
           "label": "Ustedes deciden. La alianza coordina.",
           "spoken": "Los propietarios conservan las decisiones que se pacten. La alianza entre Yo Desarrollo, Puebla Arquitectos / PG y Eduardo Lara articula el trabajo para convertir la oportunidad en un proyecto evaluable.",
-          "change": "Los propietarios se ubican encima del equipo coordinador, con sus decisiones expresamente reservadas.",
+          "change": "La familia arriba; debajo, la alianza con sus tres miembros y lo que aporta cada uno.",
           "role": "problem"
         },
         {
           "label": "Mercado y estructura financiera",
           "spoken": "A esa coordinación se conectan usuarios industriales, comercialización y especialistas financieros: demanda, contratos, fuentes de capital y condiciones que realmente pueda soportar cada negocio.",
-          "change": "Del equipo salen las responsabilidades de usuarios/mercado y proyecto/permisos.",
+          "change": "Se conecta el grupo de mercado y finanzas: usuarios, comercialización y especialistas financieros, por seleccionar.",
           "role": "solution"
         },
         {
           "label": "Proyecto, permisos, obra y operación",
           "spoken": "Arquitectura e ingenierías, asesoría legal y fiscal, gestión de permisos, ejecución y operadores se coordinan con alcances, presupuestos y responsabilidades definidos.",
-          "change": "Se incorporan finanzas/capital y jurídico/ejecución a la misma red de coordinación.",
+          "change": "Se conecta el grupo de proyecto, permisos, obra y operación: cinco especialidades por seleccionar.",
           "role": "plan"
         },
         {
           "label": "Una coordinación. Responsabilidades visibles.",
           "spoken": "El valor de la alianza es integrar esas especialidades y darles seguimiento. No les proponemos que ustedes administren una lista de proveedores inconexos; los servicios y facultades se acuerdan antes de ejecutarlos.",
-          "change": "La red completa explica cómo se integra el desarrollo y quién conserva el control.",
+          "change": "La red completa muestra una sola interfaz con la familia; cada especialista entra con alcance y presupuesto.",
           "role": "outcome"
         }
       ],
       "narration": "Los propietarios conservan las decisiones que se pacten. La alianza entre Yo Desarrollo, Puebla Arquitectos / PG y Eduardo Lara articula el trabajo para convertir la oportunidad en un proyecto evaluable. A esa coordinación se conectan usuarios industriales, comercialización y especialistas financieros: demanda, contratos, fuentes de capital y condiciones que realmente pueda soportar cada negocio. Arquitectura e ingenierías, asesoría legal y fiscal, gestión de permisos, ejecución y operadores se coordinan con alcances, presupuestos y responsabilidades definidos. El valor de la alianza es integrar esas especialidades y darles seguimiento. No les proponemos que ustedes administren una lista de proveedores inconexos; los servicios y facultades se acuerdan antes de ejecutarlos.",
       "takeaway": "Una coordinación. Responsabilidades visibles.",
-      "draw": "Los propietarios se ubican encima del equipo coordinador, con sus decisiones expresamente reservadas.",
-      "motion": "La red completa explica cómo se integra el desarrollo y quién conserva el control.",
+      "draw": "La familia arriba; debajo, la alianza con sus tres miembros y lo que aporta cada uno.",
+      "motion": "La red completa muestra una sola interfaz con la familia; cada especialista entra con alcance y presupuesto.",
       "caution": "Equipo mencionado por Dirección y propuesta. Funciones y contratación de especialistas por formalizar; no implica que bancos u operadores estén comprometidos.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
       "understand": "Entender qué coordina la alianza y qué decisiones conserva la familia.",
-      "visualMeaning": "Red de responsabilidades: la familia decide, la alianza coordina y las disciplinas entregan."
+      "visualMeaning": "Árbol de coordinación: propietarios deciden, la alianza coordina, los especialistas entregan. Línea continua = alianza; punteada = por seleccionar."
     },
     {
       "id": "demanda",
@@ -251,36 +251,36 @@ export const story={
         {
           "label": "El activo y su arrendamiento",
           "spoken": "El usuario paga por ocupar la nave. Ese flujo sostiene las obligaciones de la operación y del financiamiento acordado; el beneficio patrimonial corresponde a los propietarios.",
-          "change": "El contrato del usuario inicia el flujo de renta del inmueble.",
+          "change": "Fila de renta: usuario → contrato → renta menos obligaciones → propietarios.",
           "role": "outcome"
         },
         {
           "label": "Colocación por un usuario contratado",
           "spoken": "La originación y colocación se remunera por usuarios efectivamente contratados. Base, momento y monto se pactan por escrito. Una presentación o contacto no genera propiedad del inmueble.",
-          "change": "La renta se vincula a obligaciones/operación y al beneficio del propietario.",
+          "change": "Fila de colocación: usuario contratado → honorario pactado por escrito → equipo que lo originó.",
           "role": "plan"
         },
         {
           "label": "Gerencia sólo cuando se contrata",
           "spoken": "Si ustedes solicitan gerencia, estructuración o administración del desarrollo, se define un alcance y presupuesto propio. Ese servicio no se da por contratado dentro de una frase genérica.",
-          "change": "Un segundo flujo independiente muestra servicios autorizados, hito y honorario pactado.",
+          "change": "Filas de gerencia y especialistas: sólo con alcance y presupuesto propios.",
           "role": "plan"
         },
         {
           "label": "La asociación tiene otra lógica",
           "spoken": "En los complementarios se negocian honorarios de desarrollo y participación en resultados por producto o fase. Esa participación no se traslada automáticamente a las rentas de las naves patrimoniales.",
-          "change": "La separación impide leer que conseguir usuarios otorga automáticamente propiedad BTS.",
+          "change": "Fila de complementos por producto, separada de las rentas por un muro.",
           "role": "risk"
         }
       ],
       "narration": "El usuario paga por ocupar la nave. Ese flujo sostiene las obligaciones de la operación y del financiamiento acordado; el beneficio patrimonial corresponde a los propietarios. La originación y colocación se remunera por usuarios efectivamente contratados. Base, momento y monto se pactan por escrito. Una presentación o contacto no genera propiedad del inmueble. Si ustedes solicitan gerencia, estructuración o administración del desarrollo, se define un alcance y presupuesto propio. Ese servicio no se da por contratado dentro de una frase genérica. En los complementarios se negocian honorarios de desarrollo y participación en resultados por producto o fase. Esa participación no se traslada automáticamente a las rentas de las naves patrimoniales.",
       "takeaway": "La asociación tiene otra lógica",
-      "draw": "El contrato del usuario inicia el flujo de renta del inmueble.",
-      "motion": "La separación impide leer que conseguir usuarios otorga automáticamente propiedad BTS.",
+      "draw": "Fila de renta: usuario → contrato → renta menos obligaciones → propietarios.",
+      "motion": "Fila de complementos por producto, separada de las rentas por un muro.",
       "caution": "No hay porcentajes ni tarifas acordados en el PDF. Los diagramas expresan relaciones económicas, no una prelación contractual de pagos.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
       "understand": "Separar la renta del activo de los honorarios por servicios efectivamente pactados.",
-      "visualMeaning": "Dos flujos de ingreso: renta del inmueble al propietario; servicios pactados al equipo."
+      "visualMeaning": "Tabla de flujos: quién origina, cuándo se genera, qué concepto y quién lo recibe; sin cifras."
     },
     {
       "id": "complementos",

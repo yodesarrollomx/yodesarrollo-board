@@ -1,12 +1,7 @@
 // A different diagram grammar for each relationship. Figures are not placeholders.
-const K={ink:'#253e3b',muted:'#65756c',problem:'#ad4c46',solution:'#806397',plan:'#866143',risk:'#987419',outcome:'#297e94',action:'#517a43'};
-const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const T=(x,y,s,size=18,c=K.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${size}" fill="${c}" text-anchor="${a}">${E(s)}</text>`;
-const P=(d,c=K.muted,w=1.5,dash='')=>`<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" ${dash?'stroke-dasharray="'+dash+'"':''}/>`;
-const G=(n,s)=>`<g data-reveal="${n}">${s}</g>`;
-const A=(x,y,X,Y,c=K.plan)=>P(`M${x} ${y} L${X} ${Y}`,c)+P(`M${X-4} ${Y-7} L${X} ${Y} L${X+4} ${Y-7}`,c);
-const H=(x,y,w,c)=>P(`M${x-w/2} ${y} q${w/2} 4 ${w} 0`,c,2.5);
-const B=(x,y,w,h,c)=>`<rect x="${x-w/2}" y="${y}" width="${w}" height="${h}" rx="14" fill="${c}08" stroke="${c}" stroke-width="1.2"/>`;
+import {K,T,P,G,A,H,B} from './diagram-kit.js?v=YOD-SB08';
+import {participacion} from './network.js?v=YOD-SB08';
+import {retribucion} from './flows.js?v=YOD-SB08';
 export function meaning(index,m){const W=m?480:1100,C=W/2,L=m?122:285,R=m?358:815,S=m?17:23,small=m?14:18;let o='';
  if(index===1){
  // Patrimonio SB07: BTS y complementos. Las figuras Hairline (nave, plaza, office, hotel, club, pocket) las coloca drawings.js; aquí solo texto y guías.
@@ -41,13 +36,7 @@ export function meaning(index,m){const W=m?480:1100,C=W/2,L=m?122:285,R=m?358:81
  o+=G(3,B(C,642,440,34,K.risk)+T(C,664,'Cada negocio necesita su propia cuenta.',16,K.risk));
  }
  }
- if(index===2){
- o+=T(C,190,'Familia Parada · propietarios',m?25:31)+T(C,218,'Conserva las decisiones y autoriza compromisos',m?15:20,K.outcome)+A(C,235,C,273,K.solution);
- o+=B(C,280,m?330:580,78,K.solution)+T(C,310,'Yo Desarrollo · Puebla / PG · Eduardo Lara',m?16:24,K.solution)+T(C,337,'Un equipo que integra el desarrollo',m?16:21);
- const nodes=[['Usuarios y mercado','Prospectar · negociar'],['Proyecto y permisos','Definir · coordinar'],['Finanzas y capital','Modelar · estructurar'],['Jurídico y ejecución','Acordar · controlar']];
- nodes.forEach((a,j)=>{const x=m?(j%2?R:L):175+j*250,y=m?(j<2?440:570):475;const n=j<2?1:2;o+=G(n,P(`M${C} 360 Q${x} 390 ${x} ${y-24}`,K.solution)+T(x,y,a[0],m?16:21)+T(x,y+27,a[1],m?13:17,K.muted)+H(x,y+40,m?185:210,K.solution));});
- o+=G(3,T(C,650,'La coordinación resuelve interfaces; la familia no pierde el control.',m?13:22,K.outcome));
- }
+ if(index===2)o+=participacion(m);
  if(index===3){
  o+=T(C,190,'LA NAVE DEBE ENCAJAR CON UN USUARIO',m?17:23,K.problem);
  const req=['Operación y carga','Alturas y maniobras','Servicios y plazo'];req.forEach((s,j)=>o+=T(L,250+j*35,s,m?15:21,K.ink));
@@ -55,13 +44,7 @@ export function meaning(index,m){const W=m?480:1100,C=W/2,L=m?122:285,R=m?358:81
  o+=G(2,B(C,480,m?420:840,88,K.risk)+T(C,511,'Contrato del usuario + presupuesto + capital',m?17:24,K.risk)+T(C,541,'Las tres condiciones deben sostener la misma operación.',m?13:19));
  o+=G(3,A(C,580,C,615,K.action)+T(C,647,'Invertir en la fase que sí tiene fundamento',m?18:27,K.action));
  }
- if(index===4){
- o+=T(L,190,'RENTA DEL ACTIVO',m?18:24,K.outcome)+T(R,190,'PAGO POR EL TRABAJO',m?16:24,K.plan);
- o+=T(L,250,'Usuario industrial',S)+A(L,270,L,315,K.outcome)+T(L,342,'Contrato de arrendamiento',m?14:21);
- o+=G(1,A(L,360,L,405,K.outcome)+T(L,432,'Ingreso del inmueble',S,K.outcome)+T(L,461,'− obligaciones y operación',m?13:18)+T(L,505,'Beneficio del propietario',m?15:23,K.outcome));
- o+=G(2,T(R,250,'Servicios autorizados',S)+A(R,270,R,315,K.plan)+T(R,342,'Colocación / gerencia',m?15:21)+A(R,360,R,405,K.plan)+T(R,432,'Hito y honorario pactado',m?15:22,K.plan)+T(R,461,'Pago al equipo por su alcance',m?13:18));
- o+=G(3,H(C,560,m?410:880,K.risk)+T(C,600,'Conseguir usuarios no da propiedad automática de las BTS.',m?14:23,K.risk)+T(C,629,'La participación en complementos se pacta por separado.',m?14:20));
- }
+ if(index===4)o+=retribucion(m);
  if(index===5){
  o+=T(C,190,'DE LA NECESIDAD AL PRODUCTO',m?19:25,K.solution)+T(L,225,'La actividad necesita…',m?15:21,K.problem)+T(R,225,'Podría resolverse con…',m?14:21,K.solution);
  const rows=[['Servicios cotidianos','Comercio y servicios'],['Visitas de trabajo','Hotel de negocios'],['Reuniones y representación','Oficinas / showrooms'],['Relaciones y encuentros','Industrial Club'],['Operaciones más pequeñas','Bodegas de 250–500 m²']];

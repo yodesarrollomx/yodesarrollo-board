@@ -1,4 +1,4 @@
-# Distrito Obregón · storyboard YOD-SB07
+# Distrito Obregón · storyboard YOD-SB08
 
 Etapa uno: guion visual para revisión. La presentación de producción, sincronización de audiencia y cierre comercial no se habilitan hasta recibir instrucción explícita sobre el guion corregido.
 
@@ -67,3 +67,26 @@ La guía visible explica seis funciones, sus preguntas de evaluación y el conte
 - Autorización de Alejandro para publicar vértices reales.
 - Prueba en pantalla real de 80".
 - Aceptación de la chinche #347 por Dirección.
+
+## SB08 · Integrantes y retribución
+
+**Origen.** Chinche #348 de Dirección sobre las láminas «Quién lo articula» (`participacion`, escena 3) y «Cómo se retribuye» (`retribucion`, escena 5). No se cambió ningún texto hablado (`spoken`, `narration`, `title`, `beats`, `caution`); solo `change`, `draw`, `motion`, `visualMeaning` y `version` de esas dos escenas.
+
+**Red de integrantes (`network.js`).** Propietarios → alianza (tres miembros) → especialistas por seleccionar (ocho categorías, en línea punteada: estructurador financiero, valuador, legal o fiscal, constructora, operador y similares, sin nombres de empresas). Cada nodo lleva `data-node` y `data-status` (`alianza`, `por-seleccionar`, `por-confirmar`, `por-prospectar`); los íconos de caja `data-icon` y las líneas `data-link`. El cierre dice que la familia trata con una sola coordinación. Los miembros se muestran solo por nombre: `SHOW_MEMBER_ROLES=false` oculta las frases de aporte hasta que Dirección las apruebe. Avermont Real Estate no aparece mientras Dirección no confirme su rol.
+
+**Tabla de flujos (`flows.js`).** Cinco filas (`data-flow`: renta, colocación, gerencia, especialistas, complementos) con quién lo origina, cuándo se genera, qué concepto y quién lo recibe. Columna «lo recibe», no «lo paga». Sin cifras, porcentajes, tarifas ni cascadas; la cautela «Sin porcentajes ni tarifas acordados» está visible en todos los pasos.
+
+**Íconos (`icons.js`).** Tabler Icons 3.24.0 (outline, MIT, © Paweł Kuna), el mismo estilo de línea de la barra lateral de YOD OS. Las rutas son copia literal de los SVG originales; la licencia va en la cabecera del archivo. `diagram-kit.js` agrupa los primitivos de dibujo que antes vivían en `meaning.js`.
+
+**Pruebas.** `tests/obregon-storyboard-browser.cjs` añade para las escenas 3 y 5: 11 nodos, 3 de la alianza y al menos 6 por seleccionar; 5 flujos; cautela en los pasos 1 a 4; ausencia de cifras (`/\d\s*%|\$\s*\d|MXN|USD|\d{2,}\s*(años|meses)/`); y solapamiento de textos, cajas de íconos y líneas. La versión esperada es YOD-SB08.
+
+**Pendientes de Dirección (Q1–Q7).**
+- Q1: si Avermont Real Estate forma parte de la alianza en Obregón y con qué rol.
+- Q2: aprobación de las frases públicas del aporte de cada miembro.
+- Q3: qué mostrar del sistema de seguimiento y reportes de YOD.
+- Q4: qué especialistas pueden pasar de «por seleccionar» a nombrarse, con permiso para publicarlos.
+- Q5: quién paga y quién recibe la colocación, y si puede decirse en la lámina.
+- Q6: si la gerencia y estructuración la presta la alianza completa o un integrante.
+- Q7: si los íconos Tabler son el «estilo de logos» pedido en la chinche #351.
+
+Revisión visual y aceptación de la chinche #348 por Dirección pendientes.
