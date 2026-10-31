@@ -1,17 +1,16 @@
 {
   "model_revision": "2026-10-31.chinches-clock.1",
   "proposal_id": "CHG-CHINCHES-STROKE-CLOCK-20261031",
-  "summary": "Instalar paquete canónico chinches1.1.1 para que el primer punto comparta el reloj de inicio del trazo. Evita que el guardado rechace trazos válidos al cruzar un milisegundo; conserva protocolo, validación estricta, permisos, recibos y borradores existentes.",
+  "summary": "Actualizar a chinches-1.1.1 el parámetro de caché del grabador en las seis entradas HTML consumidoras. Permite que navegadores con el asset anterior en caché soliciten el paquete corregido ya publicado; no cambia el grabador, el protocolo ni la lógica de las presentaciones.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "Prueba browser de chinches en Chromium y WebKit con cruce de reloj controlado: falla en1.1.0 y pasa en1.1.1; captura real, trazo, IndexedDB, recarga, cancelación de compartir y retención ante cuota.",
-    "node --test tests/brokers-pin-delivery.test.cjs:16contratos aprobados.",
-    "tests/brokers-pin-delivery-browser.cjs:captura privada y recuperación de ACK perdido en Chromium/WebKit con servidor sintético.",
-    "tests/ppp-storyboard-browser.cjs:versiones, recorrido, etapa2, proyección y revocación con servicios sintéticos.",
-    "Sintaxis, git diff --check y verificación de impacto contra atlas fijado."
+    "Comprobar las seis referencias HTML del grabador frente a chinche.lock.json: ninguna conserva chinches-1.1.0 y todas resuelven el mismo vendor con chinches-1.1.1.",
+    "Comprobar que los únicos cambios HTML son el parámetro de caché del script y ejecutar git diff --check.",
+    "Verificación de impacto contra el atlas acb96e2612250caf537f1d17cfc6e1fda63e996b y CI requerido del PR.",
+    "Después de publicar: releer las seis entradas y comprobar el hash del vendor solicitado con el parámetro nuevo."
   ],
-  "rollback": "Restituir chinches1.1.0 con instalador canónico y revisión, conservar datos locales, IDs, capturas, audio, borradores y recibos. No modificar registros de negocio ni reparar borradores antiguos automáticamente.",
+  "rollback": "Revertir únicamente las referencias de caché mediante revisión; conservar el paquete, sus datos, IDs, capturas, audio, borradores y recibos. No modificar registros de negocio.",
   "model_commit": "acb96e2612250caf537f1d17cfc6e1fda63e996b"
 }
