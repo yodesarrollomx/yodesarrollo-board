@@ -1,17 +1,17 @@
 {
-  "model_revision": "2026-10-31.ppp-presentaciones.1",
-  "proposal_id": "CHG-PPP-PRESENTACIONES-20261031",
-  "summary": "Registro privado de versiones de guion y presentación generadas desde la revisión vista del PPP, renderer tipado Hairline y continuidad de etapa 2 mediante Portero y el agente existente. La biblioteca y la mesa Master Developer consumen el mismo registro. Guion, fuente, proyección y publicación separados; sin habilitación ni despliegue productivo.",
+  "model_revision": "2026-10-31.chinches-clock.1",
+  "proposal_id": "CHG-CHINCHES-STROKE-CLOCK-20261031",
+  "summary": "Instalar paquete canónico chinches1.1.1 para que el primer punto comparta el reloj de inicio del trazo. Evita que el guardado rechace trazos válidos al cruzar un milisegundo; conserva protocolo, validación estricta, permisos, recibos y borradores existentes.",
   "components": [
-    "SYS-INVERSION",
-    "GAS-SALA"
+    "SYS-INVERSION"
   ],
   "tests": [
-    "node --test tests/*.test.cjs: contratos de registro, privacidad, generación, autorización, proyección, transporte FAST y regresión existente.",
-    "CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node tests/ppp-storyboard-browser.cjs: V1 histórica con V2 vigente, doce momentos reversibles, cámara, teclado, tres orientaciones, autorización explícita, encargo durable, recarga, V3 producida, catálogo único y revocación; red real interceptada.",
-    "CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node tests/presentation-hub-browser.cjs: biblioteca existente, publicación explícita, sesión fijada y control de dos dispositivos.",
-    "Sintaxis de JS/MJS, git diff --check y verificador de impacto contra el commit del atlas fijado."
+    "Prueba browser de chinches en Chromium y WebKit con cruce de reloj controlado: falla en1.1.0 y pasa en1.1.1; captura real, trazo, IndexedDB, recarga, cancelación de compartir y retención ante cuota.",
+    "node --test tests/brokers-pin-delivery.test.cjs:16contratos aprobados.",
+    "tests/brokers-pin-delivery-browser.cjs:captura privada y recuperación de ACK perdido en Chromium/WebKit con servidor sintético.",
+    "tests/ppp-storyboard-browser.cjs:versiones, recorrido, etapa2, proyección y revocación con servicios sintéticos.",
+    "Sintaxis, git diff --check y verificación de impacto contra atlas fijado."
   ],
-  "rollback": "Revertir el PR del consumidor mediante revisión; deshabilitar el alcance nuevo en el servicio existente. Conservar versiones, autorizaciones, recibos, expedientes, cálculos PPP y chinches. No revertir ni borrar datos de negocio.",
-  "model_commit": "d99f27b5da52c5aab5d3c1ff6625937df35ba8f3"
+  "rollback": "Restituir chinches1.1.0 con instalador canónico y revisión, conservar datos locales, IDs, capturas, audio, borradores y recibos. No modificar registros de negocio ni reparar borradores antiguos automáticamente.",
+  "model_commit": "acb96e2612250caf537f1d17cfc6e1fda63e996b"
 }
