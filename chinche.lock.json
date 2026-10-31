@@ -3,13 +3,13 @@
   "id": "yodesarrollo-board",
   "repository": "yodesarrollomx/yodesarrollo-board",
   "package": "@yod/chinches",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "sequenceProtocol": 1,
   "mode": "bundle",
   "assets": [
     {
       "path": "chinche/secuencia.js",
-      "sha256": "682df06721e0163f89f0a0a06530d09a55b11cfc38421d4ba087bdd16b129e8a"
+      "sha256": "bb5a4d835e8c1015d26535bd84dc03d0b81bd96fa68d674ccc980b89b3d1bea8"
     },
     {
       "path": "chinche/entrega.js",
@@ -24,8 +24,8 @@
     {
       "path": "presentacion/vendor/yod-chinche.js",
       "kind": "markers",
-      "sha256": "4d97f4b0dab00970b90d7500c62190096732efab1a8dd9f305320cab6e14295c",
-      "bytes": 30274
+      "sha256": "904b2b6fbe4c09721fd62243dca2384a5c2867e22fb4d75ba1ebee5ebe6b546b",
+      "bytes": 30341
     }
   ]
 }
