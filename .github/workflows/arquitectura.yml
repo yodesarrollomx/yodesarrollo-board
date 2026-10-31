@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: yodesarrollomx/yod-portal
-          ref: 505d6b6f540e3b0a704659c665e64be1e4e698a1
+          ref: d99f27b5da52c5aab5d3c1ff6625937df35ba8f3
           path: .yod-atlas
           persist-credentials: false
           sparse-checkout-cone-mode: false
@@ -57,6 +57,13 @@ jobs:
           node-version: '22'
       - name: Contratos de Brokers
         run: node --test tests/brokers*.test.cjs
+      - name: Presentaciones privadas del PPP
+        run: |
+          node --test tests/ppp-*.test.cjs tests/presentation-production-api.test.cjs
+          node --check presentacion/storyboard-core.js
+          node --check presentacion/production-api.js
+          node --check presentacion/ppp/app.mjs
+          node --check presentacion/ppp/renderer.mjs
       - name: Sintaxis del flujo de preevaluación
         run: |
           node --check master-brokers/app.mjs
@@ -109,6 +116,7 @@ jobs:
           node tests/brokers-evaluator-browser.cjs
           node tests/brokers-journey-browser.cjs
           node tests/presentation-hub-browser.cjs
+          QA_ARTIFACTS=ppp-review-artifacts node tests/ppp-storyboard-browser.cjs
           node tests/brokers-board-browser.cjs
           QA_BOARD_ENGINE=webkit node tests/brokers-board-browser.cjs
       - name: Presentación con fuente pública validada
@@ -145,6 +153,7 @@ jobs:
             simple-*.jpg
             slider-*.jpg
             atlas-*.jpg
+            ppp-review-artifacts/
             intent-*.jpg
             offer-review-artifacts/
             abasto-review-artifacts/

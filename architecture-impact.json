@@ -1,16 +1,17 @@
 {
-  "model_revision": "2026-10-20.masterdeveloper-pizarra.1",
-  "proposal_id": "CHG-PRESENTATION-STORYBOARD-GITHUB-20261019",
-  "summary": "SB11 · chinche #351: escena «Primero una empresa. Después su nave.» rediseñada con figuras Hairline y pictogramas Tabler: la alianza busca una empresa que encaje, carta de intención con seis requisitos que dibujan la nave en contorno, compuerta donde contrato, costo y efectivo deben ser compatibles, y una sola nave construida con cuatro aprobaciones. Incluye la corrección de tiempos de #350: en las paradas enteras de `capital` las filas A y B se ven completas. Sin cifras; textos que requieren visto bueno de Dirección quedan apagados. Sin backend, permisos, Sheets ni cron.",
+  "model_revision": "2026-10-31.ppp-presentaciones.1",
+  "proposal_id": "CHG-PPP-PRESENTACIONES-20261031",
+  "summary": "Registro privado de versiones de guion y presentación generadas desde la revisión vista del PPP, renderer tipado Hairline y continuidad de etapa 2 mediante Portero y el agente existente. La biblioteca y la mesa Master Developer consumen el mismo registro. Guion, fuente, proyección y publicación separados; sin habilitación ni despliegue productivo.",
   "components": [
-    "SYS-INVERSION"
+    "SYS-INVERSION",
+    "GAS-SALA"
   ],
   "tests": [
-    "node tests/obregon-storyboard-browser.cjs: SB07–SB10 más escena 3 (4 pasos, compuerta solo en el paso 3, 3 condiciones, 6 requisitos, 4 aprobaciones, nave en contorno antes del paso 4, cero dígitos, sin solapes, terreno y nave sin tapar textos), escena 6 con filas A y B completas en 25.0 y 26.0, y prueba genérica de paradas enteras 0–39 (data-reveal alcanzado ≥ .95, data-until vencido < .05) en 390×844, 844×390 y 1365×900; red externa abortada.",
-    "node --test tests/*.test.cjs: contratos existentes sin regresión.",
-    "node tests/presentation-hub-browser.cjs y node tests/abasto-storyboard-browser.cjs: sin regresión.",
-    "Íconos: cada trazo comparado byte a byte con @tabler/icons 3.24.0."
+    "node --test tests/*.test.cjs: contratos de registro, privacidad, generación, autorización, proyección, transporte FAST y regresión existente.",
+    "CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node tests/ppp-storyboard-browser.cjs: V1 histórica con V2 vigente, doce momentos reversibles, cámara, teclado, tres orientaciones, autorización explícita, encargo durable, recarga, V3 producida, catálogo único y revocación; red real interceptada.",
+    "CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node tests/presentation-hub-browser.cjs: biblioteca existente, publicación explícita, sesión fijada y control de dos dispositivos.",
+    "Sintaxis de JS/MJS, git diff --check y verificador de impacto contra el commit del atlas fijado."
   ],
-  "rollback": "Revertir el PR de la presentación (vuelve SB10); no hay datos, registros, permisos ni chinches que restaurar.",
-  "model_commit": "505d6b6f540e3b0a704659c665e64be1e4e698a1"
+  "rollback": "Revertir el PR del consumidor mediante revisión; deshabilitar el alcance nuevo en el servicio existente. Conservar versiones, autorizaciones, recibos, expedientes, cálculos PPP y chinches. No revertir ni borrar datos de negocio.",
+  "model_commit": "d99f27b5da52c5aab5d3c1ff6625937df35ba8f3"
 }
