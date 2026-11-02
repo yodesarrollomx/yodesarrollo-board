@@ -1,16 +1,15 @@
 {
-  "model_revision": "2026-10-31.chinches-clock.1",
-  "proposal_id": "CHG-CHINCHES-STROKE-CLOCK-20261031",
-  "summary": "Actualizar a chinches-1.1.1 el parámetro de caché del grabador en las seis entradas HTML consumidoras. Permite que navegadores con el asset anterior en caché soliciten el paquete corregido ya publicado; no cambia el grabador, el protocolo ni la lógica de las presentaciones.",
+  "model_revision": "2026-11-01.mercado-f2.2",
+  "proposal_id": "CHG-MERCADO-ANCLAS-20261101",
+  "summary": "Master Developer (brokers.html) agrega en la cabecera, junto a «Presentaciones», una liga «Mercado Hermosillo» al tablero de oferta y demanda de yod-portal, con la clase existente .presentation-entry. Sólo HTML; sin CSS/JS nuevos, sin versiones, sin datos privados. Atlas fijado a bd5139e de yod-portal.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "Comprobar las seis referencias HTML del grabador frente a chinche.lock.json: ninguna conserva chinches-1.1.0 y todas resuelven el mismo vendor con chinches-1.1.1.",
-    "Comprobar que los únicos cambios HTML son el parámetro de caché del script y ejecutar git diff --check.",
-    "Verificación de impacto contra el atlas acb96e2612250caf537f1d17cfc6e1fda63e996b y CI requerido del PR.",
-    "Después de publicar: releer las seis entradas y comprobar el hash del vendor solicitado con el parámetro nuevo."
+    "git diff --check",
+    "verificar-impacto contra el atlas bd5139ebf2f16ffd78739af6089c40a69facdf25",
+    "Render real (Playwright) de brokers.html con la liga visible a 390 y 1440 px"
   ],
-  "rollback": "Revertir únicamente las referencias de caché mediante revisión; conservar el paquete, sus datos, IDs, capturas, audio, borradores y recibos. No modificar registros de negocio.",
-  "model_commit": "acb96e2612250caf537f1d17cfc6e1fda63e996b"
+  "rollback": "Revertir el commit; sin cambios de backend, hojas ni permisos.",
+  "model_commit": "bd5139ebf2f16ffd78739af6089c40a69facdf25"
 }
