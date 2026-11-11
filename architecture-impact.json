@@ -1,15 +1,17 @@
 {
   "model_revision": "2026-11-01.mercado-f2.2",
-  "proposal_id": "CHG-MERCADO-ANCLAS-20261101",
-  "summary": "Master Developer (brokers.html) agrega en la cabecera, junto a «Presentaciones», una liga «Mercado Hermosillo» al tablero de oferta y demanda de yod-portal, con la clase existente .presentation-entry. Sólo HTML; sin CSS/JS nuevos, sin versiones, sin datos privados. Atlas fijado a bd5139e de yod-portal.",
+  "proposal_id": "CHG-MASTERBROKERS-MINI-CRM",
+  "summary": "Cierra las chinches 298/299/301 (CHN-20261013-1214-93b3): la lista «Mi equipo» de Master Developer (agregada después de PR44) usa el mismo orden y las mismas etiquetas MD/MB que la barra de carteras: MD propia primero, luego MB Eduardo Lara, MB Alejandro Franco y MB Lupita; integrantes al final. El orden vive en una sola constante congelada de brokers-core (teamOrder). Sólo presentación: no cambia identidad, permisos, backend, Sheets ni términos comerciales.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "git diff --check",
-    "verificar-impacto contra el atlas bd5139ebf2f16ffd78739af6089c40a69facdf25",
-    "Render real (Playwright) de brokers.html con la liga visible a 390 y 1440 px"
+    "node --test tests/brokers*.test.cjs: prueba nueva del orden MD → MB confirmados → integrantes con IDs reales de cartera y datos ficticios, sin mutar el snapshot.",
+    "node tests/brokers-workspace-browser.cjs (320/390/1440): cada renglón de «Mi equipo» lleva su etiqueta y la cartera propia va primero; regresiones existentes.",
+    "node tests/brokers-board-browser.cjs, tests/brokers-crm-browser.cjs y tests/brokers-journey-browser.cjs (Chromium) sin regresión.",
+    "Render real (Playwright) de brokers.html a 390 y 1440 px con IDs reales de cartera y datos sintéticos, sin escrituras.",
+    "verificar-impacto contra el atlas bd5139ebf2f16ffd78739af6089c40a69facdf25"
   ],
-  "rollback": "Revertir el commit; sin cambios de backend, hojas ni permisos.",
+  "rollback": "Revertir el commit por PR; sin cambios de backend, hojas, permisos ni registros.",
   "model_commit": "bd5139ebf2f16ffd78739af6089c40a69facdf25"
 }

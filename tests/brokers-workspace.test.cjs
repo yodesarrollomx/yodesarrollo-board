@@ -24,6 +24,14 @@ test('orden MD/MB sólo presenta carteras existentes; acentos, apellidos y desco
  assert.deepEqual(C.orderedPortfolios(s,['Eduardo Lara','Alejandro Franco','Lupita']).map(b=>b.id),['d','e','a','l','u','v']);assert.equal(JSON.stringify(s),before);
 });
 
+test('«Mi equipo» enlista primero la MD propia y luego las MB confirmadas en su orden; integrantes al final (CHN-20261013-1214-93b3)',()=>{
+ const s=fixture();s.actor={id:'director',name:'Alejandro Puebla',role:'direccion',broker_id:'BR-ALEJANDRO-PUEBLA'};
+ s.brokers=[{id:'BR-SAYRI-FRAIJO',name:'Sayri Fraijo'},{id:'BR-LUPITA',name:'Lupita Pauls'},{id:'BR-ALEJANDRO-FRANCO',name:'Alejandro Franco'},{id:'BR-EDUARDO-LARA',name:'Eduardo Lara'},{id:'BR-ALEJANDRO-PUEBLA',name:'Alejandro Puebla Gayón'}];
+ const before=JSON.stringify(s);
+ assert.deepEqual(C.orderedPortfolios(s,C.teamOrder).map(b=>C.portfolioRoleLabel(b.id)+' '+b.name),['MD Alejandro Puebla Gayón','MB Eduardo Lara','MB Alejandro Franco','MB Lupita Pauls','Integrante Sayri Fraijo']);
+ assert.ok(Object.isFrozen(C.teamOrder));assert.throws(()=>{'use strict';C.teamOrder.push('Otra');});assert.equal(JSON.stringify(s),before);
+});
+
 test('etiqueta comercial sólo por ID confirmado; Sayri y homónimos quedan integrantes',()=>{
  assert.equal(C.portfolioRoleLabel('BR-ALEJANDRO-PUEBLA'),'MD');
  for(const id of ['BR-EDUARDO-LARA','BR-ALEJANDRO-FRANCO','BR-LUPITA'])assert.equal(C.portfolioRoleLabel(id),'MB');
