@@ -66,7 +66,7 @@
   };
   function scopeNavigation() {
     if(liveSnapshot.actor.role!=='direccion'||preview)return '';
-    const own=C.ownPortfolio(liveSnapshot),ordered=C.orderedPortfolios(liveSnapshot,['Eduardo Lara','Alejandro Franco','Lupita']);
+    const own=C.ownPortfolio(liveSnapshot),ordered=C.orderedPortfolios(liveSnapshot,C.teamOrder);
     return `<nav class="scope-switcher" aria-label="Carteras"><button data-plaza="1" aria-current="${!requestedBroker?'page':'false'}"><span class="scope-symbol" aria-hidden="true">◈</span> Mi equipo</button>${ordered.map(b=>`<button data-broker="${esc(b.id)}" aria-current="${requestedBroker===b.id?'page':'false'}" title="${esc(b.name)}"><span class="scope-avatar" aria-hidden="true">${esc(initials(b.name))}</span><span class="scope-role">${C.portfolioRoleLabel(b.id)}</span> ${esc(b.name)}${b.id===own?.id?' · Mi cartera':''}</button>`).join('')}</nav>`;
   }
   function render() {
@@ -103,11 +103,11 @@
   }
   function teamView(){
     const own=C.ownPortfolio(liveSnapshot);
-    const rows=C.orderedPortfolios(liveSnapshot).filter(b=>!query||b.name.toLocaleLowerCase('es').includes(query.toLocaleLowerCase('es')));
+    const rows=C.orderedPortfolios(liveSnapshot,C.teamOrder).filter(b=>!query||b.name.toLocaleLowerCase('es').includes(query.toLocaleLowerCase('es')));
     return `<section class="md-team" aria-label="Equipo de Master Brokers">${rows.map(b=>{
       const cases=C.caseGroups(liveSnapshot,b.id,'','','');
       const activities=liveSnapshot.activities.filter(a=>cases.some(g=>g.records.some(o=>o.id===a.opportunity_id))).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
-      return `<button class="md-broker-row" data-open-broker="${esc(b.id)}"><span class="scope-avatar">${esc(initials(b.name))}</span><span><strong>${esc(b.name)}</strong><small>${b.id===own?.id?'Mi cartera · ':''}${cases.length} ${cases.length===1?'proyecto':'proyectos'}${activities[0]?' · Último movimiento '+esc(dateLabel(activities[0].date)):''}</small></span><span aria-hidden="true">→</span></button>`;
+      return `<button class="md-broker-row" data-open-broker="${esc(b.id)}"><span class="scope-avatar">${esc(initials(b.name))}</span><span><strong><span class="scope-role">${C.portfolioRoleLabel(b.id)}</span> ${esc(b.name)}</strong><small>${b.id===own?.id?'Mi cartera · ':''}${cases.length} ${cases.length===1?'proyecto':'proyectos'}${activities[0]?' · Último movimiento '+esc(dateLabel(activities[0].date)):''}</small></span><span aria-hidden="true">→</span></button>`;
     }).join('')||'<p>No hay brokers que coincidan con la búsqueda.</p>'}</section>`;
   }
   function table(headers, rows, label) {
