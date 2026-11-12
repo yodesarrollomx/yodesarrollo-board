@@ -1,17 +1,16 @@
 {
-  "model_revision": "2026-11-01.mercado-f2.2",
-  "proposal_id": "CHG-MASTERBROKERS-MINI-CRM",
-  "summary": "Cierra las chinches 298/299/301 (CHN-20261013-1214-93b3): la lista «Mi equipo» de Master Developer (agregada después de PR44) usa el mismo orden y las mismas etiquetas MD/MB que la barra de carteras: MD propia primero, luego MB Eduardo Lara, MB Alejandro Franco y MB Lupita; integrantes al final. El orden vive en una sola constante congelada de brokers-core (teamOrder). Sólo presentación: no cambia identidad, permisos, backend, Sheets ni términos comerciales.",
+  "model_revision": "2026-11-11.grafo-accesos.3",
+  "proposal_id": "CHG-PRESENTACION-GRAFO-20261111",
+  "summary": "Nueva página presentacion/grafo/: arma en el navegador una presentación por audiencia (cliente o inversionista, dueño del terreno, producto) y extensión (completa o corta) con el grafo aprobado que publica potenciales-yod y el Plan de Potencial guardado del caso, leído con la sesión de quien abre por la misma lectura recurso=caso del Mini CRM. No calcula: cada cifra es un campo guardado con su procedencia y lo ausente se muestra «No definido». Sólo lee el grafo aprobado, así que un grafo en borrador no cambia presentaciones ni ligas. Aviso discreto (presentacion/grafo-aviso.js) en Master Brokers, Presentaciones y la propia página cuando hay otra versión del grafo en trabajo o una más nueva aprobada; sólo con sesión de YOD. Master Brokers agrega la liga «Presentar desde el grafo» en el cajón del plan. Sin escrituras, almacenamiento, secretos ni cambios de backend, hojas, permisos o términos comerciales.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "node --test tests/brokers*.test.cjs: prueba nueva del orden MD → MB confirmados → integrantes con IDs reales de cartera y datos ficticios, sin mutar el snapshot.",
-    "node tests/brokers-workspace-browser.cjs (320/390/1440): cada renglón de «Mi equipo» lleva su etiqueta y la cartera propia va primero; regresiones existentes.",
-    "node tests/brokers-board-browser.cjs, tests/brokers-crm-browser.cjs y tests/brokers-journey-browser.cjs (Chromium) sin regresión.",
-    "Render real (Playwright) de brokers.html a 390 y 1440 px con IDs reales de cartera y datos sintéticos, sin escrituras.",
-    "verificar-impacto contra el atlas bd5139ebf2f16ffd78739af6089c40a69facdf25"
+    "node --test tests/ppp-grafo-presentacion.test.cjs: 30 combinaciones de audiencia, tipo de plan y extensión arman un guion válido; cada cifra sale de un campo guardado; lo ausente queda «No definido»; ligas aceptadas; estados del aviso; páginas que lo montan; sólo lectura y sin secretos.",
+    "node tests/ppp-grafo-browser.cjs (Chromium, 393/844/1440 y 320): tres audiencias, versión corta, modo presentar, una sola lectura GET del plan, ejemplo sin sesión, puerta sin datos, borrador sin cambios, actualización al aprobar y pastilla en Master Brokers y Presentaciones; grafo y Portero sintéticos, sin escrituras.",
+    "Regresión: node --test tests/brokers*.test.cjs tests/ppp-*.test.cjs tests/presentation-production-api.test.cjs; navegador de cartera, Mini CRM, evaluador, recorrido, mesa de presentaciones y guion del PPP sin cambios de resultado.",
+    "verificar-impacto contra el atlas ab242875f5cf90fa8255ac273b38e0ad2520bbfe. Pendiente de comprobar en producción: lectura real del plan con una sesión real y grafo ya publicado por potenciales-yod."
   ],
   "rollback": "Revertir el commit por PR; sin cambios de backend, hojas, permisos ni registros.",
-  "model_commit": "bd5139ebf2f16ffd78739af6089c40a69facdf25"
+  "model_commit": "ab242875f5cf90fa8255ac273b38e0ad2520bbfe"
 }
