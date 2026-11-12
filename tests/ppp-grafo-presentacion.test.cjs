@@ -91,6 +91,47 @@ test('el aviso sólo habla cuando el grafo en pantalla no es el que se está tra
   const n=A.estado({cargado:'G-20261101-0800',versiones:V,borrador:B});
   assert.equal(n.tipo,'nueva');assert.equal(n.aprobado,V.aprobado);assert.match(n.detalle,/lo que ves no cambia/);
   for(const e of [b,n]){assert.ok(e.corto.length<=28,e.corto);assert.ok(!/[!¡]|error|alerta|urgente|atención/i.test(e.corto+e.detalle));}
+  // lo que está en borrador es el grafo, no el Plan de Potencial
+  assert.match(b.detalle,/otra versión del grafo en borrador/);assert.ok(!/Plan de Potencial/.test(b.detalle),b.detalle);
+});
+
+test('el rol de pyod_rol se lee como lo guarda portero.js, como la palabra sola de antes y sin romperse con basura',()=>{
+  const T='sy0123456789abcdef0000';
+  // portero.js: JSON.stringify({f:k.slice(0,14),rol})
+  assert.equal(A.rolDe(JSON.stringify({f:T.slice(0,14),rol:'admin'}),T),'admin');
+  assert.equal(A.rolDe(JSON.stringify({f:T.slice(0,14),rol:'Direccion'}),T),'direccion');
+  assert.equal(A.rolDe(JSON.stringify({f:T.slice(0,14),rol:'editor'}),T),'editor');
+  assert.equal(A.rolDe(JSON.stringify({rol:'admin'}),T),'admin','sin huella vale el rol');
+  assert.equal(A.rolDe(JSON.stringify({f:T.slice(0,14),rol:'admin'}),''),'admin','sin token a la mano no se descarta');
+  assert.equal(A.rolDe(JSON.stringify({f:'syOTRO00000000',rol:'admin'}),T),'','el rol de otro token no cuenta');
+  // la palabra sola de siempre
+  for(const [v,r] of [['admin','admin'],['DIRECCION','direccion'],[' comercial ','comercial'],['vista','vista']])assert.equal(A.rolDe(v,T),r,v);
+  // basura: nunca rompe y nunca da rol
+  for(const v of [null,undefined,'',7,{},[],'{roto','{"rol":7}','{"f":1,"rol":["admin"]}','[]','"admin"','{}','admin;x','<b>admin</b>','a'.repeat(40)])assert.equal(A.rolDe(v,T),'',String(v));
+});
+
+test('la liga a Accesos sólo aparece a Dirección y con el rol tal como lo guarda el Portero',async()=>{
+  const T='sy0123456789abcdef0000',V={aprobado:'G-20261111-2217',versiones:[]},B={id:'G-20261112-0915',pr:70};
+  function nodo(tag){const n={tag,children:[],attrs:{},style:{},classList:{add(){}},hidden:true,textContent:'',
+    append(...k){for(const x of k)n.children.push(typeof x==='string'?{tag:'#text',textContent:x,children:[]}:x);},setAttribute(a,v){n.attrs[a]=v;},getBoundingClientRect:()=>({left:10,right:100}),querySelectorAll:()=>[]};
+    Object.defineProperty(n,'textContent',{get(){return n._t||'';},set(v){n._t=v;if(v==='')n.children=[];}});n.ownerDocument=doc;return n;}
+  const doc={createElement:nodo,createTextNode:t=>({tag:'#text',textContent:t,children:[]}),documentElement:{clientWidth:400},addEventListener(){},removeEventListener(){},hidden:false};
+  const todos=n=>[n,...n.children.flatMap(todos)];
+  async function abrir(pyodRol){
+    const store={pyod_clave_v1:T},ses={pyod_rol:pyodRol},prev={localStorage:globalThis.localStorage,sessionStorage:globalThis.sessionStorage};
+    Object.defineProperty(globalThis,'localStorage',{value:{getItem:k=>store[k]??null},configurable:true});
+    Object.defineProperty(globalThis,'sessionStorage',{value:{getItem:k=>ses[k]??null},configurable:true});
+    try{
+      const el=nodo('span'),fetchImpl=u=>Promise.resolve({ok:true,json:()=>Promise.resolve(/versiones/.test(u)?V:B)});
+      const m=A.montar(el,{cargado:V.aprobado,fetchImpl,cada:0});await m.leer();
+      todos(el).find(n=>n.tag==='button').onclick();
+      const fin=todos(el);m.detener();return {liga:fin.some(n=>n.tag==='a'),texto:fin.map(n=>n.textContent).join(' ')};
+    }finally{for(const k of Object.keys(prev))Object.defineProperty(globalThis,k,{value:prev[k],configurable:true});}
+  }
+  assert.equal((await abrir(JSON.stringify({f:T.slice(0,14),rol:'admin'}))).liga,true,'admin como lo guarda portero.js');
+  assert.equal((await abrir('direccion')).liga,true,'la palabra sola de antes');
+  for(const otro of [JSON.stringify({f:T.slice(0,14),rol:'vista'}),JSON.stringify({f:'syOTRO00000000',rol:'admin'}),'{roto',null]){
+    const r=await abrir(otro);assert.equal(r.liga,false,String(otro));assert.match(r.texto,/pide a Dirección/);}
 });
 
 test('Master Brokers y Presentaciones montan el aviso y enlazan el plan guardado con el visor',()=>{

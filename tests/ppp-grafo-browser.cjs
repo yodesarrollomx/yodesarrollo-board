@@ -5,6 +5,8 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const root=path.resolve(__dirname,'..'),G=require('./fixtures/grafo-aprobado.json'),R=G.datos.recetas,APROBADO=G.datos.id,NUEVO='G-20991231-2359',BORRADOR='G-20991230-0915';
 const TOKEN='sy-sintetico-0000000000000000',PORTERO='https://script.google.com/macros/s/PORTERODEPRUEBA/exec';
+// El rol tal como lo deja portero.js en sessionStorage.pyod_rol: JSON {f: inicio del token, rol}.
+const ROL=rol=>JSON.stringify({f:TOKEN.slice(0,14),rol});
 const CASO={caso_id:'CASO-SINTETICO',nombre_caso:'Caso sintético',version:7,ts_actualizado:'2026-11-10T18:00:00Z',escenarios_json:JSON.stringify([{id:'a',nombre:'Base',activo:true},{id:'b',nombre:'Alta'}]),
   inTerreno:2500,inEquity:18000000,inAporteTierra:100,resumen:{ventas:182500000,costo_proyecto:141300000,utilidad:41200000,margen_pct:22.6,tir_dev_pct:27.4,moic_dev:1.92,pico_deuda:38000000,resultado_dueno:20600000,
   unidades:64,pisos:8,vendible_viv_m2:4480,meses_totales:38,ticket_promedio:2851000}};
@@ -18,7 +20,7 @@ async function main(){
   const base='http://127.0.0.1:'+server.address().port,browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_EXECUTABLE_PATH?{executablePath:process.env.CHROMIUM_EXECUTABLE_PATH}:{}),args:['--no-sandbox','--disable-dev-shm-usage']});
   const errors=[],shots=process.env.QA_ARTIFACTS;if(shots)fs.mkdirSync(shots,{recursive:true});
   // mundo: qué grafo está aprobado, si hay borrador y qué contesta el Portero
-  async function context({sesion=true,rol='direccion',viewport={width:393,height:852},mundo={}}={}){
+  async function context({sesion=true,rol=ROL('admin'),viewport={width:393,height:852},mundo={}}={}){
     const w={aprobado:APROBADO,borrador:null,permiso:true,portero:[],otros:[],...mundo};
     const c=await browser.newContext({viewport,reducedMotion:'reduce'});c.setDefaultTimeout(10000);
     if(sesion)await c.addInitScript(({t,rol})=>{try{localStorage.setItem('pyod_clave_v1',t);sessionStorage.setItem('pyod_rol',rol);}catch{}},{t:TOKEN,rol});
@@ -98,9 +100,12 @@ async function main(){
       await p.locator('#aviso .yga-boton').filter({hasText:'Hay un grafo más nuevo'}).waitFor();assert.match(await p.locator('#grafoVersion').innerText(),new RegExp('^'+APROBADO));
       await p.locator('#aviso .yga-boton').click();await p.getByRole('button',{name:'Actualizar al último grafo'}).click();
       await p.locator('#grafoVersion').filter({hasText:NUEVO}).waitFor();await p.locator('#aviso').waitFor({state:'hidden'});assert.match(await p.locator('#project').innerText(),/Caso sintético/);assert.deepEqual(w.otros,[]);await c.close();}
-    // 6 · quien no es Dirección ve la misma pastilla, sin liga a Accesos; el borrador cuenta aunque su PR aún no esté abierto
-    {const {c}=await context({rol:'comercial',mundo:{borrador:{id:BORRADOR,pr:0}}}),p=await page(c,'/presentacion/grafo/?caso=CASO-SINTETICO&tipo=mixto');
-      await p.locator('#aviso .yga-boton').click();assert.equal(await p.locator('#aviso .yga-caja a').count(),0);assert.match(await p.locator('#aviso .yga-caja').innerText(),/pide a Dirección/);await c.close();}
+    // 6 · quien no es Dirección (o trae el rol de otro token) ve la misma pastilla, sin liga a Accesos; el borrador cuenta aunque su PR aún no esté abierto.
+    //     La palabra sola de antes ('direccion') sigue valiendo.
+    for(const [rol,liga] of [[ROL('vista'),0],[JSON.stringify({f:'sy-otro-token0',rol:'admin'}),0],['comercial',0],['direccion',1]]){
+      const {c}=await context({rol,mundo:{borrador:{id:BORRADOR,pr:0}}}),p=await page(c,'/presentacion/grafo/?caso=CASO-SINTETICO&tipo=mixto');
+      await p.locator('#aviso .yga-boton').click();assert.equal(await p.locator('#aviso .yga-caja a').count(),liga,rol);
+      if(!liga)assert.match(await p.locator('#aviso .yga-caja').innerText(),/pide a Dirección/);await c.close();}
     // 7 · Master Brokers y Presentaciones: la pastilla se monta sola, sólo con sesión y sólo si hay borrador
     for(const pagina of ['/brokers.html','/presentaciones.html']){
       {const {c}=await context({mundo:{borrador:{id:BORRADOR,pr:70}}}),p=await page(c,pagina,false),mis=[];p.on('pageerror',e=>{if(/grafo|yga/i.test(e.stack||e.message))mis.push(e.message);});
