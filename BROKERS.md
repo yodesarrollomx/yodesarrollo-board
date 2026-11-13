@@ -112,6 +112,20 @@ Comprobación: pruebas de contrato y navegador Chromium/WebKit con fuentes sint�
 
 Implementación del recorrido: entrada común de tres acciones; ficha con mapa/evaluación, PPP, material y seguimiento. El regreso conserva su URL hasta ACK; cancelar ofrece Retomar y una evaluación ya vinculada abre su expediente. Actualizar conserva la selección autorizada, la creación confirmada abre el registro exacto y conserva la experiencia de clientes recién registrados. Se preserva la unificación de cartera publicada en PR41 y el prototipo público de PR42. La referencia EV actual es la última línea de evaluación, conservando las anteriores y el sobre YOD-CASE-v1. El editor del retorno recoge contacto opcional y siguiente paso; datos recibidos y clasificación se despliegan sólo si se necesitan. Publicación y pruebas se registran al finalizar.
 
+## Historia · Hoy · Plan (as-of)
+
+El detalle de cada caso añade la pestaña «Historia · Hoy · Plan». Con una fecha de consulta (por defecto hoy) muestra tres paneles: Historia a la izquierda, Hoy al centro y Planeación a la derecha. Desde 1024 px se ven juntos; en pantallas menores se alternan con las pestañas «← Historia», «Hoy» y «Planeación →», que admiten flechas, Inicio y Fin.
+
+- Historia: los hechos con fecha ocurrida hasta el día consultado, con participantes, fuente y enlace, y su estado en texto (Realizado, Programado, Propuesto, Cancelado). Muestra «Corrige a …» cuando el evento reemplaza a otro y «Registrado después de esta fecha» cuando se capturó después del día consultado.
+- Hoy: el último hecho realizado con su fuente, la etapa observada (la del último hecho que la registró; la etapa del expediente si la fecha es hoy), el siguiente paso vigente a esa fecha, la fecha real de la última captura y «Requiere decisión» sólo si la fecha es hoy y el expediente la solicita. No existe un campo de bloqueo: se indica «Sin bloqueo registrado en el expediente».
+- Planeación: «Compromisos (programados)» y «Propuestas» vigentes a la fecha. Un plan sale cuando un evento registrado hasta ese día lo reemplaza o cancela. Si su día ya pasó sin resultado se marca «Vencida · sin resultado registrado» y conserva su estado; nunca se convierte en realizado. Si la fecha es hoy se añade el siguiente paso vigente del expediente.
+
+Reglas: la vista es de sólo lectura; cambiar la fecha o volver a hoy no guarda, no llama a `brokers_save` y no modifica el snapshot. Los reemplazos y cancelaciones cuentan por su fecha de registro (America/Hermosillo), no por la fecha del hecho. Los vacíos se escriben de forma explícita («Sin hechos registrados hasta esta fecha.», «Etapa no registrada en esa fecha», «Sin siguiente paso registrado», «Sin compromisos programados», «Sin propuestas») y nunca se sustituyen por porcentajes ni por fechas inventadas.
+
+Sin cambios de contrato: se deriva de las actividades existentes y del sobre `[YOD-CRM v1]`, sin backend, tablas, campos ni permisos nuevos. La lógica pura es `CRM.temporal(rows, asOfDay, current)` en `brokers-crm.js`; `decode` y `calendarEvents` no cambian.
+
+Verificación: `node --test tests/brokers*.test.cjs` (incluye `tests/brokers-temporal.test.cjs`) y `node tests/brokers-temporal-browser.cjs` (Chromium 320/390/1440 con servicios sintéticos; capturas en `temporal-review-artifacts/`). Sin escrituras de prueba en producción. Revertir el frontend conserva actividades, recibos y PPP.
+
 ## Presentar desde el grafo · 11-nov-2026
 
 El cajón «Plan de potencial» de cada expediente agrega la liga «Presentar desde el grafo»: abre `presentacion/grafo/` con el caso y el tipo del plan guardado, para elegir audiencia (cliente, dueño del terreno o producto) y extensión. El encabezado muestra una pastilla discreta cuando hay otra versión del grafo en trabajo. Sólo lectura; detalle en [docs/PRESENTACIONES-GRAFO.md](docs/PRESENTACIONES-GRAFO.md).

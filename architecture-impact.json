@@ -1,16 +1,16 @@
 {
   "model_revision": "2026-11-11.grafo-accesos.3",
-  "proposal_id": "CHG-PRESENTACIONES-MD-20261020",
-  "summary": "Telón YOD: cada presentación del catálogo (general, Distrito Abasto, Distrito Obregón y Gastón Madrid) queda con un par de ligas rotuladas, a pedido de Dirección el 11-nov-2026. VISOR = la misma dirección de siempre, ahora con el nombre código «Telón YOD» en el título y vista previa con logo propio. MAESTRO = maestro.html en la misma carpeta: vista previa roja «⛔ MAESTRO · NO COMPARTIR» y redirección a ./?maestro=1, que usa el acceso de Dirección ya existente (lo abre una sola vez si falta sesión) y entra a «Conducir» una sola vez sin toques extra. La liga no lleva llave ni concede permisos: identidad y dueño se siguen validando en el servidor existente. Sólo presentación: no cambia identidad, permisos, backend, Sheets, sesiones ni el contenido de los guiones.",
+  "proposal_id": "CHG-MASTERBROKERS-MINI-CRM",
+  "summary": "Quinta pestaña «Historia · Hoy · Plan» en el detalle de cada caso de Brokers: con una fecha de consulta (por defecto hoy) muestra, en sólo lectura, el historial hasta esa fecha, el estado respaldado y los planes vigentes, derivados de las actividades existentes (sobre YOD-CRM v1). Sin backend, sin contrato nuevo, sin datos ni permisos nuevos y sin escrituras. Sólo frontend, pruebas y CI.",
   "components": [
-    "SYS-INVERSION"
+    "SYS-INVERSION",
+    "SYS-YOD-OS"
   ],
   "tests": [
-    "node --test tests/brokers-presentations-telon.test.cjs (7): par visor/maestro por cada entrada del catálogo con metadatos e imágenes PNG; liga maestro con sesión de Dirección conduce una sola vez y avisa; sin sesión abre el acceso una sola vez y no conduce; cuenta que no es Dirección no conduce ni ve controles; si la versión publicada no corresponde a la página no abre sesión sola; el nombre código se conserva en la pestaña; liga visor sin cambios.",
-    "node --test tests/*.test.cjs: 206 de 206 en local, sin regresión.",
-    "Chromium local a 390 y 1280 px sobre servidor estático con API de dueño simulada, sin escrituras reales: aviso visible, sin desborde horizontal y un solo session_start en general, Abasto y Gastón; en Obregón (versión de página distinta de la publicada, condición previa) no abre sesión y conserva el botón manual; sin sesión se abre el Portero y no se conduce.",
-    "verificar-impacto contra el atlas bd5139ebf2f16ffd78739af6089c40a69facdf25",
-    "No probado: conducción real con dos dispositivos contra el servidor productivo."
+    "node --test tests/brokers*.test.cjs: CRM.temporal con eventos sintéticos (historial por fecha ocurrida, reemplazos y cancelaciones por fecha de registro, vencido sin cambiar estado, hoy contra fecha pasada, fecha inválida).",
+    "node tests/brokers-temporal-browser.cjs: Chromium 320/390/1440 con servicios sintéticos; paneles, pestañas con teclado, navegación de fecha, vacíos explícitos y cero desbordamiento.",
+    "Sólo lectura: cero llamadas brokers_save y snapshot sin cambios al cambiar la fecha o volver a hoy.",
+    "Regresiones: node --check de brokers.js y brokers-crm.js y navegadores existentes de Brokers sin cambios de contrato."
   ],
-  "rollback": "Revertir el commit por PR. Las ligas VISOR conservan su dirección; sin cambios de backend, hojas, permisos ni registros."
+  "rollback": "Revertir el PR; no toca datos ni recibos"
 }

@@ -7,6 +7,7 @@
   let requestedBroker = new URLSearchParams(window.location.search).get('masterbroker') || '';
   let manageRequested = new URLSearchParams(window.location.search).get('mode') === 'manage';
   let preview = false, managing = false, caseState = '', detailTab = 'history', attention = '', liveSnapshot = null;
+  let temporalAsOf = '', temporalPane = 'today';
   const expanded = new Set(), pppData = new Map();
   let calendarMonth = '', calendarDay = '', calendarOpen = false, prospectsOpen = false, crmGeneration = 0;
   const token = () => { try { return localStorage.getItem('pyod_clave_v1') || ''; } catch (_) { return ''; } };
@@ -92,6 +93,7 @@
     if($('stage-filter'))$('stage-filter').onchange=e=>{stage=e.target.value;selected='';render();};
     if($('state-filter'))$('state-filter').onchange=e=>{caseState=e.target.value;selected='';render();};
     if($('record-select'))$('record-select').onchange=e=>{selected=e.target.value;render();};
+    if($('temporal-asof'))$('temporal-asof').onchange=e=>{const v=e.target.value;temporalAsOf=/^\d{4}-\d{2}-\d{2}$/.test(v)&&v<=today()?v:'';render();$('temporal-asof')?.focus({preventScroll:true});};
     document.querySelector('.prospect-list')?.addEventListener('toggle',e=>{prospectsOpen=e.target.open;});
     hydratePPP();
   }
@@ -222,7 +224,7 @@
   }
   $('benefits').addEventListener('close',()=>{$('benefits-content').replaceChildren();});
   $('close-benefits').onclick=()=>{$('benefits').close();$('benefits-content').replaceChildren();};
-  $('benefits-content').onclick=e=>{const b=e.target.closest('[data-open]');if(!b||!snapshot||token()!==loadedToken)return;const o=snapshot.opportunities.find(o=>o.id===b.dataset.open);if(!o)return;$('benefits').close();$('benefits-content').replaceChildren();selected=o.id;tab='opportunities';detailTab='agreements';render();};
+  $('benefits-content').onclick=e=>{const b=e.target.closest('[data-open]');if(!b||!snapshot||token()!==loadedToken)return;const o=snapshot.opportunities.find(o=>o.id===b.dataset.open);if(!o)return;$('benefits').close();$('benefits-content').replaceChildren();selected=o.id;tab='opportunities';detailTab='agreements';temporalAsOf='';temporalPane='today';render();};
   function agreementsView(all=false) {
     const ids=new Set((all?C.visible(snapshot,broker,'',''):current()).map(o=>o.id));
     const parts=snapshot.participations.filter(p=>ids.has(p.opportunity_id)&&(!broker||p.broker_id===broker));
@@ -235,6 +237,34 @@
       const url=C.safeLink(o[key]); if(!url||seen.has(url))return '';seen.add(url);return link(url,g.records.length>1?`${label} · ${o.title}`:label);
     })).join('');
   }
+  function temporalFocus(){document.querySelector('.temporal-tabs [role="tab"][aria-selected="true"]')?.focus({preventScroll:true});}
+  // Read-only view of one case on a chosen day: history, backed-up state and plans. It never saves or changes the snapshot.
+  function temporalView(o,g){
+    const t=CRM.temporal(g.activities,temporalAsOf,{stage:o.stage,next_action:o.next_action,next_date:o.next_date,decision:CRM.caseInfo(o).decision,last_review:o.last_review});
+    const byId=new Map(CRM.history(g.activities).map(e=>[e.id,e])),multi=g.records.length>1,late='<span class="status status-note">Registrado después de esta fecha</span>';
+    const empty=text=>`<span class="empty-note">${text}</span>`,when=t.isToday?'hoy':'el '+dateLabel(t.asOf);
+    const caseName=a=>multi?`<span>${esc((snapshot.opportunities.find(r=>r.id===a.opportunity_id)||{}).title||'')}</span>`:'';
+    const provenance=a=>`<div class="event-provenance">${a.participants?`<span>Con ${esc(a.participants)}</span>`:''}${a.source?`<span>${esc(a.source)}</span>`:''}${link(a.source_url,'Fuente')}${a.stage?`<span>${esc(a.stage)}</span>`:''}</div>`;
+    const corrects=a=>{const r=a.correctsId&&byId.get(a.correctsId);return a.correctsId?`<div class="event-next">Corrige a ${r?esc(r.type+' ('+r.status+') · '+(dateLabel(r.day)||'fecha no registrada')):'un registro que no aparece en este expediente'}</div>`:'';};
+    const entry=(a,planned)=>`<li data-activity="${esc(a.id)}"><div class="timeline-meta"><time>${esc(dateLabel(a.day)||'Fecha no registrada')}</time><span>${esc(a.type)}</span><span class="status">${esc(a.status)}</span>${planned&&a.overdue?'<span class="status status-late">Vencida · sin resultado registrado</span>':''}${caseName(a)}</div><p class="pre-wrap">${esc(a.text)}</p>${provenance(a)}${corrects(a)}${a.recordedLater?`<div>${late}</div>`:''}<small class="capture-meta">Registró ${esc(a.author_name||'Sin autor registrado')}${a.recorded_at?' · '+esc(dateLabel(a.recorded_at)):''}</small></li>`;
+    const list=(items,planned,none)=>items.length?`<ol class="timeline">${items.map(a=>entry(a,planned)).join('')}</ol>`:`<p class="empty-cell">${none}</p>`;
+    const step=(raw,date)=>{const s=C.nextStep(raw),owner=C.ownerLabel(liveSnapshot,raw);return (s.text.trim()||date)?`<strong class="pre-wrap">${esc(s.text.trim()||'Siguiente paso sin descripción')}</strong><div class="record-status"><span class="owner-dot" aria-hidden="true">${esc(initials(owner))}</span><span>${esc(owner)}</span><time>${esc(date?dateLabel(date):'Fecha por acordar')}</time></div>`:empty('Sin siguiente paso registrado');};
+    const f=t.today.lastFact,src=link(t.today.sourceUrl,'Fuente'),cs=t.plan.currentStep,row=(label,html)=>`<div><dt>${label}</dt><dd>${html}</dd></div>`;
+    const facts=[
+      row('Último hecho realizado',f?`<p class="pre-wrap">${esc(f.text)}</p><div class="event-provenance"><time>${esc(dateLabel(f.day))}</time>${t.today.source?`<span>${esc(t.today.source)}</span>`:''}${src}${t.today.source||src?'':'<span>Sin fuente registrada</span>'}</div>${f.recordedLater?`<div>${late}</div>`:''}`:empty('Sin hechos realizados registrados hasta esta fecha.')),
+      row(t.isToday?'Etapa actual':'Etapa observada',t.today.stage?`<span class="status">${esc(t.today.stage)}</span>${t.isToday?'':' <small>en el último hecho que la registra</small>'}`:empty(t.isToday?'Etapa no registrada en el expediente':'Etapa no registrada en esa fecha')),
+      row(t.isToday?'Siguiente paso vigente':'Siguiente paso registrado en ese hecho',step(t.today.nextAction,t.today.nextDate)),
+      row('Bloqueo',t.today.blocker?`<span class="pre-wrap">${esc(t.today.blocker)}</span>`:empty('Sin bloqueo registrado en el expediente')),
+      row('Próxima decisión',t.isToday?(t.today.decision?'<span class="decision-marker">Requiere decisión</span>':empty('Sin decisión pendiente registrada')):empty('Sin dato de decisión para esa fecha')),
+      row('Última captura registrada',t.today.lastRecordedAt?`<time>${esc(dateLabel(t.today.lastRecordedAt))}</time>`:empty('Sin capturas registradas hasta esta fecha'))
+    ].join('');
+    const toolbar=`<div class="temporal-toolbar"><label>Ver como estaba el <input type="date" id="temporal-asof" value="${esc(t.asOf)}" max="${esc(today())}" aria-label="Fecha de consulta"></label><button class="text-button" data-temporal-today ${t.isToday?'disabled':''}>Volver a hoy</button><p class="temporal-note">Vista de solo lectura: cambiar la fecha no modifica el expediente.</p></div>`;
+    const tabs=[['history','← Historia'],['today','Hoy'],['plan','Planeación →']].map(([id,label])=>`<button role="tab" id="temporal-tab-${id}" aria-controls="temporal-panel-${id}" aria-selected="${temporalPane===id}" tabindex="${temporalPane===id?0:-1}" data-temporal-pane="${id}">${label}</button>`).join('');
+    const historyPanel=`<section role="tabpanel" id="temporal-panel-history" data-pane="history" aria-label="Historial"><p class="eyebrow">HISTORIA</p><h3>Hasta ${esc(when)}</h3>${list(t.history,false,'Sin hechos registrados hasta esta fecha.')}</section>`;
+    const todayPanel=`<section role="tabpanel" id="temporal-panel-today" data-pane="today" aria-label="Hoy"><p class="eyebrow">${t.isToday?'HOY':'ESTADO EN ESA FECHA'}</p><h3>Estado respaldado ${t.isToday?'de hoy':'al '+esc(dateLabel(t.asOf))}</h3><dl class="temporal-facts">${facts}</dl></section>`;
+    const planPanel=`<section role="tabpanel" id="temporal-panel-plan" data-pane="plan" aria-label="Planeación"><p class="eyebrow">PLANEACIÓN</p><h3>${t.isToday?'Lo que sigue':'Lo vigente al '+esc(dateLabel(t.asOf))}</h3>${t.isToday?`<div class="temporal-current"><h4>Siguiente paso vigente</h4>${cs?step(cs.text,cs.date):empty('Sin siguiente paso registrado')}</div>`:''}<h4>Compromisos (programados)</h4>${list(t.plan.commitments,true,'Sin compromisos programados')}<h4>Propuestas</h4>${list(t.plan.proposals,true,'Sin propuestas')}</section>`;
+    return `<section class="temporal" aria-label="Historia, hoy y planeación">${toolbar}<div class="temporal-tabs" role="tablist" aria-label="Paneles">${tabs}</div><div class="temporal-grid" data-pane="${esc(temporalPane)}">${historyPanel}${todayPanel}${planPanel}</div></section>`;
+  }
   function detail(o) {
     const g=o&&groupFor(o.id); if(!g)return '<p>Expediente no disponible.</p>';
     const contact=snapshot.contacts.find(c=>c.id===o.contact_id), step=C.nextStep(o.next_action);
@@ -244,7 +274,8 @@
     if(detailTab==='records')body=`<section class="record-info"><p class="eyebrow">CLIENTE Y RELACIÓN</p><h3>${esc(contact?.name||'Cliente por identificar')}</h3>${contact?`<p>${esc([contact.type,contact.company,contact.email,contact.phone].filter(Boolean).join(' · '))}</p>${contact.notes?`<p class="pre-wrap">${esc(contact.notes)}</p>`:''}${canEdit()?`<button data-edit-contact="${esc(contact.id)}">Editar cliente</button>`:''}`:'<p>Vincula el contacto para reunir sus asuntos sin mezclarlos.</p>'}<hr><p class="eyebrow">TERRENO Y ALCANCE</p><h3>${esc(o.title)}</h3><p>${esc([o.kind,o.location].filter(Boolean).join(' · '))}</p><p class="secondary">${o.terrain_id?'Referencia del terreno: '+esc(o.terrain_id):'Terreno sin referencia vinculada'}</p>${CRM.caseInfo(o).text?`<p class="pre-wrap">${esc(CRM.caseInfo(o).text)}</p>`:''}${o.source_status?`<p class="secondary">${esc(o.source_status)}</p>`:''}<div class="material-links">${groupLinks(g)}</div>${canEdit()?`<button data-edit-opportunity="${esc(o.id)}">Editar registro</button>`:''}${g.records.length>1?table(['Gestión','Estado',''],g.records.map(r=>`<tr><td>${esc(r.title)}</td><td>${esc(r.stage)}</td><td><button data-select-record="${esc(r.id)}" ${r.id===selected?'disabled':''}>${r.id===selected?'Seleccionado':'Seleccionar'}</button></td></tr>`).join(''),'Gestiones relacionadas'):''}</section>`;
     if(detailTab==='material')body=`<section class="connected-plan"><p class="eyebrow">PLAN DE POTENCIAL</p><h3>${CRM.pppReference(o)?'La base para decidir':'Todavía falta vincular el plan'}</h3><p>${CRM.pppReference(o)?'Consulta la versión guardada y sus supuestos.': 'Vincula el plan existente para revisar el potencial de este asunto.'}</p><div class="material-links">${groupLinks(g)}</div>${canEdit()?`<button data-edit-opportunity="${esc(o.id)}">Completar referencias</button>`:''}</section>`;
     if(detailTab==='agreements')body=`${parts.map(p=>`<section class="agreement-item"><div class="row"><strong>${esc(names([p.broker_id]))}</strong><span class="status">${esc(p.status)}</span></div>${p.terms?`<p class="pre-wrap">${esc(p.terms)}</p>`:''}${link(p.agreement_url,'Ver acuerdo')}${canAgree()?`<button data-edit-participation="${esc(p.id)}">Editar acuerdo</button>`:''}</section>`).join('')}${canAgree()?'<button data-new="participation">+ Acuerdo</button>':''}`;
-    return `<article class="detail"><div class="detail-topline"><button class="text-button" data-action="back">← Cartera</button><span>${esc(names(o.broker_ids))}</span></div><div class="detail-heading"><div><p class="eyebrow">${esc(contact?.name||'Cliente por identificar')}</p><h2 tabindex="-1" id="case-heading">${esc(o.title)}</h2><p class="detail-subtitle"><span class="status">${esc(o.stage)}</span> ${esc(o.location||o.kind)}</p></div><aside class="key-question" aria-label="Pregunta clave"><p class="eyebrow">PREGUNTA CLAVE</p><h3>¿Qué falta confirmar para avanzar?</h3><p>${esc(step.text||'Definir el siguiente paso con el cliente.')}</p></aside></div><div class="detail-actions">${canEdit()?'<button class="primary" data-followup="true">Registrar avance</button><button data-schedule="true">Agendar reunión</button>':''}${canEdit()&&!preview?`<details class="create-menu case-tools"><summary>Más</summary><div><button data-edit-opportunity="${esc(o.id)}">Editar asunto</button>${o.terrain_id||o.ppp_id?'<button data-related="true">+ Gestión</button>':''}</div></details>`:''}</div>${g.records.length>1?`<label class="record-picker"><span>Registro activo</span><select id="record-select">${options(g.records.map(r=>({id:r.id,name:r.title+' · '+r.kind})),o.id)}</select></label>`:''}${caseJourney(o)}<nav class="detail-tabs" aria-label="Expediente">${[['history','Seguimiento'],['records','Expediente'],['material','PPP y documentos'],['agreements','Acuerdos']].map(([id,label])=>`<button data-detail-tab="${id}" aria-current="${detailTab===id?'page':'false'}">${label}</button>`).join('')}</nav><div class="detail-body">${body}</div><section class="case-ppp" aria-label="Plan de potencial guardado"><p class="eyebrow">PLAN DE POTENCIAL</p>${pppMount(o,true)}${link(o.ppp_url,'Abrir plan guardado')}</section></article>`;
+    if(detailTab==='temporal')body=temporalView(o,g);
+    return `<article class="detail"><div class="detail-topline"><button class="text-button" data-action="back">← Cartera</button><span>${esc(names(o.broker_ids))}</span></div><div class="detail-heading"><div><p class="eyebrow">${esc(contact?.name||'Cliente por identificar')}</p><h2 tabindex="-1" id="case-heading">${esc(o.title)}</h2><p class="detail-subtitle"><span class="status">${esc(o.stage)}</span> ${esc(o.location||o.kind)}</p></div><aside class="key-question" aria-label="Pregunta clave"><p class="eyebrow">PREGUNTA CLAVE</p><h3>¿Qué falta confirmar para avanzar?</h3><p>${esc(step.text||'Definir el siguiente paso con el cliente.')}</p></aside></div><div class="detail-actions">${canEdit()?'<button class="primary" data-followup="true">Registrar avance</button><button data-schedule="true">Agendar reunión</button>':''}${canEdit()&&!preview?`<details class="create-menu case-tools"><summary>Más</summary><div><button data-edit-opportunity="${esc(o.id)}">Editar asunto</button>${o.terrain_id||o.ppp_id?'<button data-related="true">+ Gestión</button>':''}</div></details>`:''}</div>${g.records.length>1?`<label class="record-picker"><span>Registro activo</span><select id="record-select">${options(g.records.map(r=>({id:r.id,name:r.title+' · '+r.kind})),o.id)}</select></label>`:''}${caseJourney(o)}<nav class="detail-tabs" aria-label="Expediente">${[['history','Seguimiento'],['records','Expediente'],['material','PPP y documentos'],['agreements','Acuerdos'],['temporal','Historia · Hoy · Plan']].map(([id,label])=>`<button data-detail-tab="${id}" aria-current="${detailTab===id?'page':'false'}">${label}</button>`).join('')}</nav><div class="detail-body">${body}</div><section class="case-ppp" aria-label="Plan de potencial guardado"><p class="eyebrow">PLAN DE POTENCIAL</p>${pppMount(o,true)}${link(o.ppp_url,'Abrir plan guardado')}</section></article>`;
 
   }
 
@@ -277,7 +308,7 @@
       if(linked[0]&&existing&&linked[0].id!==existing.id)throw Error('Esta evaluación ya está vinculada a otro expediente. Revisa su referencia antes de continuar.');
       if(existing&&window.BrokerEvaluator.hasCase(existing.notes,ev.id)){
         if(!(existing.broker_ids||[]).includes(ev.broker_id))throw Error('La evaluación no corresponde a esta cartera.');
-        selected=existing.id;tab='opportunities';detailTab='history';clearReturnURL();accessNotice('Evaluación vinculada. Continúas en el mismo expediente.');render();return;
+        selected=existing.id;tab='opportunities';detailTab='history';temporalAsOf='';temporalPane='today';clearReturnURL();accessNotice('Evaluación vinculada. Continúas en el mismo expediente.');render();return;
       }
       editor('opportunity',window.BrokerEvaluator.recordFromEvaluation(ev,existing));
       if(!edit)return;
@@ -365,8 +396,10 @@
     if(b.dataset.agenda){calendarOpen=!calendarOpen;calendarDay='';render();return;}
     if(b.dataset.caseCalendar){calendarOpen=!calendarOpen;calendarDay='';render();return;}
     if(b.dataset.journeyCases){document.querySelector('.client-list')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});return;}
-    if(b.dataset.journeyResume){selected=b.dataset.journeyResume;tab='opportunities';detailTab='history';render();$('case-heading')?.focus({preventScroll:true});return;}
+    if(b.dataset.journeyResume){selected=b.dataset.journeyResume;tab='opportunities';detailTab='history';temporalAsOf='';temporalPane='today';render();$('case-heading')?.focus({preventScroll:true});return;}
     if(b.dataset.journeyFollowup){detailTab='history';render();document.querySelector('.next-commitment')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});return;}
+    if(b.dataset.temporalPane){if(['history','today','plan'].includes(b.dataset.temporalPane)){temporalPane=b.dataset.temporalPane;render();temporalFocus();}return;}
+    if('temporalToday' in b.dataset){temporalAsOf='';render();$('temporal-asof')?.focus({preventScroll:true});return;}
     if(b.dataset.casePresent){openPresentationBoard(selected);return;}
     if(b.dataset.plaza){selectPortfolio('');return;}
     if(b.dataset.attention){attention=b.dataset.attention==='all'?'':b.dataset.attention;tab='opportunities';selected='';query='';stage='';caseState='';render();return;}
@@ -380,8 +413,8 @@
     if(b.dataset.resolveEvent){const a=snapshot.activities.find(a=>a.id===b.dataset.resolveEvent);if(!a)return;const event=CRM.decode(a),o=snapshot.opportunities.find(o=>o.id===a.opportunity_id);selected=o.id;editor('activity',{note:b.dataset.result==='Cancelado'?'Reunión cancelada.':b.dataset.result==='Programado'?event.text:'',next_action:o.next_action,next_date:o.next_date,crm:{...event.meta,v:1,type:event.type,status:b.dataset.result,occurred_at:today(),replaces:a.id}});return;}
     if (b.dataset.preevaluate) { chooseEvaluation(b.dataset.preevaluate); return; }
     if (b.dataset.tab==='presentations') {openPresentationBoard();return;}
-    if (b.dataset.tab) { attention=''; caseState = ''; detailTab = 'history'; tab = b.dataset.tab; const targetURL=new URL(location.href); if(tab==='presentations')targetURL.searchParams.set('tab','presentations');else targetURL.searchParams.delete('tab');history.replaceState({},'',targetURL);selected = ''; query = ''; stage = ''; render(); }
-    if (b.dataset.open) { selected = b.dataset.open; tab = 'opportunities'; detailTab = 'history'; calendarDay=''; render(); $('case-heading')?.focus({preventScroll:true});if(innerWidth<=850)$('case-heading')?.scrollIntoView({block:'start'}); }
+    if (b.dataset.tab) { attention=''; caseState = ''; detailTab = 'history'; temporalAsOf=''; temporalPane='today'; tab = b.dataset.tab; const targetURL=new URL(location.href); if(tab==='presentations')targetURL.searchParams.set('tab','presentations');else targetURL.searchParams.delete('tab');history.replaceState({},'',targetURL);selected = ''; query = ''; stage = ''; render(); }
+    if (b.dataset.open) { selected = b.dataset.open; tab = 'opportunities'; detailTab = 'history'; temporalAsOf=''; temporalPane='today'; calendarDay=''; render(); $('case-heading')?.focus({preventScroll:true});if(innerWidth<=850)$('case-heading')?.scrollIntoView({block:'start'}); }
     if (b.dataset.quickFollowup) { selected = b.dataset.quickFollowup; const o = snapshot.opportunities.find(x=>x.id===selected); editor('activity',{next_action:o.next_action,next_date:o.next_date}); }
     if (b.dataset.start) editor('opportunity',{kind:b.dataset.start});
     if (b.dataset.detailTab) { detailTab=b.dataset.detailTab; render(); }
@@ -401,6 +434,12 @@
     if (b.dataset.editContact) editor('contact',snapshot.contacts.find(c => c.id === b.dataset.editContact));
     if (b.dataset.editOpportunity) editor('opportunity',snapshot.opportunities.find(o => o.id === b.dataset.editOpportunity));
   };
+  $('workspace').addEventListener('keydown', e => {
+    const t = e.target; if (!t || !t.matches || !t.matches('.temporal-tabs [role="tab"]') || e.altKey || e.ctrlKey || e.metaKey) return;
+    const panes = ['history','today','plan'], i = panes.indexOf(t.dataset.temporalPane), next = {ArrowLeft:i - 1, ArrowRight:i + 1, Home:0, End:panes.length - 1}[e.key];
+    if (i < 0 || next === undefined) return;
+    e.preventDefault(); temporalPane = panes[(next + panes.length) % panes.length]; render(); temporalFocus();
+  });
   const close = () => { if (!busy) { if(edit?.evaluationId&&edit.submitted){$('form-error').textContent='El guardado todavía necesita confirmación. Pulsa Verificar envío para comprobar el mismo intento; no se creará otra solicitud.';return;} const resumable=edit?.evaluationId; $('editor').close(); edit = null; if(resumable){evaluationReturnHandled=false;returnNotice('Tu evaluación sigue guardada. Puedes terminar de incorporarla cuando quieras.');} } };
   $('close-editor').onclick = close; $('cancel-editor').onclick = close;
   $('editor').addEventListener('cancel', e => { e.preventDefault(); close(); });
@@ -430,7 +469,7 @@
       const result=await client.save(edit.kind,record,edit.revision,edit.requestId);
       applySnapshot(result);pppClient.invalidate();pppData.clear();loadedToken=token();$('editor').close();edit=null;
       if(savedKind==='opportunity'){
-        tab='opportunities';query='';stage='';caseState='';attention='';detailTab='history';
+        tab='opportunities';query='';stage='';caseState='';attention='';detailTab='history';temporalAsOf='';temporalPane='today';
         const matches=snapshot.opportunities.filter(row=>Object.entries(record).every(([key,value])=>Array.isArray(value)?value.every(id=>(row[key]||[]).includes(id)):String(row[key]??'').trim()===String(value??'').trim()));
         selected=record.id&&snapshot.opportunities.some(o=>o.id===record.id)?record.id:matches.length===1?matches[0].id:'';
         if(evalId)clearReturnURL();

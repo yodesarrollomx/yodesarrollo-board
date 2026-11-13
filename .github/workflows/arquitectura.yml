@@ -116,6 +116,7 @@ jobs:
           node tests/brokers-public-preview-browser.cjs
           node tests/brokers-crm-browser.cjs
           node tests/brokers-workspace-browser.cjs
+          node tests/brokers-temporal-browser.cjs
           node tests/brokers-evaluator-browser.cjs
           node tests/brokers-journey-browser.cjs
           node tests/presentation-hub-browser.cjs
@@ -161,6 +162,7 @@ jobs:
             intent-*.jpg
             offer-review-artifacts/
             abasto-review-artifacts/
+            temporal-review-artifacts/
             mobile-*.jpg
             pin-*.jpg
             pin-*.png
