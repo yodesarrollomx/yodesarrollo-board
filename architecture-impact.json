@@ -1,13 +1,16 @@
 {
   "model_revision": "2026-11-11.grafo-accesos.3",
   "proposal_id": "CHG-MASTERBROKERS-PUBLIC-PREVIEW",
-  "summary": "Sólo prueba: «Short fast gesture and reverse reach reading point» (tests/offer-review-browser.cjs) falló sola tres veces en el runner (chinches del grafo 98 y 104). Con 20 ms fijos entre movimientos, a veces el navegador no pintaba ningún cuadro y el avance quedaba topado en la posición actual + 0.24, así que el gesto soltaba sin avanzar. Ahora espera un cuadro entre movimientos (como en un teléfono) y a que la posición asiente antes de leerla. No cambia la presentación, sus datos ni su fuente.",
+  "summary": "Presentación de Master Brokers (superficie offer-4): un deslizamiento rápido y corto ahora pasa al siguiente punto de lectura en su dirección. Antes, con el tope de avance por cuadro, a 60 cuadros por segundo un deslizamiento de unos 120 px se quedaba en 0.48 de un paso y al soltar regresaba: a veces avanzaba y a veces no. Por eso la prueba «Short fast gesture and reverse reach reading point» fallaba sola (chinches del grafo 98 y 104). Sólo aplica al soltar un arrastre con velocidad de 700 px/s o más y movimiento en los últimos 120 ms. La rueda, los arrastres lentos, los micro-movimientos y las interrupciones siguen igual. La prueba ahora espera un cuadro entre movimientos, como en un teléfono, y a que la posición asiente. La etiqueta de intent-mobile.js pasa a offer-4-flick1.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "node tests/offer-review-browser.cjs en el paso «Presentación con fuente pública validada» (Chromium y WebKit móvil, contra la fuente pública)",
+    "node tests/offer-review-browser.cjs (Chromium 3 de 3 en local con la copia pública fijada: avanza a 9 y regresa a 7; WebKit en CI)",
+    "QA_BROWSER=chromium node tests/brokers-intent-browser.cjs (velocidad, micro-gesto, rueda y extremos sin cambio)",
+    "node tests/intent-visual-browser.cjs",
+    "tests/intent-continuity-browser.cjs y WebKit corren en CI (paso «Presentación con fuente pública validada»).",
     "verificar-impacto contra el atlas fijado."
   ],
-  "rollback": "Revertir el merge: la prueba vuelve a los 20 ms fijos."
+  "rollback": "Revertir el merge: vuelve el redondeo de siempre al soltar y la prueba con 20 ms fijos."
 }

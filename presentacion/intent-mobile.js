@@ -3,7 +3,8 @@ const $=id=>document.getElementById(id),el=(tag,cls,text)=>{const n=document.cre
 window.YodMobileJourney={create({render,getProgress,cancel}){
  const root=document.documentElement,media=matchMedia('(max-width:800px), (hover:none) and (pointer:coarse) and (max-width:1000px)'),reduce=matchMedia('(prefers-reduced-motion:reduce)'),workspace=document.querySelector('.workspace'),figure=$('diagram'),art=$('art'),frameBox=$('artFrame');
  root.classList.add('single-surface');
- let cfg,mobile=false,locked=false,manualLock=false,drag=null,target=0,raf=0,lastFrame=0,lastDirection=0,speed=0,releasedAt=0,lastWheel=0,active=-1,width=innerWidth,rotorTravel=0,settleTimer=0,settling=false;
+ const FLICK_SPEED=700;   // px/s al soltar: por encima es un deslizamiento rápido (un dedo que «avienta»)
+ let cfg,mobile=false,locked=false,manualLock=false,drag=null,target=0,raf=0,lastFrame=0,lastDirection=0,speed=0,releasedAt=0,lastWheel=0,active=-1,width=innerWidth,rotorTravel=0,settleTimer=0,settling=false,lastMoveAt=0;
  const stage=el('div','surface-stage'),head=el('div','surface-heading'),kicker=el('p','surface-kicker'),heading=el('h1','surface-title'),caption=el('p','surface-caption'),notes=el('div','surface-notes'),hint=el('p','surface-hint'),brandTitle=el('span','brand-title'),city=el('small','brand-city'),sensor=el('div','surface-rotor'),menu=el('dialog','surface-menu'),mh=el('div','dialog-head'),mt=el('h2','', 'Presentación'),mc=el('button','close','×'),detail=el('button','', 'Ver explicación completa'),restart=el('button','', 'Volver al inicio'),reviews=el('button','', 'Revisiones'),chapters=el('details','surface-jumps'),summary=el('summary','', 'Ir a una etapa'),stageList=el('nav','surface-stage-list');
  const lines=document.createElementNS('http://www.w3.org/2000/svg','svg');lines.id='surfaceLeaders';lines.setAttribute('aria-hidden','true');const paths=Array.from({length:0},()=>{const n=document.createElementNS('http://www.w3.org/2000/svg','path');n.setAttribute('class','marker-leader');lines.append(n);return n;});
  const words=Array.from({length:1},(_,i)=>el('p','marker-note note-'+i));notes.append(...words);head.append(kicker,heading,caption);head.id='surfaceHeading';heading.id='surfaceTitle';notes.id='surfaceNotes';hint.id='surfaceHint';sensor.id='mobileRotor';sensor.tabIndex=0;sensor.setAttribute('role','slider');sensor.setAttribute('aria-orientation','vertical');sensor.setAttribute('aria-valuemin','0');sensor.setAttribute('aria-valuemax','26');sensor.setAttribute('aria-label','Recorrer la presentación');sensor.setAttribute('aria-describedby',hint.id);sensor.innerHTML='<span class="rotor-window"><svg viewBox="0 0 16 120" aria-hidden="true"><path d="M1 10Q15 3 13 0M1 28Q15 21 13 18M1 46Q15 39 13 36M1 64Q15 57 13 54M1 82Q15 75 13 72M1 100Q15 93 13 90M1 118Q15 111 13 108"/></svg></span>';
@@ -11,12 +12,15 @@ window.YodMobileJourney={create({render,getProgress,cancel}){
  menu.id='surface-menu';detail.id='surfaceDetail';restart.id='surfaceRestart';reviews.id='pin-history';mc.type=detail.type=restart.type=reviews.type='button';mc.setAttribute('aria-label','Cerrar menú');mt.id='surfaceMenuTitle';menu.setAttribute('aria-labelledby',mt.id);mh.append(mt,mc);chapters.append(summary,stageList);menu.append(mh,detail,reviews,chapters,restart);document.body.append(menu);
  function openDetail(){menu.close();$('reader').showModal();requestAnimationFrame(()=>{const sections=$('readerBody').querySelectorAll(':scope>section');sections[window.YodSliderCore.state(getProgress()).scene]?.scrollIntoView({block:'start'});});}
  $('contents').onclick=()=>{if(cfg)menu.showModal();};detail.onclick=openDetail;mc.onclick=()=>menu.close();restart.onclick=()=>{menu.close();window.YodSlider.api.seek(0);};
- function endDrag(readable=false){if(!drag)return;const {id,node,started}=drag;drag=null;releasedAt=performance.now();if(cfg)leaders(getProgress());root.classList.remove('gesture-active');sensor.classList.remove('rotor-active');if(node.hasPointerCapture(id))node.releasePointerCapture(id);if(readable&&started)settleReading();}
+ function endDrag(readable=false){if(!drag)return;const {id,node,started}=drag;drag=null;releasedAt=performance.now();if(cfg)leaders(getProgress());root.classList.remove('gesture-active');sensor.classList.remove('rotor-active');if(node.hasPointerCapture(id))node.releasePointerCapture(id);if(readable&&started)settleReading(true);}
  function stop(){clearTimeout(settleTimer);settleTimer=0;settling=false;cancelAnimationFrame(raf);raf=0;target=getProgress();lastFrame=0;speed=0;lastDirection=0;endDrag();releasedAt=0;}
- function settleReading(){
+ function settleReading(fromDrag=false){
   if(cfg?.surface?.revision!=='offer-4'||!mobile||locked||manualLock)return;
   clearTimeout(settleTimer);settleTimer=0;cancelAnimationFrame(raf);raf=0;
-  const from=getProgress(),to=clamp(Math.round(target)),started=performance.now();target=to;releasedAt=0;
+  // Un deslizamiento rápido y corto pasa al siguiente punto de lectura en su dirección: con el tope de avance por
+  // cuadro, a 60 cuadros por segundo se quedaba en 0.48 de un paso y regresaba (a veces avanzaba y a veces no).
+  const from=getProgress(),flick=fromDrag&&lastDirection!==0&&speed>=FLICK_SPEED&&performance.now()-lastMoveAt<120;
+  const to=clamp(flick?(lastDirection>0?Math.floor(from+1e-6)+1:Math.ceil(from-1e-6)-1):Math.round(target)),started=performance.now();target=to;releasedAt=0;
   if(reduce.matches||Math.abs(to-from)<.001){render(to);settling=false;return;}
   settling=true;function settleFrame(now){if(!settling||drag||locked||manualLock)return;const t=clamp((now-started)/140,0,1);render(from+(to-from)*smooth(t));if(t<1)raf=requestAnimationFrame(settleFrame);else{raf=0;settling=false;render(to);}}
   raf=requestAnimationFrame(settleFrame);
@@ -26,7 +30,7 @@ window.YodMobileJourney={create({render,getProgress,cancel}){
   if(Math.abs(diff)<.001||(!drag&&releasedAt&&now-releasedAt>=90)){render(target);return;}
   render(clamp(value+Math.sign(diff)*Math.min(Math.abs(diff)*(1-Math.exp(-dt/28)),5*dt/1000)));raf=requestAnimationFrame(tick);
  }
- function move(delta,elapsed){if(!mobile||locked||!delta)return;if(settling){cancelAnimationFrame(raf);raf=0;settling=false;target=getProgress();}clearTimeout(settleTimer);settleTimer=0;cancel();if(!drag)releasedAt=0;const sign=Math.sign(delta),dt=clamp(elapsed,8,160),actual=getProgress();if(sign!==lastDirection){target=actual;speed=0;lastDirection=sign;}
+ function move(delta,elapsed){if(!mobile||locked||!delta)return;if(settling){cancelAnimationFrame(raf);raf=0;settling=false;target=getProgress();}clearTimeout(settleTimer);settleTimer=0;cancel();if(!drag)releasedAt=0;lastMoveAt=performance.now();const sign=Math.sign(delta),dt=clamp(elapsed,8,160),actual=getProgress();if(sign!==lastDirection){target=actual;speed=0;lastDirection=sign;}
   const instant=Math.abs(delta)/dt*1000;speed+=(instant-speed)*(1-Math.exp(-dt/40));const acceleration=smooth(clamp((speed-45)/650,0,1)),gain=.0065+.0215*acceleration;
   target=clamp(target+delta*gain,Math.max(0,actual-.24),Math.min(window.YodSliderCore.max(),actual+.24));if(reduce.matches){render(target);return;}if(!raf&&Math.abs(target-actual)>.0001){lastFrame=performance.now();raf=requestAnimationFrame(tick);}
  }
