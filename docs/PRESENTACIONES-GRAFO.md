@@ -20,7 +20,7 @@ Se entra desde el cajón «Plan de potencial» de un expediente en Master Broker
 
 ## Qué no hace
 
-- **No calcula.** Cada cifra es un campo guardado del plan, con su procedencia. Lo que el plan no trae se muestra «No definido»; nunca se deriva ni se inventa.
+- **No calcula.** Cada cifra es un campo guardado del plan, con su procedencia. Si el plan tiene ese campo pero sin valor, se muestra «No definido». Si la receta nombra un dato que ese tipo de plan no tiene (por ejemplo, recámaras en macrolotes), el dato no se muestra: no aplica a ese plan. Nunca se deriva ni se inventa.
 - **No escribe ni guarda.** No hay POST, almacenamiento ni registro. Nunca borra la credencial compartida del Portero.
 - **No publica.** Sin sesión de YOD sólo se ve el ejemplo con cifras ficticias. Quien recibe una liga necesita su propio acceso al caso.
 - **No sustituye las presentaciones registradas del PPP** (`presentacion/ppp/`, con versiones y producción). Es una vista interna que se arma al abrirla.
@@ -30,7 +30,8 @@ Se entra desde el cajón «Plan de potencial» de un expediente en Master Broker
 La página sólo lee el grafo **aprobado**.
 
 - Mientras un grafo rehecho está en **borrador**, las presentaciones y sus ligas no cambian.
-- Al **aprobarse** (se fusiona el PR del borrador en `potenciales-yod`), la siguiente apertura usa el grafo nuevo sin más pasos. Quien la tiene abierta ve «Hay un grafo más nuevo» y actualiza con un toque.
+- Al **aprobarse** (se fusiona el PR del borrador en `potenciales-yod`; desde el 13-nov-2026 es un solo toque porque el PR lo abre la App del grafo), la siguiente apertura usa el grafo nuevo sin más pasos. Quien la tiene abierta ve «Hay un grafo más nuevo» y actualiza con un toque.
+- La pastilla discreta de Master Brokers, Presentaciones y esta página ofrece a Dirección la liga «Ver el borrador en Accesos». Reconoce el rol por `pyod_rol` o, donde el Portero no lo deja, por la identidad del cargador compartido del token vigente; es sólo una pista: Accesos tiene su propio candado.
 
 Si una receta nombra un campo que el plan ya no guarda, ese dato deja de mostrarse y el aviso de borrador en Accesos lo advierte antes de aprobar.
 
