@@ -23,6 +23,6 @@ Revertir el commit de este cambio mediante revisión y repetir las verificacione
 
 Usa datos sintéticos y dobles para verificar integraciones. No pruebes escrituras en endpoints de producción ni publiques credenciales, datos personales o contenido privado en archivos o logs públicos.
 
-## Eficiencia de contexto YOD OS (propuesta)
+## Eficiencia de contexto YOD OS
 
-Cuando la política transversal de agentes esté aprobada e integrada en `yodesarrollomx/yod-portal`, seguir `docs/agentes/politica-eficiencia-yod-os.md` de ese repositorio además de estas reglas. No activar herramientas, proxies ni proveedores externos por esta referencia. En caso de conflicto, prevalecen los controles específicos de este repositorio y las instrucciones de mayor prioridad.
+La política transversal de agentes está integrada en `yodesarrollomx/yod-portal` (13-nov-2026): seguir `docs/agentes/politica-eficiencia-yod-os.md` de ese repositorio además de estas reglas. No activar herramientas, proxies ni proveedores externos por esta referencia. En caso de conflicto, prevalecen los controles específicos de este repositorio y las instrucciones de mayor prioridad.
