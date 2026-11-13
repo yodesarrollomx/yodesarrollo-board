@@ -117,8 +117,8 @@ test('la liga a Accesos sólo aparece a Dirección y con el rol tal como lo guar
     Object.defineProperty(n,'textContent',{get(){return n._t||'';},set(v){n._t=v;if(v==='')n.children=[];}});n.ownerDocument=doc;return n;}
   const doc={createElement:nodo,createTextNode:t=>({tag:'#text',textContent:t,children:[]}),documentElement:{clientWidth:400},addEventListener(){},removeEventListener(){},hidden:false};
   const todos=n=>[n,...n.children.flatMap(todos)];
-  async function abrir(pyodRol){
-    const store={pyod_clave_v1:T},ses={pyod_rol:pyodRol},prev={localStorage:globalThis.localStorage,sessionStorage:globalThis.sessionStorage};
+  async function abrir(pyodRol,cargador){
+    const store={pyod_clave_v1:T,yodcg_sesion_v1:cargador??null},ses={pyod_rol:pyodRol},prev={localStorage:globalThis.localStorage,sessionStorage:globalThis.sessionStorage};
     Object.defineProperty(globalThis,'localStorage',{value:{getItem:k=>store[k]??null},configurable:true});
     Object.defineProperty(globalThis,'sessionStorage',{value:{getItem:k=>ses[k]??null},configurable:true});
     try{
@@ -132,6 +132,22 @@ test('la liga a Accesos sólo aparece a Dirección y con el rol tal como lo guar
   assert.equal((await abrir('direccion')).liga,true,'la palabra sola de antes');
   for(const otro of [JSON.stringify({f:T.slice(0,14),rol:'vista'}),JSON.stringify({f:'syOTRO00000000',rol:'admin'}),'{roto',null]){
     const r=await abrir(otro);assert.equal(r.liga,false,String(otro));assert.match(r.texto,/pide a Dirección/);}
+  // Master Brokers canjea por el cargador y el Portero no deja pyod_rol: cuenta la copia del cargador, sólo del token vigente y fresca
+  const ses=(rol,tok=T,ts=Date.now())=>JSON.stringify({h:A.fnv(tok),board:'',data:{ok:true,rol,boards:'*'},ts});
+  assert.equal((await abrir(null,ses('admin'))).liga,true,'sin pyod_rol, con la identidad del cargador');
+  for(const [c,porque] of [[ses('vista'),'rol vista'],[ses('admin','syOTRO000000000000'),'de otro token'],[ses('admin',T,Date.now()-13*3600e3),'más de 12 h'],['{roto','basura']]){
+    const r=await abrir(null,c);assert.equal(r.liga,false,porque);assert.match(r.texto,/pide a Dirección/);}
+});
+
+test('la identidad del cargador sólo cuenta si es del token vigente, está confirmada y tiene menos de 12 h',()=>{
+  const T='sy0123456789abcdef0000',ahora=1800000000000;
+  assert.equal(A.fnv('hola'),'b2c65197','FNV-1a de 32 bits, igual que yod-cargador.js');
+  const c=(o)=>JSON.stringify(Object.assign({h:A.fnv(T),board:'',data:{ok:true,rol:'admin'},ts:ahora-60000},o));
+  assert.equal(A.rolCargador(c({}),T,ahora),'admin');
+  assert.equal(A.rolCargador(c({data:{ok:true,rol:'Direccion'}}),T,ahora),'direccion');
+  for(const [v,porque] of [[c({h:'00000000'}),'otro token'],[c({data:{ok:false,rol:'admin'}}),'canje no confirmado'],[c({ts:ahora-43200000}),'12 h justas'],[c({ts:ahora+1000}),'del futuro'],
+    [c({data:{ok:true,rol:7}}),'rol raro'],[c({data:null}),'sin datos'],['{roto','basura'],[null,'nada']])assert.equal(A.rolCargador(v,T,ahora),'',porque);
+  assert.equal(A.rolCargador(c({}),'',ahora),'','sin token no hay rol');
 });
 
 test('Master Brokers y Presentaciones montan el aviso y enlazan el plan guardado con el visor',()=>{
