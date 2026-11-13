@@ -1,16 +1,13 @@
 {
   "model_revision": "2026-11-11.grafo-accesos.3",
-  "proposal_id": "CHG-MASTERBROKERS-MINI-CRM",
-  "summary": "Quinta pestaña «Historia · Hoy · Plan» en el detalle de cada caso de Brokers: con una fecha de consulta (por defecto hoy) muestra, en sólo lectura, el historial hasta esa fecha, el estado respaldado y los planes vigentes, derivados de las actividades existentes (sobre YOD-CRM v1). Sin backend, sin contrato nuevo, sin datos ni permisos nuevos y sin escrituras. Sólo frontend, pruebas y CI.",
+  "proposal_id": "CHG-MASTERBROKERS-PUBLIC-PREVIEW",
+  "summary": "Sólo prueba: «Short fast gesture and reverse reach reading point» (tests/offer-review-browser.cjs) falló sola tres veces en el runner (chinches del grafo 98 y 104). Con 20 ms fijos entre movimientos, a veces el navegador no pintaba ningún cuadro y el avance quedaba topado en la posición actual + 0.24, así que el gesto soltaba sin avanzar. Ahora espera un cuadro entre movimientos (como en un teléfono) y a que la posición asiente antes de leerla. No cambia la presentación, sus datos ni su fuente.",
   "components": [
-    "SYS-INVERSION",
-    "SYS-YOD-OS"
+    "SYS-INVERSION"
   ],
   "tests": [
-    "node --test tests/brokers*.test.cjs: CRM.temporal con eventos sintéticos (historial por fecha ocurrida, reemplazos y cancelaciones por fecha de registro, vencido sin cambiar estado, hoy contra fecha pasada, fecha inválida).",
-    "node tests/brokers-temporal-browser.cjs: Chromium 320/390/1440 con servicios sintéticos; paneles, pestañas con teclado, navegación de fecha, vacíos explícitos y cero desbordamiento.",
-    "Sólo lectura: cero llamadas brokers_save y snapshot sin cambios al cambiar la fecha o volver a hoy.",
-    "Regresiones: node --check de brokers.js y brokers-crm.js y navegadores existentes de Brokers sin cambios de contrato."
+    "node tests/offer-review-browser.cjs en el paso «Presentación con fuente pública validada» (Chromium y WebKit móvil, contra la fuente pública)",
+    "verificar-impacto contra el atlas fijado."
   ],
-  "rollback": "Revertir el PR; no toca datos ni recibos"
+  "rollback": "Revertir el merge: la prueba vuelve a los 20 ms fijos."
 }
