@@ -1,0 +1,2193 @@
+{
+  "revision": "offer-4",
+  "creativeApproval": false,
+  "engines": [
+    {
+      "engine": "chromium",
+      "states": [
+        {
+          "p": 0,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Inmueble con potencial",
+            "Vivienda para vender",
+            "Transformar para vender"
+          ]
+        },
+        {
+          "p": 1,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 2,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 3,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Construcción existente"
+          ]
+        },
+        {
+          "p": 4,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Contrastar con mercado",
+            "¿Quién compraría?",
+            "¿Qué tamaño busca?",
+            "¿Qué precio paga?"
+          ]
+        },
+        {
+          "p": 5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Propuesta conceptual"
+          ]
+        },
+        {
+          "p": 6,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Alternativa A",
+            "Alternativa B",
+            "Menor entrada",
+            "Más intervención",
+            "Mayor entrada",
+            "Menos intervención",
+            "¿Cuál sostiene mejor el negocio?"
+          ]
+        },
+        {
+          "p": 7,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Ventas estimadas",
+            "− Inmueble",
+            "− Desarrollo completo",
+            "= Resultado estimado"
+          ]
+        },
+        {
+          "p": 8,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Compra",
+            "Aportación",
+            "Pago al propietario",
+            "Valor yparticipaciónacordados"
+          ]
+        },
+        {
+          "p": 9,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Inmueble",
+            "Capital",
+            "Comprar o aportar",
+            "Financiar las etapas",
+            "YoDesarrollo",
+            "Estructurar y dirigir"
+          ]
+        },
+        {
+          "p": 10,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "¿Se puede formalizar?",
+            "¿Se puede desarrollar?",
+            "¿Sostiene la cuenta?",
+            "Avanzar a estudio",
+            "Descartar"
+          ]
+        },
+        {
+          "p": 11,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Proyecto ypermisos",
+            "Obra y control",
+            "Viviendaterminada"
+          ]
+        },
+        {
+          "p": 12,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Vender",
+            "Escriturar y cobrar",
+            "Aplicar lo cobrado",
+            "Obligaciones",
+            "Recuperación",
+            "Resultadopactado"
+          ]
+        },
+        {
+          "p": 13,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "¿Cuánto capital ypara qué?",
+            "¿Qué plazo yescenarios deresultado?",
+            "¿Qué riesgos y cómose recupera?"
+          ]
+        },
+        {
+          "p": 14,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Una oportunidad para revisar",
+            "Con capital",
+            "Con un inmueble"
+          ]
+        },
+        {
+          "p": 0,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Inmueble con potencial",
+            "Vivienda para vender",
+            "Transformar para vender"
+          ]
+        },
+        {
+          "p": 0.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 1,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 1.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 2,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 2.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 3,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Construcción existente"
+          ]
+        },
+        {
+          "p": 3.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 4,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Contrastar con mercado",
+            "¿Quién compraría?",
+            "¿Qué tamaño busca?",
+            "¿Qué precio paga?"
+          ]
+        },
+        {
+          "p": 4.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Propuesta conceptual"
+          ]
+        },
+        {
+          "p": 5.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 6,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Alternativa A",
+            "Alternativa B",
+            "Menor entrada",
+            "Más intervención",
+            "Mayor entrada",
+            "Menos intervención",
+            "¿Cuál sostiene mejor el negocio?"
+          ]
+        },
+        {
+          "p": 6.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 7,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Ventas estimadas",
+            "− Inmueble",
+            "− Desarrollo completo",
+            "= Resultado estimado"
+          ]
+        },
+        {
+          "p": 7.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 8,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Compra",
+            "Aportación",
+            "Pago al propietario",
+            "Valor yparticipaciónacordados"
+          ]
+        },
+        {
+          "p": 8.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 9,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Inmueble",
+            "Capital",
+            "Comprar o aportar",
+            "Financiar las etapas",
+            "YoDesarrollo",
+            "Estructurar y dirigir"
+          ]
+        },
+        {
+          "p": 9.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 10,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "¿Se puede formalizar?",
+            "¿Se puede desarrollar?",
+            "¿Sostiene la cuenta?",
+            "Avanzar a estudio",
+            "Descartar"
+          ]
+        },
+        {
+          "p": 10.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 11,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Proyecto ypermisos",
+            "Obra y control",
+            "Viviendaterminada"
+          ]
+        },
+        {
+          "p": 11.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 12,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Vender",
+            "Escriturar y cobrar",
+            "Aplicar lo cobrado",
+            "Obligaciones",
+            "Recuperación",
+            "Resultadopactado"
+          ]
+        },
+        {
+          "p": 12.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 13,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "¿Cuánto capital ypara qué?",
+            "¿Qué plazo yescenarios deresultado?",
+            "¿Qué riesgos y cómose recupera?"
+          ]
+        },
+        {
+          "p": 13.5,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 14,
+          "viewport": [
+            320,
+            568
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Una oportunidad para revisar",
+            "Con capital",
+            "Con un inmueble"
+          ]
+        },
+        {
+          "p": 0,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Inmueble con potencial",
+            "Vivienda para vender",
+            "Transformar para vender"
+          ]
+        },
+        {
+          "p": 0.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 1,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 1.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 2,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 2.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 3,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Construcción existente"
+          ]
+        },
+        {
+          "p": 3.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 4,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Contrastar con mercado",
+            "¿Quién compraría?",
+            "¿Qué tamaño busca?",
+            "¿Qué precio paga?"
+          ]
+        },
+        {
+          "p": 4.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Propuesta conceptual"
+          ]
+        },
+        {
+          "p": 5.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 6,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Alternativa A",
+            "Alternativa B",
+            "Menor entrada",
+            "Más intervención",
+            "Mayor entrada",
+            "Menos intervención",
+            "¿Cuál sostiene mejor el negocio?"
+          ]
+        },
+        {
+          "p": 6.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 7,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Ventas estimadas",
+            "− Inmueble",
+            "− Desarrollo completo",
+            "= Resultado estimado"
+          ]
+        },
+        {
+          "p": 7.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 8,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Compra",
+            "Aportación",
+            "Pago al propietario",
+            "Valor yparticipaciónacordados"
+          ]
+        },
+        {
+          "p": 8.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 9,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Inmueble",
+            "Capital",
+            "Comprar o aportar",
+            "Financiar las etapas",
+            "YoDesarrollo",
+            "Estructurar y dirigir"
+          ]
+        },
+        {
+          "p": 9.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 10,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "¿Se puede formalizar?",
+            "¿Se puede desarrollar?",
+            "¿Sostiene la cuenta?",
+            "Avanzar a estudio",
+            "Descartar"
+          ]
+        },
+        {
+          "p": 10.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 11,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Proyecto ypermisos",
+            "Obra y control",
+            "Viviendaterminada"
+          ]
+        },
+        {
+          "p": 11.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 12,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Vender",
+            "Escriturar y cobrar",
+            "Aplicar lo cobrado",
+            "Obligaciones",
+            "Recuperación",
+            "Resultadopactado"
+          ]
+        },
+        {
+          "p": 12.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 13,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "¿Cuánto capital ypara qué?",
+            "¿Qué plazo yescenarios deresultado?",
+            "¿Qué riesgos y cómose recupera?"
+          ]
+        },
+        {
+          "p": 13.5,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 14,
+          "viewport": [
+            360,
+            780
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Una oportunidad para revisar",
+            "Con capital",
+            "Con un inmueble"
+          ]
+        },
+        {
+          "p": 0,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Inmueble con potencial",
+            "Vivienda para vender",
+            "Transformar para vender"
+          ]
+        },
+        {
+          "p": 0.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 1,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 1.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 2,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 2.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 3,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Construcción existente"
+          ]
+        },
+        {
+          "p": 3.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 4,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Contrastar con mercado",
+            "¿Quién compraría?",
+            "¿Qué tamaño busca?",
+            "¿Qué precio paga?"
+          ]
+        },
+        {
+          "p": 4.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Propuesta conceptual"
+          ]
+        },
+        {
+          "p": 5.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 6,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Alternativa A",
+            "Alternativa B",
+            "Menor entrada",
+            "Más intervención",
+            "Mayor entrada",
+            "Menos intervención",
+            "¿Cuál sostiene mejor el negocio?"
+          ]
+        },
+        {
+          "p": 6.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 7,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Ventas estimadas",
+            "− Inmueble",
+            "− Desarrollo completo",
+            "= Resultado estimado"
+          ]
+        },
+        {
+          "p": 7.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 8,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Compra",
+            "Aportación",
+            "Pago al propietario",
+            "Valor yparticipaciónacordados"
+          ]
+        },
+        {
+          "p": 8.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 9,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Inmueble",
+            "Capital",
+            "Comprar o aportar",
+            "Financiar las etapas",
+            "YoDesarrollo",
+            "Estructurar y dirigir"
+          ]
+        },
+        {
+          "p": 9.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 10,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "¿Se puede formalizar?",
+            "¿Se puede desarrollar?",
+            "¿Sostiene la cuenta?",
+            "Avanzar a estudio",
+            "Descartar"
+          ]
+        },
+        {
+          "p": 10.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 11,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Proyecto ypermisos",
+            "Obra y control",
+            "Viviendaterminada"
+          ]
+        },
+        {
+          "p": 11.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 12,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Vender",
+            "Escriturar y cobrar",
+            "Aplicar lo cobrado",
+            "Obligaciones",
+            "Recuperación",
+            "Resultadopactado"
+          ]
+        },
+        {
+          "p": 12.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 13,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "¿Cuánto capital ypara qué?",
+            "¿Qué plazo yescenarios deresultado?",
+            "¿Qué riesgos y cómose recupera?"
+          ]
+        },
+        {
+          "p": 13.5,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 14,
+          "viewport": [
+            390,
+            844
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Una oportunidad para revisar",
+            "Con capital",
+            "Con un inmueble"
+          ]
+        },
+        {
+          "p": 0,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Inmueble con potencial",
+            "Vivienda para vender",
+            "Transformar para vender"
+          ]
+        },
+        {
+          "p": 0.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 1,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 1.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 2,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 2.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "Demanda",
+            "Empleo",
+            "Servicios"
+          ]
+        },
+        {
+          "p": 3,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Construcción existente"
+          ]
+        },
+        {
+          "p": 3.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 4,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Contrastar con mercado",
+            "¿Quién compraría?",
+            "¿Qué tamaño busca?",
+            "¿Qué precio paga?"
+          ]
+        },
+        {
+          "p": 4.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Propuesta conceptual"
+          ]
+        },
+        {
+          "p": 5.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 6,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Alternativa A",
+            "Alternativa B",
+            "Menor entrada",
+            "Más intervención",
+            "Mayor entrada",
+            "Menos intervención",
+            "¿Cuál sostiene mejor el negocio?"
+          ]
+        },
+        {
+          "p": 6.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 7,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Ventas estimadas",
+            "− Inmueble",
+            "− Desarrollo completo",
+            "= Resultado estimado"
+          ]
+        },
+        {
+          "p": 7.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 8,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Compra",
+            "Aportación",
+            "Pago al propietario",
+            "Valor yparticipaciónacordados"
+          ]
+        },
+        {
+          "p": 8.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 9,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Inmueble",
+            "Capital",
+            "Comprar o aportar",
+            "Financiar las etapas",
+            "YoDesarrollo",
+            "Estructurar y dirigir"
+          ]
+        },
+        {
+          "p": 9.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 10,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "¿Se puede formalizar?",
+            "¿Se puede desarrollar?",
+            "¿Sostiene la cuenta?",
+            "Avanzar a estudio",
+            "Descartar"
+          ]
+        },
+        {
+          "p": 10.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 11,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Proyecto ypermisos",
+            "Obra y control",
+            "Viviendaterminada"
+          ]
+        },
+        {
+          "p": 11.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 12,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Vender",
+            "Escriturar y cobrar",
+            "Aplicar lo cobrado",
+            "Obligaciones",
+            "Recuperación",
+            "Resultadopactado"
+          ]
+        },
+        {
+          "p": 12.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 13,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "¿Cuánto capital ypara qué?",
+            "¿Qué plazo yescenarios deresultado?",
+            "¿Qué riesgos y cómose recupera?"
+          ]
+        },
+        {
+          "p": 13.5,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": []
+        },
+        {
+          "p": 14,
+          "viewport": [
+            844,
+            390
+          ],
+          "overflow": false,
+          "title": true,
+          "caption": true,
+          "outside": [],
+          "overlaps": [],
+          "labels": [
+            "Una oportunidad para revisar",
+            "Con capital",
+            "Con un inmueble"
+          ]
+        }
+      ],
+      "errors": [],
+      "blockedWrites": 0,
+      "fastGesture": [
+        {
+          "direction": 1,
+          "end": 9
+        },
+        {
+          "direction": -1,
+          "end": 7
+        }
+      ],
+      "contrast": [
+        {
+          "q": ".surface-caption",
+          "ratio": 5.560322581313336
+        },
+        {
+          "q": ".surface-kicker",
+          "ratio": 5.122585000801141
+        },
+        {
+          "q": ".surface-hint",
+          "ratio": 5.560322581313336
+        }
+      ],
+      "checks": {
+        "beats": 15,
+        "persistentHero": true,
+        "exactReverse": true,
+        "clearTransitionLane": true,
+        "noAutoplay": true,
+        "singleGesture": true,
+        "readableRelease": true,
+        "settlementInterruptions": true,
+        "secondaryContrast": true,
+        "visiblePosition": true,
+        "historySeparated": true,
+        "mapAttributionContext": true,
+        "menuReaderRestart": true,
+        "clipboardShareFallback": true,
+        "pause": true,
+        "closingMessage": true,
+        "recipientGuidance": true,
+        "evaluatorLink": true,
+        "pinVisible": true,
+        "noHorizontalOverflow": true
+      },
+      "layoutWarnings": []
+    }
+  ],
+  "failures": [
+    "browserType.launch: Executable doesn't exist at /opt/pw-browsers/webkit-2359/pw_run.sh\n╔════════════════════════════════════════════════════════════╗\n║ Looks like Playwright was just installed or updated.       ║\n║ Please run the following command to download new browsers: ║\n║                                                            ║\n║     npx playwright install                                 ║\n║                                                            ║\n║ <3 Playwright Team                                         ║\n╚════════════════════════════════════════════════════════════╝"
+  ],
+  "technicalPass": false
+}

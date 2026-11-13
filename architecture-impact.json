@@ -1,16 +1,16 @@
 {
   "model_revision": "2026-11-11.grafo-accesos.3",
-  "proposal_id": "CHG-MASTERBROKERS-MINI-CRM",
-  "summary": "Quinta pestaña «Historia · Hoy · Plan» en el detalle de cada caso de Brokers: con una fecha de consulta (por defecto hoy) muestra, en sólo lectura, el historial hasta esa fecha, el estado respaldado y los planes vigentes, derivados de las actividades existentes (sobre YOD-CRM v1). Sin backend, sin contrato nuevo, sin datos ni permisos nuevos y sin escrituras. Sólo frontend, pruebas y CI.",
+  "proposal_id": "CHG-MASTERBROKERS-PUBLIC-PREVIEW",
+  "summary": "Presentación de Master Brokers (superficie offer-4): un deslizamiento rápido y corto ahora pasa al siguiente punto de lectura en su dirección. Antes, con el tope de avance por cuadro, a 60 cuadros por segundo un deslizamiento de unos 120 px se quedaba en 0.48 de un paso y al soltar regresaba: a veces avanzaba y a veces no. Por eso la prueba «Short fast gesture and reverse reach reading point» fallaba sola (chinches del grafo 98 y 104). Sólo aplica al soltar un arrastre con velocidad de 700 px/s o más y movimiento en los últimos 120 ms. La rueda, los arrastres lentos, los micro-movimientos y las interrupciones siguen igual. La prueba ahora espera un cuadro entre movimientos, como en un teléfono, y a que la posición asiente. La etiqueta de intent-mobile.js pasa a offer-4-flick1.",
   "components": [
-    "SYS-INVERSION",
-    "SYS-YOD-OS"
+    "SYS-INVERSION"
   ],
   "tests": [
-    "node --test tests/brokers*.test.cjs: CRM.temporal con eventos sintéticos (historial por fecha ocurrida, reemplazos y cancelaciones por fecha de registro, vencido sin cambiar estado, hoy contra fecha pasada, fecha inválida).",
-    "node tests/brokers-temporal-browser.cjs: Chromium 320/390/1440 con servicios sintéticos; paneles, pestañas con teclado, navegación de fecha, vacíos explícitos y cero desbordamiento.",
-    "Sólo lectura: cero llamadas brokers_save y snapshot sin cambios al cambiar la fecha o volver a hoy.",
-    "Regresiones: node --check de brokers.js y brokers-crm.js y navegadores existentes de Brokers sin cambios de contrato."
+    "node tests/offer-review-browser.cjs (Chromium 3 de 3 en local con la copia pública fijada: avanza a 9 y regresa a 7; WebKit en CI)",
+    "QA_BROWSER=chromium node tests/brokers-intent-browser.cjs (velocidad, micro-gesto, rueda y extremos sin cambio)",
+    "node tests/intent-visual-browser.cjs",
+    "tests/intent-continuity-browser.cjs y WebKit corren en CI (paso «Presentación con fuente pública validada»).",
+    "verificar-impacto contra el atlas fijado."
   ],
-  "rollback": "Revertir el PR; no toca datos ni recibos"
+  "rollback": "Revertir el merge: vuelve el redondeo de siempre al soltar y la prueba con 20 ms fijos."
 }
