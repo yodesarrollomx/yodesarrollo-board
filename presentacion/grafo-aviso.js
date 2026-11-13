@@ -19,14 +19,29 @@
     if (base !== aprobado) return { tipo: 'nueva', cargado: base, aprobado, corto: 'Hay un grafo más nuevo',
       detalle: 'Esto se armó con el grafo ' + base + '. Ya se aprobó uno más nuevo (' + aprobado + '). Al actualizar se usa el nuevo; mientras tanto, lo que ves no cambia.' };
     if (borrador && ID.test(String(borrador.id || '')) && borrador.id !== aprobado) return { tipo: 'borrador', cargado: base, aprobado, borrador: borrador.id, corto: 'Otra versión en trabajo',
-      detalle: 'Esto usa el grafo aprobado ' + aprobado + '. En el Plan de Potencial se está trabajando otra versión (' + borrador.id + ', en borrador), así que puede cambiar más adelante. ' +
+      detalle: 'Esto usa el grafo aprobado ' + aprobado + '. Hay otra versión del grafo en borrador (' + borrador.id + '), así que puede cambiar más adelante. ' +
         'No hay que hacer nada: sigue igual hasta que se apruebe.' };
     return { tipo: 'al-dia', cargado: base, aprobado };
   }
 
+  /* El rol que dejó portero.js en sessionStorage.pyod_rol: hoy un JSON {f, rol}, donde f es el inicio del token con que
+     se canjeó; antes, la palabra sola. Sólo es una pista para la interfaz (enseñar o no la liga a Accesos): no autoriza
+     nada, el servidor valida todo. Si no se entiende, o es de otro token, no hay rol. */
+  function rolDe(valor, token = '') {
+    if (typeof valor !== 'string') return '';
+    let rol = valor.trim();
+    if (rol.charAt(0) === '{') {
+      let o = null; try { o = JSON.parse(rol); } catch (e) { return ''; }
+      if (!o || typeof o !== 'object' || typeof o.rol !== 'string') return '';
+      if (typeof o.f === 'string' && o.f && typeof token === 'string' && token && !token.startsWith(o.f)) return '';
+      rol = o.rol.trim();
+    }
+    return /^[a-z_]{1,32}$/i.test(rol) ? rol.toLowerCase() : '';
+  }
+
   function montar(el, { cargado = '', base = root.YOD_GRAFO_BASE || BASE, crudo = root.YOD_GRAFO_CRUDO || CRUDO, fetchImpl = (...a) => root.fetch(...a), cada = 300000,
     sesion = () => { try { return !!root.localStorage.getItem('pyod_clave_v1'); } catch (e) { return false; } },
-    direccion = () => { try { return ['admin', 'direccion'].includes(String(root.sessionStorage.getItem('pyod_rol') || '').toLowerCase()); } catch (e) { return false; } },
+    direccion = () => { try { return ['admin', 'direccion'].includes(rolDe(root.sessionStorage.getItem('pyod_rol'), root.localStorage.getItem('pyod_clave_v1') || '')); } catch (e) { return false; } },
     alActualizar = () => root.location.reload() } = {}) {
     let vivo = true, reloj = null, ultimo = { tipo: 'sin-dato' }, abierto = false;
     const doc = el.ownerDocument, json = u => fetchImpl(u, { cache: 'no-store', credentials: 'omit' }).then(r => r.ok ? r.json() : null).catch(() => null);
@@ -75,5 +90,5 @@
     const arranca = () => { for (const el of root.document.querySelectorAll('[data-grafo-aviso]')) if (!el.__yga) el.__yga = montar(el); };
     if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded', arranca); else arranca();
   }
-  return { estado, montar, BASE, CRUDO };
+  return { estado, montar, rolDe, BASE, CRUDO };
 });

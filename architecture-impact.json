@@ -1,16 +1,16 @@
 {
   "model_revision": "2026-11-11.grafo-accesos.3",
   "proposal_id": "CHG-PRESENTACION-GRAFO-20261111",
-  "summary": "Nueva página presentacion/grafo/: arma en el navegador una presentación por audiencia (cliente o inversionista, dueño del terreno, producto) y extensión (completa o corta) con el grafo aprobado que publica potenciales-yod y el Plan de Potencial guardado del caso, leído con la sesión de quien abre por la misma lectura recurso=caso del Mini CRM. No calcula: cada cifra es un campo guardado con su procedencia y lo ausente se muestra «No definido». Sólo lee el grafo aprobado, así que un grafo en borrador no cambia presentaciones ni ligas. Aviso discreto (presentacion/grafo-aviso.js) en Master Brokers, Presentaciones y la propia página cuando hay otra versión del grafo en trabajo o una más nueva aprobada; sólo con sesión de YOD. Master Brokers agrega la liga «Presentar desde el grafo» en el cajón del plan. Sin escrituras, almacenamiento, secretos ni cambios de backend, hojas, permisos o términos comerciales.",
+  "summary": "Corrección de la pastilla del grafo (presentacion/grafo-aviso.js), comprobada en vivo el 12-nov-2026: (1) la liga «Ver el borrador en Accesos» no salía nunca a Dirección porque portero.js guarda sessionStorage.pyod_rol como JSON {f, rol} y el aviso comparaba la cadena completa; ahora lee ese JSON, la palabra sola de antes y descarta basura o el rol de otro token, sin romperse. Sigue siendo sólo una pista de interfaz: no autoriza nada. (2) El detalle del borrador decía que se trabajaba otra versión «en el Plan de Potencial»; lo que está en borrador es el grafo. Se sube ?v=YGA-2 del aviso en las tres páginas que lo cargan. Sin cambios en el compilador, en lo que se muestra de cada plan, en lecturas, escrituras, almacenamiento, secretos, backend, hojas ni permisos.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "node --test tests/ppp-grafo-presentacion.test.cjs: 30 combinaciones de audiencia, tipo de plan y extensión arman un guion válido; cada cifra sale de un campo guardado; lo ausente queda «No definido»; ligas aceptadas; estados del aviso; páginas que lo montan; sólo lectura y sin secretos.",
-    "node tests/ppp-grafo-browser.cjs (Chromium, 393/844/1440 y 320): tres audiencias, versión corta, modo presentar, una sola lectura GET del plan, ejemplo sin sesión, puerta sin datos, borrador sin cambios, actualización al aprobar y pastilla en Master Brokers y Presentaciones; grafo y Portero sintéticos, sin escrituras.",
-    "Regresión: node --test tests/brokers*.test.cjs tests/ppp-*.test.cjs tests/presentation-production-api.test.cjs; navegador de cartera, Mini CRM, evaluador, recorrido, mesa de presentaciones y guion del PPP sin cambios de resultado.",
-    "verificar-impacto contra el atlas ab242875f5cf90fa8255ac273b38e0ad2520bbfe. Pendiente de comprobar en producción: lectura real del plan con una sesión real y grafo ya publicado por potenciales-yod."
+    "node --test tests/ppp-grafo-presentacion.test.cjs: 13/13; nuevas: rol de pyod_rol en JSON como lo guarda portero.js, palabra sola, rol de otro token y basura; la liga a Accesos sólo para admin o dirección; el detalle del borrador habla del grafo y no del Plan de Potencial. Con el aviso anterior fallan 3.",
+    "node tests/ppp-grafo-browser.cjs (Chromium): el doble del Portero deja pyod_rol en el formato real; Dirección ve la liga a Accesos; vista, comercial y rol de otro token no; la palabra sola de antes sigue valiendo. Con el aviso anterior se cae en el paso del borrador.",
+    "Regresión: node --test tests/brokers*.test.cjs (173/173) y tests/ppp-*.test.cjs tests/presentation-production-api.test.cjs (39/39); node --check de los módulos del flujo.",
+    "verificar-impacto contra el atlas ab242875f5cf90fa8255ac273b38e0ad2520bbfe."
   ],
-  "rollback": "Revertir el commit por PR; sin cambios de backend, hojas, permisos ni registros.",
+  "rollback": "Revertir el commit por PR; sólo cambia la pastilla del grafo y su ?v=. Sin backend, hojas, permisos ni registros.",
   "model_commit": "ab242875f5cf90fa8255ac273b38e0ad2520bbfe"
 }
