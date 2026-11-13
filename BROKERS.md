@@ -125,3 +125,7 @@ Reglas: la vista es de sólo lectura; cambiar la fecha o volver a hoy no guarda,
 Sin cambios de contrato: se deriva de las actividades existentes y del sobre `[YOD-CRM v1]`, sin backend, tablas, campos ni permisos nuevos. La lógica pura es `CRM.temporal(rows, asOfDay, current)` en `brokers-crm.js`; `decode` y `calendarEvents` no cambian.
 
 Verificación: `node --test tests/brokers*.test.cjs` (incluye `tests/brokers-temporal.test.cjs`) y `node tests/brokers-temporal-browser.cjs` (Chromium 320/390/1440 con servicios sintéticos; capturas en `temporal-review-artifacts/`). Sin escrituras de prueba en producción. Revertir el frontend conserva actividades, recibos y PPP.
+
+## Presentar desde el grafo · 11-nov-2026
+
+El cajón «Plan de potencial» de cada expediente agrega la liga «Presentar desde el grafo»: abre `presentacion/grafo/` con el caso y el tipo del plan guardado, para elegir audiencia (cliente, dueño del terreno o producto) y extensión. El encabezado muestra una pastilla discreta cuando hay otra versión del grafo en trabajo. Sólo lectura; detalle en [docs/PRESENTACIONES-GRAFO.md](docs/PRESENTACIONES-GRAFO.md).

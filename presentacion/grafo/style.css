@@ -1,0 +1,24 @@
+/* Presentación desde el grafo: lo propio de esta página; lo demás viene de ../ppp/style.css. */
+.opciones{display:grid;gap:14px;margin:6px 0 22px}
+.opciones fieldset{border:0;padding:0;margin:0;min-width:0}
+.opciones legend{font-size:10px;font-weight:750;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);padding:0;margin:0 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{border-radius:999px;min-height:40px;padding:8px 14px;font-size:13px;text-align:left}
+.chips button small{display:block;font-weight:400;font-size:11px;color:var(--muted)}
+.chips button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chips button[aria-pressed=true] small{color:#d9decf}
+.fuente{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:12px;color:var(--muted);margin:0 0 18px}
+.fuente b{color:var(--ink);font-weight:650}
+.ejemplo{background:#fff3cd;border:1px solid #e6c766;color:#6b4a0c;border-radius:30px;padding:5px 11px;font-size:11px;font-weight:700;letter-spacing:.04em}
+.elegir{max-width:680px;margin:6vh auto;line-height:1.65}
+.elegir h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(26px,4vw,40px);line-height:1.15;letter-spacing:-.02em;margin:10px 0 12px}
+.elegir label{display:grid;gap:6px;font-size:13px;font-weight:600;margin:18px 0 10px}
+.elegir input{font:inherit;font-weight:400;border:1px solid var(--line);border-radius:8px;min-height:46px;padding:10px 12px;background:#fff;color:var(--ink);width:100%}
+.elegir .fila{display:flex;flex-wrap:wrap;gap:8px}
+.elegir .primario{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.elegir p[role=status]{font-size:13px;color:#a94438;min-height:1.6em}
+.fact small.estado{display:block;margin-top:2px}
+.presenting .opciones,.presenting .fuente .solo-preparar,.presenting #access,.presenting #copiar{display:none}
+.presenting .fuente{margin-bottom:10px}
+@media(max-width:650px){.chips{gap:6px}.chips button{flex:1 1 auto;min-height:38px;padding:7px 12px;font-size:12.5px}.chips button small{display:none}.opciones{gap:10px;margin-bottom:14px}}
+@media print{.opciones,.elegir{display:none!important}}

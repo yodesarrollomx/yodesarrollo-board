@@ -1,54 +1,49 @@
 // A different diagram grammar for each relationship. Figures are not placeholders.
-const K={ink:'#253e3b',muted:'#65756c',problem:'#ad4c46',solution:'#806397',plan:'#866143',risk:'#987419',outcome:'#297e94',action:'#517a43'};
-const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const T=(x,y,s,size=18,c=K.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${size}" fill="${c}" text-anchor="${a}">${E(s)}</text>`;
-const P=(d,c=K.muted,w=1.5,dash='')=>`<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" ${dash?'stroke-dasharray="'+dash+'"':''}/>`;
-const G=(n,s)=>`<g data-reveal="${n}">${s}</g>`;
-const A=(x,y,X,Y,c=K.plan)=>P(`M${x} ${y} L${X} ${Y}`,c)+P(`M${X-4} ${Y-7} L${X} ${Y} L${X+4} ${Y-7}`,c);
-const H=(x,y,w,c)=>P(`M${x-w/2} ${y} q${w/2} 4 ${w} 0`,c,2.5);
-const B=(x,y,w,h,c)=>`<rect x="${x-w/2}" y="${y}" width="${w}" height="${h}" rx="14" fill="${c}08" stroke="${c}" stroke-width="1.2"/>`;
+import {K,T,P,G,A,H,B} from './diagram-kit.js?v=YOD-SB11';
+import {participacion} from './network.js?v=YOD-SB11';
+import {retribucion} from './flows.js?v=YOD-SB11';
+import {complementos} from './districts.js?v=YOD-SB11';
+import {capital} from './capital.js?v=YOD-SB11';
+import {demanda} from './demand.js?v=YOD-SB11';
 export function meaning(index,m){const W=m?480:1100,C=W/2,L=m?122:285,R=m?358:815,S=m?17:23,small=m?14:18;let o='';
  if(index===1){
- o+=T(C,190,'UNA PROPIEDAD · DOS DESTINOS ECONÓMICOS',m?17:22,K.solution)+P(`M${C} 210 V235 H${L} V265 M${C} 235 H${R} V265`,K.solution,2);
- o+=T(L,290,'Naves a la medida',S)+T(L,316,'BTS · arrendamiento',small,K.muted)+H(L,332,m?180:320,K.outcome);
- o+=G(1,A(L,342,L,395,K.outcome)+T(L,420,'Inmuebles + rentas',S,K.outcome)+T(L,446,'Beneficio de la familia',small));
- o+=G(2,T(R,290,'Complementos',S)+T(R,316,'Negocios por desarrollar',small,K.muted)+H(R,332,m?180:320,K.solution)+A(R,342,R,395,K.solution)+T(R,420,'Asociación por producto',m?16:S,K.solution)+T(R,446,'Tierra + desarrollo + capital',m?13:small));
- o+=G(3,P(`M${C} 270 V490`,K.muted,1,'4 7')+B(C,535,m?420:820,85,K.risk)+T(C,566,'Cada negocio necesita su financiamiento.',m?18:25,K.risk)+T(C,595,'Conservar las BTS no equivale a venderlas para pagar el resto.',m?13:19));
+ // Patrimonio SB07: BTS y complementos. Las figuras Hairline (nave, plaza, office, hotel, club, pocket) las coloca drawings.js; aquí solo texto y guías.
+ // Textos tomados de las escenas patrimonio, demanda, retribución y complementos (story.js); la tercera línea de cada fila viene de assets/concepto-fuente.webp y solo se muestra en desktop.
+ // Franja reservada: drawings.js pinta la etiqueta del paso en y=H-42 (tope ≈ H-63 en desktop, H-58 en móvil) y «GUION VISUAL» en H-12; todo este bloque termina ≥ 6 px arriba (desktop y ≤ 661, móvil y ≤ 676).
+ const sub='#6b7972',BT=K.outcome,CO=K.solution;
+ o+=T(m?262:585,m?196:172,'Una propiedad · 24.7584 ha',m?15:18,sub,'start');
+ if(!m){
+ // Eje del panel BTS: x=392 (encabezado, definición, patios y cadena comparten eje, a la derecha de la nave en x=160). La conclusión G1 abarca todo el panel (eje 285).
+ // Filas de complementos: nombre y0 (19), necesidad y0+19.5 (15), tercera línea y0+36 (13); y0 = 285 + 58.5·fila. Figuras (origen, x=612): 298, 359, 423, 473, 536.
+ const cx=392,rows=[['Plaza y servicios','Servicios cotidianos de la zona','Restaurantes · bancos · cafetería · farmacia · conveniencia'],['Oficinas flex y showrooms','Proveedores y empresas','Showrooms industriales · oficinas · salas de juntas'],['Hotel de negocios','Visitas de trabajo','Para viajeros de negocios y visitantes'],['Industrial Club','Relaciones y encuentros','Restaurante · gimnasio · alberca · pádel/tenis · spa · salas de juntas'],['Bodegas pocket de 250 a 500 m²','Operaciones más pequeñas','Módulos flexibles y funcionales']];
+ o+=P(`M550 198 V206 H${cx} V214 M550 206 H815 V214`,CO,2);
+ o+=G(0,T(cx,240,'NAVES A LA MEDIDA · BTS',22,BT)+T(cx,262,'Built-To-Suit: se proyecta para las',16)+T(cx,282,'necesidades de una empresa.',16)+T(cx,299,'Patios de maniobra · andenes ·',13,sub)+T(cx,316,'infraestructura para gran escala',13,sub)
+  +T(cx,346,'Una empresa necesita una nave',19)+T(cx,366,'superficie, altura, andenes, energía y plazo',15,sub)
+  +A(cx,375,cx,391,BT)+T(cx,416,'Se proyecta a su medida',19)
+  +A(cx,426,cx,442,BT)+T(cx,468,'Contrato de arrendamiento',19)
+  +A(cx,478,cx,494,BT)+T(cx,520,'Rentas a largo plazo',19,BT));
+ o+=G(1,H(L,544,440,BT)+T(L,571,'Los propietarios conservan el inmueble y sus rentas.',19,BT)+T(L,595,'Conseguir un usuario no convierte al equipo en dueño.',15,sub));
+ o+=G(2,T(R,240,'COMPLEMENTOS',22,CO)+T(R,262,'Negocios que atienden necesidades del entorno industrial.',16)
+  +rows.map((a,j)=>{const y=285+j*58.5;return T(650,y,a[0],19,K.ink,'start')+T(650,y+19.5,a[1],15,sub,'start')+T(650,y+36,a[2],13,sub,'start')}).join('')
+  +T(R,579,'Asociación desarrolladora con reglas por producto',18,CO)+T(R,598,'Cada uno debe probar demanda, operador y viabilidad.',15));
+ o+=G(3,P('M550 226 V603',K.muted,1,'4 7')+B(C,609,1000,52,K.risk)+T(C,633,'Cada negocio necesita su propia cuenta.',20,K.risk)+T(C,653,'No se venden las naves para pagar lo demás: cada componente justifica su demanda, capital, obligaciones y resultado.',15));
+ }else{
+ // Móvil: todo ≥15 (≥12 px en 390 de ancho); se omiten las necesidades grises. Filas cada 28 (y = 474…586); figuras (origen, x=40) 5 px sobre cada fila: 469, 497, 525, 553, 581.
+ const rows=['Plaza y servicios','Oficinas flex y showrooms','Hotel de negocios','Industrial Club','Bodegas pocket de 250 a 500 m²'];
+ o+=P('M240 212 V217',CO,2);
+ o+=G(0,T(C,236,'NAVES A LA MEDIDA · BTS',16,BT)+T(C,255,'Built-To-Suit: se proyecta para las necesidades de una empresa.',15)
+  +T(160,280,'Una empresa necesita una nave',15,K.ink,'start')+A(166,288,166,296,BT)+T(160,314,'Se proyecta a su medida',15,K.ink,'start')+A(166,322,166,330,BT)+T(160,348,'Contrato de arrendamiento',15,K.ink,'start')+A(166,356,166,364,BT)+T(160,382,'Rentas a largo plazo',15,BT,'start'));
+ o+=G(1,H(C,397,360,BT)+T(C,421,'Los propietarios conservan el inmueble y sus rentas.',15,BT));
+ o+=G(2,T(C,450,'COMPLEMENTOS',16,CO)+rows.map((a,j)=>T(70,474+j*28,a,15,K.ink,'start')).join('')
+  +T(C,607,'Asociación desarrolladora con reglas por producto',15,CO)+T(C,626,'Cada uno debe probar demanda, operador y viabilidad.',15));
+ o+=G(3,B(C,642,440,34,K.risk)+T(C,664,'Cada negocio necesita su propia cuenta.',16,K.risk));
  }
- if(index===2){
- o+=T(C,190,'Familia Parada · propietarios',m?25:31)+T(C,218,'Conserva las decisiones y autoriza compromisos',m?15:20,K.outcome)+A(C,235,C,273,K.solution);
- o+=B(C,280,m?330:580,78,K.solution)+T(C,310,'Yo Desarrollo · Puebla / PG · Eduardo Lara',m?16:24,K.solution)+T(C,337,'Un equipo que integra el desarrollo',m?16:21);
- const nodes=[['Usuarios y mercado','Prospectar · negociar'],['Proyecto y permisos','Definir · coordinar'],['Finanzas y capital','Modelar · estructurar'],['Jurídico y ejecución','Acordar · controlar']];
- nodes.forEach((a,j)=>{const x=m?(j%2?R:L):175+j*250,y=m?(j<2?440:570):475;const n=j<2?1:2;o+=G(n,P(`M${C} 360 Q${x} 390 ${x} ${y-24}`,K.solution)+T(x,y,a[0],m?16:21)+T(x,y+27,a[1],m?13:17,K.muted)+H(x,y+40,m?185:210,K.solution));});
- o+=G(3,T(C,650,'La coordinación resuelve interfaces; la familia no pierde el control.',m?13:22,K.outcome));
  }
- if(index===3){
- o+=T(C,190,'LA NAVE DEBE ENCAJAR CON UN USUARIO',m?17:23,K.problem);
- const req=['Operación y carga','Alturas y maniobras','Servicios y plazo'];req.forEach((s,j)=>o+=T(L,250+j*35,s,m?15:21,K.ink));
- o+=G(1,P(`M${m?215:460} 270 H${m?248:590}`,K.plan,2)+T(m?265:640,252,'Define',small,K.plan)+T(R,438,'Una nave a la medida',m?16:22,K.solution));
- o+=G(2,B(C,480,m?420:840,88,K.risk)+T(C,511,'Contrato del usuario + presupuesto + capital',m?17:24,K.risk)+T(C,541,'Las tres condiciones deben sostener la misma operación.',m?13:19));
- o+=G(3,A(C,580,C,615,K.action)+T(C,647,'Invertir en la fase que sí tiene fundamento',m?18:27,K.action));
- }
- if(index===4){
- o+=T(L,190,'RENTA DEL ACTIVO',m?18:24,K.outcome)+T(R,190,'PAGO POR EL TRABAJO',m?16:24,K.plan);
- o+=T(L,250,'Usuario industrial',S)+A(L,270,L,315,K.outcome)+T(L,342,'Contrato de arrendamiento',m?14:21);
- o+=G(1,A(L,360,L,405,K.outcome)+T(L,432,'Ingreso del inmueble',S,K.outcome)+T(L,461,'− obligaciones y operación',m?13:18)+T(L,505,'Beneficio del propietario',m?15:23,K.outcome));
- o+=G(2,T(R,250,'Servicios autorizados',S)+A(R,270,R,315,K.plan)+T(R,342,'Colocación / gerencia',m?15:21)+A(R,360,R,405,K.plan)+T(R,432,'Hito y honorario pactado',m?15:22,K.plan)+T(R,461,'Pago al equipo por su alcance',m?13:18));
- o+=G(3,H(C,560,m?410:880,K.risk)+T(C,600,'Conseguir usuarios no da propiedad automática de las BTS.',m?14:23,K.risk)+T(C,629,'La participación en complementos se pacta por separado.',m?14:20));
- }
- if(index===5){
- o+=T(C,190,'DE LA NECESIDAD AL PRODUCTO',m?19:25,K.solution)+T(L,225,'La actividad necesita…',m?15:21,K.problem)+T(R,225,'Podría resolverse con…',m?14:21,K.solution);
- const rows=[['Servicios cotidianos','Comercio y servicios'],['Visitas de trabajo','Hotel de negocios'],['Reuniones y representación','Oficinas / showrooms'],['Relaciones y encuentros','Industrial Club'],['Operaciones más pequeñas','Bodegas de 250–500 m²']];
- rows.forEach((a,j)=>{const y=280+j*62,n=j<2?1:2;o+=G(n,T(L,y,a[0],m?13:20)+P(`M${m?223:490} ${y-5} H${m?252:610}`,K.solution,2)+P(`M${m?247:604} ${y-10} l6 5 -6 5`,K.solution)+T(R,y,a[1],m?13:20,K.solution)+P(`M${m?28:100} ${y+21} H${W-(m?28:100)}`, '#d6ddcf',1));});
- o+=G(3,B(C,610,m?420:900,58,K.plan)+T(C,645,'Cada producto debe probar demanda, operador y viabilidad.',m?13:22,K.plan));
- }
- if(index===6){
- o+=T(L,190,'A · TIERRA',m?23:30,K.solution)+T(R,190,'B · TIERRA + CAPITAL',m?18:30,K.solution);
- for(const x of[L,R])o+=B(x,220,m?194:380,65,K.ink)+T(x,247,'Suelo delimitado',S)+T(x,272,'Valuación acordada',small,K.muted);
- o+=G(1,T(L,325,'+ trabajo desarrollador',m?14:21,K.plan)+T(R,325,'+ trabajo desarrollador',m?14:21,K.plan));
- o+=G(2,B(R,350,m?194:380,62,K.outcome)+T(R,376,'+ efectivo del propietario',m?13:21,K.outcome)+T(R,398,'Reconocido por separado',m?12:17)+T(L,376,'Capital de otras fuentes',m?14:21)+T(L,401,'Por conseguir y acordar',m?13:17,K.muted));
- o+=G(3,P(`M${L} 440 V470 H${R} V440 M${C} 470 V500`,K.plan,2)+T(C,532,'Modelo + riesgo + aportaciones + trabajo',m?18:27,K.plan)+T(C,572,'Participaciones y obligaciones pactadas',m?19:28,K.action)+T(C,612,'El dibujo compara componentes; no representa porcentajes.',m?13:18,K.muted));
- }
+ if(index===2)o+=participacion(m);
+ if(index===3)o+=demanda(m);
+ if(index===4)o+=retribucion(m);
+ if(index===5)o+=complementos(m);
+ if(index===6)o+=capital(m);
  if(index===7){
  o+=T(C,185,'PROTEGER EL CONJUNTO SIN MEZCLAR LOS RIESGOS',m?15:25,K.risk);
  for(const [x,name]of[[L,'BTS patrimonial'],[R,'Complementos']])o+=B(x,230,m?200:390,245,K.risk)+T(x,266,name,S)+P(`M${x-(m?85:165)} 286 h${m?170:330}`,K.risk)+T(x,322,'Activos identificados',m?14:21)+T(x,355,'Cuentas y obligaciones',m?14:21)+G(1,T(x,402,'Presupuesto propio',m?14:21)+T(x,435,'Reportes por componente',m?13:19));
@@ -67,4 +62,9 @@ export function meaning(index,m){const W=m?480:1100,C=W/2,L=m?122:285,R=m?358:81
  }
  return o;
 }
-export function reveal(root,progress){for(const e of root.querySelectorAll('[data-reveal]')){const n=Number(e.dataset.reveal),x=Math.max(0,Math.min(1,progress-n+1)),t=x*x*(3-2*x);e.setAttribute('opacity',t);e.setAttribute('transform',`translate(0 ${(1-t)*12})`);}}
+// reveal(root, progress): aparición y salida por paso.
+// - data-reveal="n": aparece (opacidad suavizada y desplazamiento vertical de 12 px) cuando el progreso llega a n.
+// - data-span="s" (junto a data-reveal): ancho de la entrada; opacidad = smoothstep((progress − n + s) / s), es decir, aparece entre n − s y n. Sin data-span equivale a s = 1.
+// - data-until="n": se desvanece al avanzar; opacidad = 1 − smoothstep((progress − n) / 0.2), es decir, visible hasta el progreso n y oculto del todo en n + 0.2.
+// - Si el elemento lleva ambos atributos, la opacidad es el producto de las dos; el desplazamiento solo depende de data-reveal.
+export function reveal(root,progress){const smooth=x=>{x=Math.max(0,Math.min(1,x));return x*x*(3-2*x)};for(const e of root.querySelectorAll('[data-reveal],[data-until]')){let t=1;if(e.dataset.reveal!==undefined){const n=Number(e.dataset.reveal),sp=e.dataset.span!==undefined?Number(e.dataset.span):1;t=smooth((progress-n+sp)/sp);e.setAttribute('transform',`translate(0 ${(1-t)*12})`);}if(e.dataset.until!==undefined)t*=1-smooth((progress-Number(e.dataset.until))/0.2);e.setAttribute('opacity',t);}}

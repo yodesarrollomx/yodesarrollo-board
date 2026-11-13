@@ -1,5 +1,5 @@
 export const story={
-  "version": "YOD-SB06",
+  "version": "YOD-SB11",
   "stage": "storyboard",
   "production": "requires_explicit_instruction",
   "title": "Distrito Obregón Industrial",
@@ -55,36 +55,36 @@ export const story={
         {
           "label": "Ciudad Obregón · Sonora",
           "spoken": "Partimos de la propiedad que ustedes conocen, en Ciudad Obregón, sobre la carretera Federal 15. Primero ubicamos el lugar; después explicamos el negocio.",
-          "change": "La traza urbana ubica el punto documental junto a Federal15; el color de contexto permanece neutro.",
+          "change": "La traza urbana de Ciudad Obregón ubica el predio sobre la Federal 15; norte y escala visibles.",
           "role": "context"
         },
         {
           "label": "24.7584 hectáreas de referencia",
           "spoken": "La propuesta considera 247,584 metros cuadrados. El terreno adicional al sur queda fuera de esta base. La forma se toma de la presentación conceptual original; el levantamiento confirmará linderos y accesos.",
-          "change": "El mapa reduce su escala y aparece el contorno de la presentación junto a la superficie documental.",
+          "change": "La cámara se acerca al predio: contorno a escala, calle de frente y colindancias rotuladas.",
           "role": "context"
         },
         {
           "label": "Suelo, accesos y servicios",
           "spoken": "La ubicación por sí sola no define qué cabe. Accesos de carga, servicios, usos de suelo y superficie útil determinarán el plan maestro.",
-          "change": "Accesos, servicios y superficie útil aparecen como preguntas de capacidad, no como aprobaciones.",
+          "change": "Cuatro preguntas numeradas sobre el contorno: accesos, servicios, uso de suelo y superficie útil.",
           "role": "problem"
         },
         {
           "label": "Una propiedad. Dos estrategias de negocio.",
           "spoken": "Sobre esta misma propiedad proponemos separar dos decisiones: conservar las naves industriales como patrimonio y asociarnos para desarrollar los productos complementarios.",
-          "change": "El predio permanece como referencia y anticipa dos estrategias económicas, sin dibujar una lotificación.",
+          "change": "El predio queda como una sola propiedad y sube para abrir las dos estrategias; sin lotificación.",
           "role": "solution"
         }
       ],
       "narration": "Partimos de la propiedad que ustedes conocen, en Ciudad Obregón, sobre la carretera Federal 15. Primero ubicamos el lugar; después explicamos el negocio. La propuesta considera 247,584 metros cuadrados. El terreno adicional al sur queda fuera de esta base. La forma se toma de la presentación conceptual original; el levantamiento confirmará linderos y accesos. La ubicación por sí sola no define qué cabe. Accesos de carga, servicios, usos de suelo y superficie útil determinarán el plan maestro. Sobre esta misma propiedad proponemos separar dos decisiones: conservar las naves industriales como patrimonio y asociarnos para desarrollar los productos complementarios.",
       "takeaway": "Una propiedad. Dos estrategias de negocio.",
-      "draw": "La traza urbana ubica el punto documental junto a Federal15; el color de contexto permanece neutro.",
-      "motion": "El predio permanece como referencia y anticipa dos estrategias económicas, sin dibujar una lotificación.",
-      "caution": "Ubicación documental: 27°28′30.0″N, 109°55′17.4″W. Contorno trazado desde la presentación conceptual original, sin georreferenciación catastral. La base comercial no sustituye un levantamiento.",
+      "draw": "La traza urbana de Ciudad Obregón ubica el predio sobre la Federal 15; norte y escala visibles.",
+      "motion": "El predio queda como una sola propiedad y sube para abrir las dos estrategias; sin lotificación.",
+      "caution": "Ubicación documental: 27°28′30.0″N, 109°55′17.4″W. Contorno trazado desde la presentación conceptual original, sin georreferenciación catastral. La base comercial no sustituye un levantamiento. Forma conceptual escalada a 247,584 m² y colocada sobre cartografía OpenStreetMap; posición aproximada hasta recibir el KMZ.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
       "understand": "Ubicar la propiedad y distinguir superficie conocida de capacidad por estudiar.",
-      "visualMeaning": "Geografía: punto de ubicación + contorno documental. No pretende validar cabida."
+      "visualMeaning": "Geografía: traza OSM georreferenciada + contorno a escala de la superficie. No pretende validar cabida."
     },
     {
       "id": "patrimonio",
@@ -104,25 +104,25 @@ export const story={
         {
           "label": "Naves a la medida de un arrendatario",
           "spoken": "Una nave a la medida —Built-To-Suit o BTS— se proyecta para las necesidades de una empresa. La estrategia propuesta es conservar ese inmueble y recibir rentas a largo plazo.",
-          "change": "Una bifurcación abre el negocio de las naves a la medida desde una propiedad común.",
+          "change": "La propiedad abre dos ramas; en la de BTS aparece la nave y la cadena empresa → nave → contrato → rentas.",
           "role": "solution"
         },
         {
           "label": "Patrimonio industrial para los propietarios",
           "spoken": "El beneficio patrimonial de las naves permanece del lado de ustedes, sujeto a los acuerdos jurídicos y financieros. Conseguir un usuario no convierte automáticamente al equipo en dueño.",
-          "change": "La rama BTS conduce a inmuebles y rentas del propietario.",
+          "change": "La cadena BTS termina en el inmueble y las rentas de los propietarios.",
           "role": "outcome"
         },
         {
           "label": "Otros negocios, con asociación propia",
           "spoken": "Los servicios, hotel, negocios, club y bodegas pequeñas se estudian como negocios complementarios. Ahí proponemos una asociación desarrolladora con reglas por producto.",
-          "change": "La otra rama muestra negocios complementarios y asociación por producto.",
+          "change": "La rama de complementos muestra cinco negocios, cada uno con la necesidad que atiende.",
           "role": "solution"
         },
         {
           "label": "Cada negocio necesita su propia cuenta",
           "spoken": "El objetivo no es vender las naves para pagar todo lo demás. Cada componente debe justificar su demanda, capital, obligaciones y resultado.",
-          "change": "Una separación y una condición de financiamiento impiden confundir los flujos de ambos negocios.",
+          "change": "Una banda separa las cuentas: las naves no financian lo demás.",
           "role": "risk"
         }
       ],
@@ -133,7 +133,7 @@ export const story={
       "caution": "Propuesta preliminar. El plan maestro definirá superficies y número de edificios; las maquetas representan modelos de negocio, no cabida.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
       "understand": "Distinguir qué patrimonio se conserva y en qué negocios se propone asociarse.",
-      "visualMeaning": "Bifurcación: una propiedad, dos destinos económicos; no es una lotificación."
+      "visualMeaning": "Bifurcación con figuras: una propiedad, patrimonio BTS a un lado y negocios complementarios al otro; no es lotificación."
     },
     {
       "id": "participacion",
@@ -153,36 +153,36 @@ export const story={
         {
           "label": "Ustedes deciden. La alianza coordina.",
           "spoken": "Los propietarios conservan las decisiones que se pacten. La alianza entre Yo Desarrollo, Puebla Arquitectos / PG y Eduardo Lara articula el trabajo para convertir la oportunidad en un proyecto evaluable.",
-          "change": "Los propietarios se ubican encima del equipo coordinador, con sus decisiones expresamente reservadas.",
+          "change": "La familia arriba; debajo, la alianza con sus tres miembros y lo que aporta cada uno.",
           "role": "problem"
         },
         {
           "label": "Mercado y estructura financiera",
           "spoken": "A esa coordinación se conectan usuarios industriales, comercialización y especialistas financieros: demanda, contratos, fuentes de capital y condiciones que realmente pueda soportar cada negocio.",
-          "change": "Del equipo salen las responsabilidades de usuarios/mercado y proyecto/permisos.",
+          "change": "Se conecta el grupo de mercado y finanzas: usuarios, comercialización y especialistas financieros, por seleccionar.",
           "role": "solution"
         },
         {
           "label": "Proyecto, permisos, obra y operación",
           "spoken": "Arquitectura e ingenierías, asesoría legal y fiscal, gestión de permisos, ejecución y operadores se coordinan con alcances, presupuestos y responsabilidades definidos.",
-          "change": "Se incorporan finanzas/capital y jurídico/ejecución a la misma red de coordinación.",
+          "change": "Se conecta el grupo de proyecto, permisos, obra y operación: cinco especialidades por seleccionar.",
           "role": "plan"
         },
         {
           "label": "Una coordinación. Responsabilidades visibles.",
           "spoken": "El valor de la alianza es integrar esas especialidades y darles seguimiento. No les proponemos que ustedes administren una lista de proveedores inconexos; los servicios y facultades se acuerdan antes de ejecutarlos.",
-          "change": "La red completa explica cómo se integra el desarrollo y quién conserva el control.",
+          "change": "La red completa muestra una sola interfaz con la familia; cada especialista entra con alcance y presupuesto.",
           "role": "outcome"
         }
       ],
       "narration": "Los propietarios conservan las decisiones que se pacten. La alianza entre Yo Desarrollo, Puebla Arquitectos / PG y Eduardo Lara articula el trabajo para convertir la oportunidad en un proyecto evaluable. A esa coordinación se conectan usuarios industriales, comercialización y especialistas financieros: demanda, contratos, fuentes de capital y condiciones que realmente pueda soportar cada negocio. Arquitectura e ingenierías, asesoría legal y fiscal, gestión de permisos, ejecución y operadores se coordinan con alcances, presupuestos y responsabilidades definidos. El valor de la alianza es integrar esas especialidades y darles seguimiento. No les proponemos que ustedes administren una lista de proveedores inconexos; los servicios y facultades se acuerdan antes de ejecutarlos.",
       "takeaway": "Una coordinación. Responsabilidades visibles.",
-      "draw": "Los propietarios se ubican encima del equipo coordinador, con sus decisiones expresamente reservadas.",
-      "motion": "La red completa explica cómo se integra el desarrollo y quién conserva el control.",
+      "draw": "La familia arriba; debajo, la alianza con sus tres miembros y lo que aporta cada uno.",
+      "motion": "La red completa muestra una sola interfaz con la familia; cada especialista entra con alcance y presupuesto.",
       "caution": "Equipo mencionado por Dirección y propuesta. Funciones y contratación de especialistas por formalizar; no implica que bancos u operadores estén comprometidos.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
       "understand": "Entender qué coordina la alianza y qué decisiones conserva la familia.",
-      "visualMeaning": "Red de responsabilidades: la familia decide, la alianza coordina y las disciplinas entregan."
+      "visualMeaning": "Árbol de coordinación: propietarios deciden, la alianza coordina, los especialistas entregan. Línea continua = alianza; punteada = por seleccionar."
     },
     {
       "id": "demanda",
@@ -202,36 +202,36 @@ export const story={
         {
           "label": "Encontrar al usuario adecuado",
           "spoken": "Prospectamos empresas cuya operación encaje con la ubicación. Hay que entender qué producen, almacenan o distribuyen, qué superficie requieren y qué renta puede sostener su negocio.",
-          "change": "Los requerimientos del usuario aparecen antes de cualquier volumen construido.",
+          "change": "La alianza sale del terreno a buscar una empresa que encaje con la ubicación.",
           "role": "problem"
         },
         {
           "label": "Convertir interés en requerimientos y acuerdos",
           "spoken": "Con el usuario definimos superficie, altura, patios, andenes, energía y plazo. Una carta de intención permite avanzar en la negociación; todavía no es un arrendamiento definitivo.",
-          "change": "Los requerimientos definen la nave que aparece a su lado.",
+          "change": "Empresa y alianza firman una carta de intención; seis requisitos dibujan la nave, todavía en contorno.",
           "role": "plan"
         },
         {
           "label": "Comprobar costo, contrato y capital",
           "spoken": "El proyecto y su costo deben ser compatibles con el arrendamiento. Con contratos y garantías se estudia el financiamiento; también se identifica el efectivo que hará falta.",
-          "change": "La nave se completa y se añade la condición conjunta: contrato, presupuesto y capital.",
+          "change": "Contrato, costo y efectivo entran a una compuerta: deben ser compatibles.",
           "role": "risk"
         },
         {
           "label": "Ejecutar sólo la fase que se sostiene",
           "spoken": "La fase comienza cuando sus condiciones técnicas, comerciales, legales y financieras estén aprobadas. Así se construye para una operación concreta y con una estructura de inversión conocida.",
-          "change": "La condición conduce a invertir en la fase que la operación puede sostener.",
+          "change": "Con cuatro aprobaciones la compuerta queda atrás y una nave sólida llega a su terreno.",
           "role": "outcome"
         }
       ],
       "narration": "Prospectamos empresas cuya operación encaje con la ubicación. Hay que entender qué producen, almacenan o distribuyen, qué superficie requieren y qué renta puede sostener su negocio. Con el usuario definimos superficie, altura, patios, andenes, energía y plazo. Una carta de intención permite avanzar en la negociación; todavía no es un arrendamiento definitivo. El proyecto y su costo deben ser compatibles con el arrendamiento. Con contratos y garantías se estudia el financiamiento; también se identifica el efectivo que hará falta. La fase comienza cuando sus condiciones técnicas, comerciales, legales y financieras estén aprobadas. Así se construye para una operación concreta y con una estructura de inversión conocida.",
       "takeaway": "Ejecutar sólo la fase que se sostiene",
-      "draw": "Los requerimientos del usuario aparecen antes de cualquier volumen construido.",
-      "motion": "La condición conduce a invertir en la fase que la operación puede sostener.",
+      "draw": "La alianza sale del terreno a buscar una empresa que encaje con la ubicación.",
+      "motion": "Con cuatro aprobaciones la compuerta queda atrás y una nave sólida llega a su terreno.",
       "caution": "No se presume demanda contratada, financiamiento aprobado ni rentabilidad. Requerimientos y condiciones por usuario.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
-      "understand": "Entender por qué los requerimientos y el contrato del usuario preceden a la inversión.",
-      "visualMeaning": "Encaje: requisitos del usuario → nave adecuada → contrato y presupuesto → inversión."
+      "understand": "Ver quién dice que sí, y en qué orden, antes de construir en su terreno.",
+      "visualMeaning": "Hilo con objetos: terreno → empresa → carta de intención y requisitos → compuerta (contrato, costo, efectivo) → nave sólida en el terreno."
     },
     {
       "id": "retribucion",
@@ -251,36 +251,36 @@ export const story={
         {
           "label": "El activo y su arrendamiento",
           "spoken": "El usuario paga por ocupar la nave. Ese flujo sostiene las obligaciones de la operación y del financiamiento acordado; el beneficio patrimonial corresponde a los propietarios.",
-          "change": "El contrato del usuario inicia el flujo de renta del inmueble.",
+          "change": "Fila de renta: usuario → contrato → renta menos obligaciones → propietarios.",
           "role": "outcome"
         },
         {
           "label": "Colocación por un usuario contratado",
           "spoken": "La originación y colocación se remunera por usuarios efectivamente contratados. Base, momento y monto se pactan por escrito. Una presentación o contacto no genera propiedad del inmueble.",
-          "change": "La renta se vincula a obligaciones/operación y al beneficio del propietario.",
+          "change": "Fila de colocación: usuario contratado → honorario pactado por escrito → equipo que lo originó.",
           "role": "plan"
         },
         {
           "label": "Gerencia sólo cuando se contrata",
           "spoken": "Si ustedes solicitan gerencia, estructuración o administración del desarrollo, se define un alcance y presupuesto propio. Ese servicio no se da por contratado dentro de una frase genérica.",
-          "change": "Un segundo flujo independiente muestra servicios autorizados, hito y honorario pactado.",
+          "change": "Filas de gerencia y especialistas: sólo con alcance y presupuesto propios.",
           "role": "plan"
         },
         {
           "label": "La asociación tiene otra lógica",
           "spoken": "En los complementarios se negocian honorarios de desarrollo y participación en resultados por producto o fase. Esa participación no se traslada automáticamente a las rentas de las naves patrimoniales.",
-          "change": "La separación impide leer que conseguir usuarios otorga automáticamente propiedad BTS.",
+          "change": "Fila de complementos por producto, separada de las rentas por un muro.",
           "role": "risk"
         }
       ],
       "narration": "El usuario paga por ocupar la nave. Ese flujo sostiene las obligaciones de la operación y del financiamiento acordado; el beneficio patrimonial corresponde a los propietarios. La originación y colocación se remunera por usuarios efectivamente contratados. Base, momento y monto se pactan por escrito. Una presentación o contacto no genera propiedad del inmueble. Si ustedes solicitan gerencia, estructuración o administración del desarrollo, se define un alcance y presupuesto propio. Ese servicio no se da por contratado dentro de una frase genérica. En los complementarios se negocian honorarios de desarrollo y participación en resultados por producto o fase. Esa participación no se traslada automáticamente a las rentas de las naves patrimoniales.",
       "takeaway": "La asociación tiene otra lógica",
-      "draw": "El contrato del usuario inicia el flujo de renta del inmueble.",
-      "motion": "La separación impide leer que conseguir usuarios otorga automáticamente propiedad BTS.",
+      "draw": "Fila de renta: usuario → contrato → renta menos obligaciones → propietarios.",
+      "motion": "Fila de complementos por producto, separada de las rentas por un muro.",
       "caution": "No hay porcentajes ni tarifas acordados en el PDF. Los diagramas expresan relaciones económicas, no una prelación contractual de pagos.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
       "understand": "Separar la renta del activo de los honorarios por servicios efectivamente pactados.",
-      "visualMeaning": "Dos flujos de ingreso: renta del inmueble al propietario; servicios pactados al equipo."
+      "visualMeaning": "Tabla de flujos: quién origina, cuándo se genera, qué concepto y quién lo recibe; sin cifras."
     },
     {
       "id": "complementos",
@@ -300,36 +300,36 @@ export const story={
         {
           "label": "Operación industrial como punto de partida",
           "spoken": "La propuesta complementaria tiene sentido si atiende necesidades reales del entorno industrial. No es llenar el terreno de productos: cada negocio debe demostrar a quién sirve y cómo se sostiene.",
-          "change": "Dos encabezados distinguen necesidad industrial y producto que podría responder.",
+          "change": "La nave aparece primero; de ella salen cinco necesidades de quienes operan en el distrito. Llenar el terreno queda tachado.",
           "role": "problem"
         },
         {
           "label": "Servicios y espacios para trabajar",
           "spoken": "Plaza y servicios pueden atender la actividad cotidiana; oficinas flex y showrooms, a proveedores y empresas. Su escala depende de demanda, competencia y operación.",
-          "change": "Servicios cotidianos y visitas de trabajo se conectan con comercio y hotel.",
+          "change": "Plaza y servicios, y oficinas flex y showrooms, responden a las dos primeras necesidades.",
           "role": "solution"
         },
         {
           "label": "Estancia, encuentro y bodegas pequeñas",
           "spoken": "El hotel, el Industrial Club y bodegas pocket de 250 a 500 metros cuadrados completan las posibilidades. No todos tienen que desarrollarse juntos ni bajo el mismo modelo.",
-          "change": "Reuniones, encuentros y operaciones pequeñas se vinculan con oficinas, club y bodegas pequeñas.",
+          "change": "Hotel, Industrial Club y bodegas pocket de 250 a 500 m² responden a las otras tres, cada uno por separado.",
           "role": "solution"
         },
         {
           "label": "Seleccionar producto, operador y fase",
           "spoken": "Para cada componente elegimos, con estudios, si conviene desarrollar, vender, arrendar o integrar un operador. La asociación se define para ese negocio; no con un porcentaje general sin sustento.",
-          "change": "Una condición común filtra todas las opciones: demanda, operador y viabilidad.",
+          "change": "Los cinco pasan por el mismo filtro de estudios y salen a una ruta y una asociación propias; siguiente paso: el estudio.",
           "role": "plan"
         }
       ],
       "narration": "La propuesta complementaria tiene sentido si atiende necesidades reales del entorno industrial. No es llenar el terreno de productos: cada negocio debe demostrar a quién sirve y cómo se sostiene. Plaza y servicios pueden atender la actividad cotidiana; oficinas flex y showrooms, a proveedores y empresas. Su escala depende de demanda, competencia y operación. El hotel, el Industrial Club y bodegas pocket de 250 a 500 metros cuadrados completan las posibilidades. No todos tienen que desarrollarse juntos ni bajo el mismo modelo. Para cada componente elegimos, con estudios, si conviene desarrollar, vender, arrendar o integrar un operador. La asociación se define para ese negocio; no con un porcentaje general sin sustento.",
       "takeaway": "Seleccionar producto, operador y fase",
-      "draw": "Dos encabezados distinguen necesidad industrial y producto que podría responder.",
-      "motion": "Una condición común filtra todas las opciones: demanda, operador y viabilidad.",
+      "draw": "La nave aparece primero; de ella salen cinco necesidades de quienes operan en el distrito. Llenar el terreno queda tachado.",
+      "motion": "Los cinco pasan por el mismo filtro de estudios y salen a una ruta y una asociación propias; siguiente paso: el estudio.",
       "caution": "Productos propuestos, sujetos a factibilidad. Las relaciones de uso son hipótesis de diseño comercial; no acreditan mercado, operador o dimensiones definitivas.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
-      "understand": "Vincular cada producto complementario con una necesidad y demanda por validar.",
-      "visualMeaning": "Relación necesidad–producto: actividad industrial → necesidades → negocios que podrían responder."
+      "understand": "Entender por qué existiría cada complemento y cómo se decide si se hace.",
+      "visualMeaning": "Cadena causal: operación → necesidad → producto → filtro (demanda, operador, viabilidad) → ruta y asociación por producto → siguiente paso."
     },
     {
       "id": "capital",
@@ -349,36 +349,36 @@ export const story={
         {
           "label": "El suelo tiene un valor que reconocer",
           "spoken": "La tierra que corresponda a cada negocio se valúa. El equipo estructura el desarrollo y gestiona las fuentes de recursos. El valor del suelo, el trabajo y el riesgo no se pueden confundir en una sola cifra.",
-          "change": "Dos modalidades comparten una misma aportación de suelo delimitado y valuado.",
+          "change": "El terreno aparece primero y se valúa; suelo, trabajo y riesgo quedan como tres valores separados.",
           "role": "plan"
         },
         {
           "label": "A · Aportar tierra",
           "spoken": "En esta alternativa ustedes aportan suelo. El modelo debe definir qué efectivo necesita la fase y cómo se obtendrá: inversionistas, deuda y comercialización, cuando sean viables.",
-          "change": "El trabajo desarrollador se añade en ambas modalidades.",
+          "change": "El terreno baja a la fila A: suelo + trabajo + capital por conseguir → modelo; cada parte ve lo que recibe.",
           "role": "plan"
         },
         {
           "label": "B · Aportar tierra y efectivo",
           "spoken": "Si además desean invertir efectivo, esa aportación se reconoce por separado. Puede cambiar sus derechos económicos, según la valuación, los riesgos y los acuerdos del negocio.",
-          "change": "Se distingue efectivo opcional del propietario de capital externo por conseguir.",
+          "change": "La fila B repite A con el efectivo de ustedes; una llave marca la única diferencia.",
           "role": "plan"
         },
         {
           "label": "Del modelo a los derechos económicos",
           "spoken": "Primero se modelan ingresos, costos, financiamiento, capital y riesgos. Con ese resultado se negocian honorarios, participación y reglas. La oferta es construir juntos un negocio entendible antes de comprometerlo.",
-          "change": "Las aportaciones confluyen en un modelo y una negociación de participaciones, sin porcentajes gráficos.",
+          "change": "Ambos modelos convergen en la fórmula: aportaciones valuadas → modelo → honorarios, participación y reglas.",
           "role": "risk"
         }
       ],
       "narration": "La tierra que corresponda a cada negocio se valúa. El equipo estructura el desarrollo y gestiona las fuentes de recursos. El valor del suelo, el trabajo y el riesgo no se pueden confundir en una sola cifra. En esta alternativa ustedes aportan suelo. El modelo debe definir qué efectivo necesita la fase y cómo se obtendrá: inversionistas, deuda y comercialización, cuando sean viables. Si además desean invertir efectivo, esa aportación se reconoce por separado. Puede cambiar sus derechos económicos, según la valuación, los riesgos y los acuerdos del negocio. Primero se modelan ingresos, costos, financiamiento, capital y riesgos. Con ese resultado se negocian honorarios, participación y reglas. La oferta es construir juntos un negocio entendible antes de comprometerlo.",
       "takeaway": "Del modelo a los derechos económicos",
-      "draw": "Dos modalidades comparten una misma aportación de suelo delimitado y valuado.",
-      "motion": "Las aportaciones confluyen en un modelo y una negociación de participaciones, sin porcentajes gráficos.",
+      "draw": "El terreno aparece primero y se valúa; suelo, trabajo y riesgo quedan como tres valores separados.",
+      "motion": "Ambos modelos convergen en la fórmula: aportaciones valuadas → modelo → honorarios, participación y reglas.",
       "caution": "Alternativas aplicables a los complementarios. No se presume que el equipo aportará todo el efectivo ni que el financiamiento está garantizado. PDF pp.3–4.",
       "question": "¿El dibujo permite explicar esta decisión sin depender de un párrafo?",
-      "understand": "Distinguir suelo, efectivo, trabajo desarrollador y fuentes externas antes de repartir.",
-      "visualMeaning": "Composición de aportaciones: tierra, desarrollo y capital; modalidades A/B comparables."
+      "understand": "Ver qué aporta y qué recibe cada parte en A y en B, y que primero se valúa y se modela.",
+      "visualMeaning": "Ecuación de aportaciones A/B con objetos: suelo, trabajo, capital y modelo; lo que recibe cada parte, sin cifras."
     },
     {
       "id": "reglas",

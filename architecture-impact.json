@@ -1,5 +1,5 @@
 {
-  "model_revision": "2026-10-20.masterdeveloper-pizarra.1",
+  "model_revision": "2026-11-11.grafo-accesos.3",
   "proposal_id": "CHG-MASTERBROKERS-MINI-CRM",
   "summary": "Quinta pestaña «Historia · Hoy · Plan» en el detalle de cada caso de Brokers: con una fecha de consulta (por defecto hoy) muestra, en sólo lectura, el historial hasta esa fecha, el estado respaldado y los planes vigentes, derivados de las actividades existentes (sobre YOD-CRM v1). Sin backend, sin contrato nuevo, sin datos ni permisos nuevos y sin escrituras. Sólo frontend, pruebas y CI.",
   "components": [
@@ -12,6 +12,5 @@
     "Sólo lectura: cero llamadas brokers_save y snapshot sin cambios al cambiar la fecha o volver a hoy.",
     "Regresiones: node --check de brokers.js y brokers-crm.js y navegadores existentes de Brokers sin cambios de contrato."
   ],
-  "rollback": "Revertir el PR; no toca datos ni recibos",
-  "model_commit": "505d6b6f540e3b0a704659c665e64be1e4e698a1"
+  "rollback": "Revertir el PR; no toca datos ni recibos"
 }
