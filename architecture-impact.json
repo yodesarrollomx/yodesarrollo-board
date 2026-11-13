@@ -1,5 +1,5 @@
 {
-  "model_revision": "2026-11-01.mercado-f2.2",
+  "model_revision": "2026-11-11.grafo-accesos.3",
   "proposal_id": "CHG-PRESENTACIONES-MD-20261020",
   "summary": "Telón YOD: cada presentación del catálogo (general, Distrito Abasto, Distrito Obregón y Gastón Madrid) queda con un par de ligas rotuladas, a pedido de Dirección el 11-nov-2026. VISOR = la misma dirección de siempre, ahora con el nombre código «Telón YOD» en el título y vista previa con logo propio. MAESTRO = maestro.html en la misma carpeta: vista previa roja «⛔ MAESTRO · NO COMPARTIR» y redirección a ./?maestro=1, que usa el acceso de Dirección ya existente (lo abre una sola vez si falta sesión) y entra a «Conducir» una sola vez sin toques extra. La liga no lleva llave ni concede permisos: identidad y dueño se siguen validando en el servidor existente. Sólo presentación: no cambia identidad, permisos, backend, Sheets, sesiones ni el contenido de los guiones.",
   "components": [
@@ -12,6 +12,5 @@
     "verificar-impacto contra el atlas bd5139ebf2f16ffd78739af6089c40a69facdf25",
     "No probado: conducción real con dos dispositivos contra el servidor productivo."
   ],
-  "rollback": "Revertir el commit por PR. Las ligas VISOR conservan su dirección; sin cambios de backend, hojas, permisos ni registros.",
-  "model_commit": "bd5139ebf2f16ffd78739af6089c40a69facdf25"
+  "rollback": "Revertir el commit por PR. Las ligas VISOR conservan su dirección; sin cambios de backend, hojas, permisos ni registros."
 }
