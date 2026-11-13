@@ -1,16 +1,16 @@
 {
   "model_revision": "2026-11-11.grafo-accesos.3",
   "proposal_id": "CHG-PRESENTACION-GRAFO-20261111",
-  "summary": "Corrección de la pastilla del grafo (presentacion/grafo-aviso.js), comprobada en vivo el 12-nov-2026: (1) la liga «Ver el borrador en Accesos» no salía nunca a Dirección porque portero.js guarda sessionStorage.pyod_rol como JSON {f, rol} y el aviso comparaba la cadena completa; ahora lee ese JSON, la palabra sola de antes y descarta basura o el rol de otro token, sin romperse. Sigue siendo sólo una pista de interfaz: no autoriza nada. (2) El detalle del borrador decía que se trabajaba otra versión «en el Plan de Potencial»; lo que está en borrador es el grafo. Se sube ?v=YGA-2 del aviso en las tres páginas que lo cargan. Sin cambios en el compilador, en lo que se muestra de cada plan, en lecturas, escrituras, almacenamiento, secretos, backend, hojas ni permisos.",
+  "summary": "La pastilla del aviso del grafo reconoce a Dirección también donde el Portero no guarda pyod_rol (Master Brokers canjea por el cargador compartido de YOD OS): usa la identidad que el cargador dejó tras un canje real (localStorage yodcg_sesion_v1), sólo si es del token vigente (su huella FNV-1a), confirmada y con menos de 12 h. Sólo decide si se pinta la liga «Ver el borrador en Accesos», que tiene su propio candado; no autoriza nada, no escribe y no borra la credencial. Visto en vivo el 13-nov-2026 con un borrador real (G-20261112-1823): en Master Brokers la pastilla salía pero sin la liga para Dirección. Sube ?v=YGA-3.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "node --test tests/ppp-grafo-presentacion.test.cjs: 13/13; nuevas: rol de pyod_rol en JSON como lo guarda portero.js, palabra sola, rol de otro token y basura; la liga a Accesos sólo para admin o dirección; el detalle del borrador habla del grafo y no del Plan de Potencial. Con el aviso anterior fallan 3.",
-    "node tests/ppp-grafo-browser.cjs (Chromium): el doble del Portero deja pyod_rol en el formato real; Dirección ve la liga a Accesos; vista, comercial y rol de otro token no; la palabra sola de antes sigue valiendo. Con el aviso anterior se cae en el paso del borrador.",
-    "Regresión: node --test tests/brokers*.test.cjs (173/173) y tests/ppp-*.test.cjs tests/presentation-production-api.test.cjs (39/39); node --check de los módulos del flujo.",
-    "verificar-impacto contra el atlas ab242875f5cf90fa8255ac273b38e0ad2520bbfe."
+    "node --test tests/ppp-grafo-presentacion.test.cjs: 14/14 (nuevas: identidad del cargador del token vigente, de otro token, vieja, sin confirmar y basura)",
+    "node --test tests/brokers*.test.cjs tests/ppp-*.test.cjs: 210/210",
+    "node tests/ppp-grafo-browser.cjs (Chromium): PASS",
+    "verificar-impacto contra el atlas fijado (ab24287)"
   ],
-  "rollback": "Revertir el commit por PR; sólo cambia la pastilla del grafo y su ?v=. Sin backend, hojas, permisos ni registros.",
+  "rollback": "Revertir el PR: la pastilla vuelve a mirar sólo pyod_rol.",
   "model_commit": "ab242875f5cf90fa8255ac273b38e0ad2520bbfe"
 }

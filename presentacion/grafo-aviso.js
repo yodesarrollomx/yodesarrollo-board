@@ -39,9 +39,32 @@
     return /^[a-z_]{1,32}$/i.test(rol) ? rol.toLowerCase() : '';
   }
 
+  /* FNV-1a de 32 bits en hex, igual que yod-cargador.js: con ella se liga su copia de la identidad al token vigente. */
+  function fnv(s) {
+    let h = 0x811c9dc5; s = String(s == null ? '' : s);
+    for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+    return ('0000000' + h.toString(16)).slice(-8);
+  }
+
+  /* El rol que dejó el cargador compartido de YOD OS (localStorage yodcg_sesion_v1) tras un canje real: sólo si es del token
+     vigente (su huella) y tiene menos de 12 h. Donde el Portero no guarda pyod_rol (p. ej. Master Brokers, que canjea por el
+     cargador), es la única pista. Sólo decide si se pinta la liga a Accesos, que tiene su propio candado: no autoriza nada. */
+  function rolCargador(valor, token = '', ahora = Date.now()) {
+    if (typeof valor !== 'string' || !valor || typeof token !== 'string' || !token) return '';
+    let o = null; try { o = JSON.parse(valor); } catch (e) { return ''; }
+    if (!o || typeof o !== 'object' || o.h !== fnv(token) || !o.data || o.data.ok !== true || typeof o.data.rol !== 'string') return '';
+    const edad = ahora - Number(o.ts); if (!(edad >= 0 && edad < 43200000)) return '';
+    return rolDe(o.data.rol);
+  }
+
   function montar(el, { cargado = '', base = root.YOD_GRAFO_BASE || BASE, crudo = root.YOD_GRAFO_CRUDO || CRUDO, fetchImpl = (...a) => root.fetch(...a), cada = 300000,
     sesion = () => { try { return !!root.localStorage.getItem('pyod_clave_v1'); } catch (e) { return false; } },
-    direccion = () => { try { return ['admin', 'direccion'].includes(rolDe(root.sessionStorage.getItem('pyod_rol'), root.localStorage.getItem('pyod_clave_v1') || '')); } catch (e) { return false; } },
+    direccion = () => {
+      const es = r => ['admin', 'direccion'].includes(r);
+      let tok = ''; try { tok = root.localStorage.getItem('pyod_clave_v1') || ''; } catch (e) { tok = ''; }
+      try { if (es(rolDe(root.sessionStorage.getItem('pyod_rol'), tok))) return true; } catch (e) { /* sin sessionStorage */ }
+      try { return es(rolCargador(root.localStorage.getItem('yodcg_sesion_v1'), tok)); } catch (e) { return false; }
+    },
     alActualizar = () => root.location.reload() } = {}) {
     let vivo = true, reloj = null, ultimo = { tipo: 'sin-dato' }, abierto = false;
     const doc = el.ownerDocument, json = u => fetchImpl(u, { cache: 'no-store', credentials: 'omit' }).then(r => r.ok ? r.json() : null).catch(() => null);
@@ -90,5 +113,5 @@
     const arranca = () => { for (const el of root.document.querySelectorAll('[data-grafo-aviso]')) if (!el.__yga) el.__yga = montar(el); };
     if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded', arranca); else arranca();
   }
-  return { estado, montar, rolDe, BASE, CRUDO };
+  return { estado, montar, rolDe, rolCargador, fnv, BASE, CRUDO };
 });
