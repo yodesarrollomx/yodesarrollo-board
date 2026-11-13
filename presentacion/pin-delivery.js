@@ -12,6 +12,8 @@ const utf8=s=>new TextEncoder().encode(s);
 async function sha(bytes){return [...new Uint8Array(await root.crypto.subtle.digest('SHA-256',bytes))].map(n=>n.toString(16).padStart(2,'0')).join('');}
 function allowedSource(origin,url){try{const u=new URL(url);return u.origin===origin&&((origin===ORIGIN&&u.pathname.startsWith('/yodesarrollo-board/presentacion/'))||(origin===EXTERNAL&&u.pathname==='/'));}catch{return false;}}
 function validate(p){
+ if(p?.v===2){if(!ID.test(p.id)||!allowedSource(p.sourceOrigin,p.sourceUrl)||p.ch?.id!==p.id||!p.ch?.secuencia||JSON.stringify(p.ch).length>12500000)throw Error('Secuencia no válida');return p.ch;}
+
  if(!p||p.v!==1||!ID.test(p.id)||!allowedSource(p.sourceOrigin,p.sourceUrl)||!/^[a-f0-9]{64}$/.test(p.hash)||typeof p.detail!=='string'||p.detail.length>MAX)throw Error('Revisión no válida. Conserva el original.');
  const d=JSON.parse(p.detail),r=d.objeto?.revision;
  if(d.kind!==KIND||typeof d.pantalla!=='string'||!d.pantalla||d.id!==p.id||d.objeto?.huella!==p.hash||r?.id!==p.id||r?.source!==p.sourceUrl||typeof r.comment!=='string'||!r.comment.trim()||r.comment.length>12000)throw Error('El contexto de la revisión no coincide.');
@@ -35,6 +37,8 @@ async function compactPhoto(blob){
  }finally{root.URL.revokeObjectURL(url);}
 }
 async function packet(ch,blob,destination){
+ if(ch.secuencia){ch={...ch,destino:destination};const u=new URL(ch.objeto?.enlace||ch.url);u.search='';u.hash='';const p={v:2,id:ch.id,sourceOrigin:u.origin,sourceUrl:u.href,hash:await sha(utf8(JSON.stringify(root.YodChincheEntrega.packageData(ch)))),ch};validate(p);return p;}
+
  const source=new URL(ch.objeto?.enlace||ch.url);source.search='';source.hash='';
  if(!allowedSource(source.origin,source.href))throw Error('Esta presentación no tiene conexión autorizada.');
  const revision={v:1,id:ch.id,created:ch.creado,source:source.href,comment:ch.texto,context:ch.objeto||{},destination,capture:await compactPhoto(blob)};
@@ -57,12 +61,14 @@ function client(deps={}){
  async function ready(){const j=await request(CAPABILITY+'?v=sala-pins-1');return j.contract==='sala-presentation-reviews-v1'&&j.privateProjection===true&&j.receipt==='id-sha256';}
  async function read(p,k){const j=await request(SALA+'?'+new URLSearchParams({recurso:'dia',fresco:'1',clave:k}));if(!Array.isArray(j.produccion)||j.cache===true)throw Error('No se pudo confirmar la bandeja de Sala.');return receipt(j.produccion,p);}
  async function deliver(p){
+  if(p?.v===2){validate(p);if(!root.YodChincheEntrega)throw Error('Falta el transporte de secuencias');if(await sha(utf8(JSON.stringify(root.YodChincheEntrega.packageData(p.ch))))!==p.hash)throw Error('La huella no coincide');return root.YodChincheEntrega.client({key:readKey}).send(p.ch);}
+
   validate(p);const d=JSON.parse(p.detail);if(await sha(utf8(JSON.stringify(d.objeto.revision)))!==p.hash)throw Error('La huella del comentario no coincide.');
   const k=readKey();if(!k)return{state:'auth-required',id:p.id};
-  try{if(!await ready())return{state:'waiting',id:p.id};}catch{return{state:'waiting',id:p.id};}
+  try{if(!await ready())return{state:'waiting',id:p.id,reason:'contract'};}catch{return{state:'waiting',id:p.id,reason:'connection'};}
   const old=await memory('get',p.id);if(old?.hash&&old.hash!==p.hash)throw Error('El ID ya pertenece a otra versión del comentario.');
   if(old?.state==='received')return old;
-  let seen;try{seen=await read(p,k);}catch(e){return{state:e.code==='AUTH'?'auth-required':old?.state==='started'?'uncertain':'waiting',id:p.id};}
+  let seen;try{seen=await read(p,k);}catch(e){return{state:e.code==='AUTH'?'auth-required':old?.state==='started'?'uncertain':'waiting',id:p.id,reason:e.name==='AbortError'?'timeout':'ledger'};}
   if(seen?.state==='conflict')return seen;
   if(seen?.state==='received'){const a={...seen,at:new Date().toISOString()};await memory('put',p.id,a);return a;}
   if(old?.state==='started'||old?.state==='uncertain')return{state:'uncertain',id:p.id};
@@ -95,7 +101,7 @@ if(root.addEventListener)root.addEventListener('message',e=>{
  }
 });
 async function send(p,onResult){if(root.location.origin===ORIGIN)return client().deliver(p);const s=sessions.get(p.id);if(!s||s.popup.closed)return{state:'connect-required',id:p.id};return new Promise(ok=>{s.resolve=ok;s.onResult=onResult;s.packet=p;if(s.ready)s.popup.postMessage({type:'yod-pin-submit',nonce:s.nonce,packet:p},ORIGIN);setTimeout(()=>{if(s.resolve){s.resolve=null;ok({state:'waiting',id:p.id});}},65000);});}
-function label(r){return({conflict:'Guardada · ese ID ya tiene otra versión en Sala; requiere conciliación',received:'Recibida en Sala · en revisión',uncertain:'Guardada · falta confirmar recepción; no se duplicará el envío',waiting:'Guardada · pendiente de conexión con Sala','auth-required':'Guardada · inicia sesión en YOD OS para enviarla','connect-required':'Guardada · conecta con YOD OS para enviarla',error:'Guardada · Sala no confirmó la recepción'})[r?.state]||'Guardada en este dispositivo';}
+function label(r){if(r?.state==='waiting'&&r.reason)return ({contract:'Guardada aquí · conexión de revisiones no disponible',connection:'Guardada aquí · sin conexión con Sala; reintentaremos',timeout:'Guardada aquí · Sala tardó en responder; reintentaremos',ledger:'Guardada aquí · no se pudo consultar Sala; reintentaremos'})[r.reason]||'Guardada · pendiente de conexión con Sala';return({conflict:'Guardada · ese ID ya tiene otra versión en Sala; requiere conciliación',received:'Recibida en Sala · en revisión',uncertain:'Guardada · falta confirmar recepción; no se duplicará el envío',waiting:'Guardada · pendiente de conexión con Sala','auth-required':'Guardada · inicia sesión en YOD OS para enviarla','connect-required':'Guardada · conecta con YOD OS para enviarla',error:'Guardada · Sala no confirmó la recepción'})[r?.state]||'Guardada en este dispositivo';}
 async function mark(id,r){const db=await new Promise((ok,no)=>{const q=root.indexedDB.open('yodChinche',1);q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error);});try{return await new Promise((ok,no)=>{const t=db.transaction('chinches','readwrite'),s=t.objectStore('chinches'),q=s.get(id);q.onsuccess=()=>{const ch=q.result;if(ch){ch.delivery=r;if(r.state==='received'){ch.estado='mandada';ch.mandada=r.at;ch.via='sala-presentation-v1';}s.put(ch);}};t.oncomplete=ok;t.onerror=()=>no(t.error);});}finally{db.close();}}
 return{version:'sala-presentation-v1',ORIGIN,EXTERNAL,allowedSource,validate,packet,receipt,client,begin,send,label,mark,hasSession:()=>!!key()};
 });

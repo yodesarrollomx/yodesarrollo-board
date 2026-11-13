@@ -1,23 +1,16 @@
 {
-  "model_revision": "2026-10-17.chinches-entregas.1",
+  "model_revision": "2026-11-11.grafo-accesos.3",
   "proposal_id": "CHG-MASTERBROKERS-MINI-CRM",
-  "summary": "Recorrido común para todos los brokers, presentación y expediente conectados; regreso recuperable al evaluador mediante CHG-MASTERBROKER-PREEVALUATION. Misma autorización y contratos, sin nueva base ni publicación de casos privados. Completa etiquetas/orden MD/MB, beneficios documentados y pregunta derecha/PPP inferior (chinches298/299/301); propuesta previa docs/propuestas/mb-chinches-20261018.md. Sin arquitectura nueva. Etiquetas de cartera sólo por IDs comerciales confirmados; Sayri y cualquier rol sin confirmar permanecen Integrante.",
+  "summary": "Quinta pestaña «Historia · Hoy · Plan» en el detalle de cada caso de Brokers: con una fecha de consulta (por defecto hoy) muestra, en sólo lectura, el historial hasta esa fecha, el estado respaldado y los planes vigentes, derivados de las actividades existentes (sobre YOD-CRM v1). Sin backend, sin contrato nuevo, sin datos ni permisos nuevos y sin escrituras. Sólo frontend, pruebas y CI.",
   "components": [
     "SYS-INVERSION",
-    "GAS-CRM",
-    "SHEET-CRM",
-    "SYS-POTENCIALES",
-    "GAS-PORTERO",
-    "SHEET-PORTERO",
     "SYS-YOD-OS"
   ],
   "tests": [
-    "node --test tests/brokers*.test.cjs: conservar metadatos y referencias anteriores; EV vigente inequívoco.",
-    "Chromium/WebKit 320/390/430: retorno con error y reintento, cancelar/retomar, ACK y apertura de expediente, regreso duplicado y aislamiento de dos brokers.",
-    "Regresiones de cartera unificada, clientes, PPP y presentación; prototipo público intacto.",
-    "Cero escrituras de prueba en negocio; fuente de datos Drive/Sheets sin copiar registros en Git.",
-    "Chinches: orden visual estable, beneficios sin datos cruzados, PPP único al pie y pregunta lateral/apilada en320/390/1440.",
-    "Regresión de ID canónico versus nombre/homónimo/rol de sesión: sin inferir MB o MD para integrantes."
+    "node --test tests/brokers*.test.cjs: CRM.temporal con eventos sintéticos (historial por fecha ocurrida, reemplazos y cancelaciones por fecha de registro, vencido sin cambiar estado, hoy contra fecha pasada, fecha inválida).",
+    "node tests/brokers-temporal-browser.cjs: Chromium 320/390/1440 con servicios sintéticos; paneles, pestañas con teclado, navegación de fecha, vacíos explícitos y cero desbordamiento.",
+    "Sólo lectura: cero llamadas brokers_save y snapshot sin cambios al cambiar la fecha o volver a hoy.",
+    "Regresiones: node --check de brokers.js y brokers-crm.js y navegadores existentes de Brokers sin cambios de contrato."
   ],
-  "rollback": "Revertir únicamente frontend por PR; mantener todos los IDs, notas, versiones, archivos Drive/Sheets, permisos y registro de clientes. No restaurar registros operativos."
+  "rollback": "Revertir el PR; no toca datos ni recibos"
 }

@@ -1,0 +1,12 @@
+/* Aviso discreto del grafo: una pastilla pequeña y gris; el detalle sólo aparece al tocarla. */
+.yga{position:relative;display:inline-block;font:500 11px/1.4 system-ui,-apple-system,'Segoe UI',sans-serif;color:#65756c}
+.yga[hidden]{display:none!important}
+.yga-boton{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:3px 9px;border:1px solid #d9decf;border-radius:999px;background:transparent;color:inherit;font:inherit;cursor:pointer}
+.yga-boton:hover{background:#00000008}
+.yga-boton i{width:6px;height:6px;border-radius:50%;background:#b08a2e;display:inline-block}
+.yga-caja{position:absolute;z-index:40;top:calc(100% + 6px);left:0;width:min(320px,calc(100vw - 32px));padding:12px 14px;border:1px solid #d9decf;border-radius:12px;background:#fbfaf5;color:#293e34;box-shadow:0 8px 28px #172e241f;font-size:12.5px;line-height:1.55;text-align:left}
+.yga-caja p{margin:0 0 10px;font-size:12.5px;font-weight:400}
+.yga-fila{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.yga-fila button,.yga-fila a{font:600 12px/1.3 system-ui,sans-serif;color:#293e34;background:transparent;border:1px solid #d9decf;border-radius:8px;padding:7px 10px;min-height:32px;text-decoration:none;cursor:pointer}
+.yga-fila span{color:#65756c;font-size:12px}
+.yga.yga-derecha .yga-caja{left:auto;right:0}

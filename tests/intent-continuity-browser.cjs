@@ -6,7 +6,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path'),
  await new Promise(r=>server.listen(0,'127.0.0.1',r));
  for(const [engine,name]of [[webkit,'webkit'],[chromium,'chromium']]){
   const browser=await engine.launch(),context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
-  let writes=0;await context.route('https://**/*',r=>{if(r.request().method()!=='GET'){writes++;return r.abort();}return r.fulfill({contentType:'application/json',body:JSON.stringify(payload)});});
+  let writes=0;await context.route('https://**/*',r=>{if(r.request().method()!=='GET'){let body;try{body=JSON.parse(r.request().postData())}catch{}if(body?.accion==='presentaciones'&&body.presentation?.op==='catalog')return r.fulfill({json:{ok:false,error:'unauthorized'}});writes++;return r.abort();}return r.fulfill({contentType:'application/json',body:JSON.stringify(payload)});});
   const p=await context.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto('http://127.0.0.1:'+server.address().port+'/');await p.locator('#journey:not([hidden])').waitFor({timeout:65000});
   await p.evaluate(()=>{window.__hero=document.querySelector('[data-object="property-p1"]');window.__plan=document.querySelector('[data-object="same-floorplan"]');window.__film=document.querySelector('[data-film-root]');});
   for(let i=0;i<=140;i++){await p.evaluate(v=>YodSlider.api.seek(v),i/10);assert.ok(await p.evaluate(()=>window.__hero===document.querySelector('[data-object="property-p1"]')&&window.__plan===document.querySelector('[data-object="same-floorplan"]')&&window.__film===document.querySelector('[data-film-root]')),'Persistent architectural objects');}

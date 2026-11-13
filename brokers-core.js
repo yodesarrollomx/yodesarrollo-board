@@ -61,6 +61,8 @@
     if (id === 'BR-ALEJANDRO-PUEBLA') return 'MD';
     return ['BR-EDUARDO-LARA','BR-ALEJANDRO-FRANCO','BR-LUPITA'].includes(id) ? 'MB' : 'Integrante';
   }
+  // Presentation only: commercial order of confirmed MB portfolios after the MD's own one. Never grants access.
+  const teamOrder = Object.freeze(['Eduardo Lara','Alejandro Franco','Lupita']);
   function orderedPortfolios(s, preferredNames = []) {
     const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLocaleLowerCase('es');
     const preferred = preferredNames.map(normalize), own = ownPortfolio(s);
@@ -179,7 +181,7 @@
     }
     return { load: () => request('brokers_snapshot', {}), save, invalidate: () => { generation++; } };
   }
-  const api = { stages, participationStates, safeLink, validateSnapshot, visible, caseGroups, clientGroups, portfolioRoleLabel, orderedPortfolios, ownPortfolio, ownerLabel, overdue, nextStep, encodeStep, agenda, previewSnapshot, workspaceSnapshot, dailyControl, createClient };
+  const api = { stages, participationStates, safeLink, validateSnapshot, visible, caseGroups, clientGroups, portfolioRoleLabel, teamOrder, orderedPortfolios, ownPortfolio, ownerLabel, overdue, nextStep, encodeStep, agenda, previewSnapshot, workspaceSnapshot, dailyControl, createClient };
   if (typeof module !== 'undefined') module.exports = api;
   root.BrokersCore = api;
 })(typeof window === 'undefined' ? globalThis : window);

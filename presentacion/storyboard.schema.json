@@ -1,0 +1,373 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yodesarrollomx.github.io/yodesarrollo-board/presentacion/storyboard.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "title",
+    "audience",
+    "decision",
+    "objects",
+    "facts",
+    "scenes"
+  ],
+  "properties": {
+    "schema": {
+      "const": "yod.storyboard.v1"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "audience": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 300
+    },
+    "decision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "objects": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 24,
+      "items": {
+        "$ref": "#/$defs/object"
+      }
+    },
+    "facts": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 100,
+      "items": {
+        "$ref": "#/$defs/fact"
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 24,
+      "items": {
+        "$ref": "#/$defs/scene"
+      }
+    }
+  },
+  "$defs": {
+    "object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "label",
+        "schematic"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "kind": {
+          "enum": [
+            "land",
+            "building",
+            "unit",
+            "money",
+            "person",
+            "document"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "schematic": {
+          "type": "boolean"
+        }
+      }
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "value",
+        "unit",
+        "source_ref",
+        "status",
+        "condition"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 40
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 400,
+          "pattern": "^snapshot\\.[A-Za-z0-9_.\\[\\]-]+$"
+        },
+        "status": {
+          "enum": [
+            "verified",
+            "calculated",
+            "assumption",
+            "pending"
+          ]
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        }
+      }
+    },
+    "annotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "object_id",
+        "fact_id",
+        "label"
+      ],
+      "properties": {
+        "object_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "fact_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 100
+        }
+      }
+    },
+    "relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from",
+        "to",
+        "label"
+      ],
+      "properties": {
+        "from": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "to": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 90
+        }
+      }
+    },
+    "moment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "spoken",
+        "visible_objects",
+        "annotations",
+        "relations",
+        "camera"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "spoken": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "visible_objects": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "uniqueItems": true
+        },
+        "annotations": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/annotation"
+          }
+        },
+        "relations": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/relation"
+          }
+        },
+        "camera": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "focus"
+          ],
+          "properties": {
+            "focus": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 6,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100,
+                "pattern": "^[A-Za-z0-9_-]+$"
+              },
+              "uniqueItems": true
+            }
+          }
+        }
+      }
+    },
+    "scene": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "question",
+        "takeaway",
+        "role",
+        "diagram",
+        "condition",
+        "moments"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "takeaway": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 350
+        },
+        "role": {
+          "enum": [
+            "problem",
+            "solution",
+            "plan",
+            "risk",
+            "outcome",
+            "action",
+            "context"
+          ]
+        },
+        "diagram": {
+          "enum": [
+            "site",
+            "comparison",
+            "program",
+            "cashflow",
+            "phases",
+            "decision"
+          ]
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "moments": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/moment"
+          }
+        }
+      }
+    }
+  }
+}

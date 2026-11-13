@@ -21,7 +21,7 @@ permissions:
 jobs:
   impacto:
     name: Arquitectura YOD
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # Playwright 1.58.2 no soporta Chromium en ubuntu-latest (26.04)
     steps:
       - name: Validar referencias manuales
         env:
@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: yodesarrollomx/yod-portal
-          ref: 18b40fe639092a76dc46f697359bf587e958328f
+          ref: ab242875f5cf90fa8255ac273b38e0ad2520bbfe
           path: .yod-atlas
           persist-credentials: false
           sparse-checkout-cone-mode: false
@@ -57,6 +57,16 @@ jobs:
           node-version: '22'
       - name: Contratos de Brokers
         run: node --test tests/brokers*.test.cjs
+      - name: Presentaciones privadas del PPP
+        run: |
+          node --test tests/ppp-*.test.cjs tests/presentation-production-api.test.cjs
+          node --check presentacion/storyboard-core.js
+          node --check presentacion/production-api.js
+          node --check presentacion/ppp/app.mjs
+          node --check presentacion/ppp/renderer.mjs
+          node --check presentacion/grafo/compilar.js
+          node --check presentacion/grafo/app.mjs
+          node --check presentacion/grafo-aviso.js
       - name: Sintaxis del flujo de preevaluación
         run: |
           node --check master-brokers/app.mjs
@@ -65,6 +75,9 @@ jobs:
           node --check brokers-crm.js
           node --check brokers-core.js
           node --check brokers-evaluator.js
+          node --check presentacion/board-core.js
+          node --check presentacion/board-store.js
+          node --check presentacion/board.js
           node --check presentacion/story-core.js
           node --check presentacion/source.js
           node --check presentacion/story.js
@@ -103,13 +116,21 @@ jobs:
           node tests/brokers-public-preview-browser.cjs
           node tests/brokers-crm-browser.cjs
           node tests/brokers-workspace-browser.cjs
+          node tests/brokers-temporal-browser.cjs
           node tests/brokers-evaluator-browser.cjs
           node tests/brokers-journey-browser.cjs
+          node tests/presentation-hub-browser.cjs
+          QA_ARTIFACTS=ppp-review-artifacts node tests/ppp-storyboard-browser.cjs
+          QA_ARTIFACTS=ppp-review-artifacts node tests/ppp-grafo-browser.cjs
+          node tests/brokers-board-browser.cjs
+          QA_BOARD_ENGINE=webkit node tests/brokers-board-browser.cjs
       - name: Presentación con fuente pública validada
         env:
           VERIFY_PUBLISHED_STORY: ${{ github.event_name == 'push' && '1' || startsWith(github.head_ref, 'codex/verify-published-story') && '1' || '0' }}
           YOD_PUBLIC_SOURCE_SNAPSHOT_DIR: ${{ runner.temp }}/yod-public-source-${{ github.run_id }}-${{ github.run_attempt }}
         run: |
+          node tests/obregon-storyboard-browser.cjs
+          QA_DIR=abasto-review-artifacts node tests/abasto-storyboard-browser.cjs
           node tests/brokers-pin-delivery-browser.cjs
           node tests/brokers-pins-browser.cjs
           node tests/brokers-intent-browser.cjs
@@ -129,6 +150,7 @@ jobs:
         with:
           name: investor-scene1-mobile
           path: |
+            board-review-artifacts/
             investor-scene*-mobile.png
             hunt-*.png
             mono-*.jpg
@@ -136,8 +158,11 @@ jobs:
             simple-*.jpg
             slider-*.jpg
             atlas-*.jpg
+            ppp-review-artifacts/
             intent-*.jpg
             offer-review-artifacts/
+            abasto-review-artifacts/
+            temporal-review-artifacts/
             mobile-*.jpg
             pin-*.jpg
             pin-*.png

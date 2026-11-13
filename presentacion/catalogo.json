@@ -1,0 +1,279 @@
+{
+  "schema": 1,
+  "version": "PMD-1.0.0",
+  "presentations": [
+    {
+      "id": "PRS-YOD-GENERAL",
+      "title": "YoDesarrollo · Del terreno al proyecto",
+      "site": "YoDesarrollo",
+      "location": "General",
+      "type": "Institucional",
+      "stage": "presentation",
+      "baseVersion": "YOD-GENERAL-9fbcde92543b",
+      "url": "https://yodesarrollomx.github.io/yodesarrollo-board/presentacion/",
+      "adapter": "intent",
+      "maxPosition": 14,
+      "public": true,
+      "shared": true,
+      "order": 10,
+      "tags": [
+        "Presentación general",
+        "Master Brokers"
+      ],
+      "scenes": [
+        {
+          "id": "invitation",
+          "moments": 2
+        },
+        {
+          "id": "discovery",
+          "moments": 2
+        },
+        {
+          "id": "transformation",
+          "moments": 2
+        },
+        {
+          "id": "selection",
+          "moments": 2
+        },
+        {
+          "id": "participation",
+          "moments": 2
+        },
+        {
+          "id": "delivery",
+          "moments": 3
+        },
+        {
+          "id": "closing",
+          "moments": 2
+        }
+      ]
+    },
+    {
+      "id": "PRS-DISTRITO-ABASTO",
+      "title": "Distrito Abasto Sonora",
+      "site": "Hermosillo",
+      "location": "Hermosillo, Sonora",
+      "type": "Desarrollo agroalimentario",
+      "stage": "presentation",
+      "baseVersion": "YOD-AB02",
+      "url": "https://yodesarrollomx.github.io/yodesarrollo-board/presentacion/distrito-abasto/",
+      "adapter": "storyboard",
+      "maxPosition": 47,
+      "public": true,
+      "shared": false,
+      "order": 20,
+      "tags": [
+        "Central de Abastos",
+        "Abastos",
+        "Distrito Abasto Sonora"
+      ],
+      "scenes": [
+        {
+          "id": "potencial",
+          "moments": 4
+        },
+        {
+          "id": "operacion",
+          "moments": 4
+        },
+        {
+          "id": "equipo",
+          "moments": 4
+        },
+        {
+          "id": "alternativas",
+          "moments": 4
+        },
+        {
+          "id": "validacion",
+          "moments": 4
+        },
+        {
+          "id": "etapas",
+          "moments": 4
+        },
+        {
+          "id": "ejecucion",
+          "moments": 4
+        },
+        {
+          "id": "comercializacion",
+          "moments": 4
+        },
+        {
+          "id": "economia",
+          "moments": 4
+        },
+        {
+          "id": "retribuciones",
+          "moments": 4
+        },
+        {
+          "id": "oferta",
+          "moments": 4
+        },
+        {
+          "id": "decision",
+          "moments": 4
+        }
+      ]
+    },
+    {
+      "id": "PRS-DISTRITO-OBREGON",
+      "title": "Distrito Obregón Industrial",
+      "site": "Ciudad Obregón",
+      "location": "Ciudad Obregón, Sonora",
+      "type": "Desarrollo industrial",
+      "stage": "storyboard",
+      "baseVersion": "YOD-SB11",
+      "url": "https://yodesarrollomx.github.io/yodesarrollo-board/presentacion/distrito-obregon/",
+      "adapter": "storyboard",
+      "maxPosition": 39,
+      "public": true,
+      "shared": false,
+      "order": 30,
+      "tags": [
+        "Obregón",
+        "Asociación"
+      ],
+      "scenes": [
+        {
+          "id": "ubicacion",
+          "moments": 4
+        },
+        {
+          "id": "patrimonio",
+          "moments": 4
+        },
+        {
+          "id": "participacion",
+          "moments": 4
+        },
+        {
+          "id": "demanda",
+          "moments": 4
+        },
+        {
+          "id": "retribucion",
+          "moments": 4
+        },
+        {
+          "id": "complementos",
+          "moments": 4
+        },
+        {
+          "id": "capital",
+          "moments": 4
+        },
+        {
+          "id": "reglas",
+          "moments": 4
+        },
+        {
+          "id": "validacion",
+          "moments": 4
+        },
+        {
+          "id": "decision",
+          "moments": 4
+        }
+      ]
+    },
+    {
+      "id": "PRS-GASTON-MADRID",
+      "title": "Gastón Madrid · Plan de potencial",
+      "site": "Hermosillo",
+      "location": "Hermosillo, Sonora",
+      "type": "Plan de potencial patrimonial",
+      "stage": "presentation",
+      "baseVersion": "YOD-GASTON-D25-67e6306",
+      "url": "https://yodesarrollomx.github.io/yodesarrollo-board/presentacion/gaston-madrid/",
+      "aliases": [
+        "https://gaston-madrid-pintarron.sayri-fraijo.chatgpt.site/"
+      ],
+      "adapter": "gaston",
+      "maxPosition": 67.999,
+      "public": true,
+      "shared": false,
+      "order": 40,
+      "tags": [
+        "Gastón Madrid",
+        "Eduardo Coronel",
+        "Patrimonial"
+      ],
+      "scenes": [
+        {
+          "id": "terreno",
+          "moments": 4
+        },
+        {
+          "id": "estrategia",
+          "moments": 4
+        },
+        {
+          "id": "reglas",
+          "moments": 4
+        },
+        {
+          "id": "cajones",
+          "moments": 4
+        },
+        {
+          "id": "planta",
+          "moments": 4
+        },
+        {
+          "id": "optimizar",
+          "moments": 4
+        },
+        {
+          "id": "volumen",
+          "moments": 4
+        },
+        {
+          "id": "areas",
+          "moments": 4
+        },
+        {
+          "id": "servicios",
+          "moments": 4
+        },
+        {
+          "id": "mercado",
+          "moments": 4
+        },
+        {
+          "id": "rentas",
+          "moments": 4
+        },
+        {
+          "id": "neto",
+          "moments": 4
+        },
+        {
+          "id": "inversion",
+          "moments": 4
+        },
+        {
+          "id": "valor",
+          "moments": 4
+        },
+        {
+          "id": "patrimonio",
+          "moments": 4
+        },
+        {
+          "id": "mixto",
+          "moments": 4
+        },
+        {
+          "id": "propuesta",
+          "moments": 4
+        }
+      ]
+    }
+  ]
+}
