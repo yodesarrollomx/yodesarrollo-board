@@ -1,16 +1,16 @@
 {
   "model_revision": "2026-11-11.grafo-accesos.3",
-  "proposal_id": "CHG-PRESENTACION-GRAFO-20261111",
-  "summary": "La pastilla del aviso del grafo reconoce a Dirección también donde el Portero no guarda pyod_rol (Master Brokers canjea por el cargador compartido de YOD OS): usa la identidad que el cargador dejó tras un canje real (localStorage yodcg_sesion_v1), sólo si es del token vigente (su huella FNV-1a), confirmada y con menos de 12 h. Sólo decide si se pinta la liga «Ver el borrador en Accesos», que tiene su propio candado; no autoriza nada, no escribe y no borra la credencial. Visto en vivo el 13-nov-2026 con un borrador real (G-20261112-1823): en Master Brokers la pastilla salía pero sin la liga para Dirección. Sube ?v=YGA-3.",
+  "proposal_id": "CHG-PRESENTACIONES-MD-20261020",
+  "summary": "Telón YOD: cada presentación del catálogo (general, Distrito Abasto, Distrito Obregón y Gastón Madrid) queda con un par de ligas rotuladas, a pedido de Dirección el 11-nov-2026. VISOR = la misma dirección de siempre, ahora con el nombre código «Telón YOD» en el título y vista previa con logo propio. MAESTRO = maestro.html en la misma carpeta: vista previa roja «⛔ MAESTRO · NO COMPARTIR» y redirección a ./?maestro=1, que usa el acceso de Dirección ya existente (lo abre una sola vez si falta sesión) y entra a «Conducir» una sola vez sin toques extra. La liga no lleva llave ni concede permisos: identidad y dueño se siguen validando en el servidor existente. Sólo presentación: no cambia identidad, permisos, backend, Sheets, sesiones ni el contenido de los guiones.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "node --test tests/ppp-grafo-presentacion.test.cjs: 14/14 (nuevas: identidad del cargador del token vigente, de otro token, vieja, sin confirmar y basura)",
-    "node --test tests/brokers*.test.cjs tests/ppp-*.test.cjs: 210/210",
-    "node tests/ppp-grafo-browser.cjs (Chromium): PASS",
-    "verificar-impacto contra el atlas fijado (ab24287)"
+    "node --test tests/brokers-presentations-telon.test.cjs (7): par visor/maestro por cada entrada del catálogo con metadatos e imágenes PNG; liga maestro con sesión de Dirección conduce una sola vez y avisa; sin sesión abre el acceso una sola vez y no conduce; cuenta que no es Dirección no conduce ni ve controles; si la versión publicada no corresponde a la página no abre sesión sola; el nombre código se conserva en la pestaña; liga visor sin cambios.",
+    "node --test tests/*.test.cjs: 206 de 206 en local, sin regresión.",
+    "Chromium local a 390 y 1280 px sobre servidor estático con API de dueño simulada, sin escrituras reales: aviso visible, sin desborde horizontal y un solo session_start en general, Abasto y Gastón; en Obregón (versión de página distinta de la publicada, condición previa) no abre sesión y conserva el botón manual; sin sesión se abre el Portero y no se conduce.",
+    "verificar-impacto contra el atlas bd5139ebf2f16ffd78739af6089c40a69facdf25",
+    "No probado: conducción real con dos dispositivos contra el servidor productivo."
   ],
-  "rollback": "Revertir el PR: la pastilla vuelve a mirar sólo pyod_rol.",
-  "model_commit": "ab242875f5cf90fa8255ac273b38e0ad2520bbfe"
+  "rollback": "Revertir el commit por PR. Las ligas VISOR conservan su dirección; sin cambios de backend, hojas, permisos ni registros."
 }
