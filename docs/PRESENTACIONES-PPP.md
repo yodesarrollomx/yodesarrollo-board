@@ -1,5 +1,7 @@
 # Presentaciones desde la versión vista del PPP
 
+> Para armar al vuelo una presentación por audiencia con el grafo aprobado y el plan guardado, ver [Presentación desde el grafo](PRESENTACIONES-GRAFO.md). Es otra vista y no cambia nada de lo que sigue.
+
 Esta implementación añade al board existente un visor privado y versiones de contenido generadas por el agente. La fuente financiera sigue siendo el PPP y su snapshot confirmado en servidor. El catálogo y la mesa Master Developer leen el mismo registro de Sala; no se crea otra biblioteca ni se incluyen expedientes en el catálogo estático.
 
 ## Identidad, almacenamiento y acceso
