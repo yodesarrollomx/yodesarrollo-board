@@ -4,6 +4,7 @@ on:
     paths:
       - 'brokers*'
       - 'tests/brokers-journey-browser.cjs'
+      - 'tests/brokers-visor*'
       - '.github/workflows/broker-journey.yml'
 permissions:
   contents: read
@@ -23,6 +24,7 @@ jobs:
           npx playwright install --with-deps chromium webkit
           node --test tests/brokers*.test.cjs
           node tests/brokers-journey-browser.cjs
+          node tests/brokers-visor-browser.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

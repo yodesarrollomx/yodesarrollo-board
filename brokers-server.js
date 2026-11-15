@@ -98,7 +98,34 @@
       });
     }catch(e){const allowed=['unauthorized','forbidden','broker_not_linked','conflict','not_found','invalid_record','invalid_field','invalid_link','invalid_date','invalid_email','invalid_kind','invalid_broker','broker_required','name_required','contact_not_linked','duplicate_contact','opportunity_incomplete','activity_incomplete','invalid_participation','evidence_required','duplicate_participation','invalid_transition','immutable_reference','append_only','invalid_request_id','idempotency_mismatch','backend_not_ready'];return {ok:false,error:allowed.includes(e.message)?e.message:'service_unavailable'};}
   }};}
-  const api={actor,snapshot,prepare,createService,stages,states};
+  // Read-only bridge from the Master Brokers history book (tabs Personas and Proyectos, header row first).
+  // A project row with a valid `visor` address reaches the portfolio of its broker, matched by name.
+  // It never writes; snapshot() keeps applying the same ownership filter afterwards.
+  const visorPattern=/^https:\/\/yodesarrollomx\.github\.io\/potenciales-yod\/visor\.html#l=[A-Za-z0-9_-]{24,80}$/;
+  const historyStages={activo:'PPP en proceso','stand-by':'En pausa',pausado:'En pausa',descartado:'Descartado'};
+  function rowsOf(values){
+    if(!Array.isArray(values)||!values.length)return [];
+    const head=values[0].map(h=>String(h==null?'':h).trim().toLowerCase());
+    return values.slice(1).map(row=>{const o={};head.forEach((h,i)=>{if(h)o[h]=String(row[i]==null?'':row[i]).trim();});return o;});
+  }
+  function nameWords(v){return String(v||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim().split(/\s+/).filter(Boolean);}
+  function brokerByName(name,brokers){
+    const p=nameWords(name);if(!p.length)return '';
+    const found=brokers.filter(b=>{const n=nameWords(b.name),[short,long]=p.length<=n.length?[p,n]:[n,p];return short.length>0&&short.every((w,i)=>w===long[i]);});
+    return found.length===1?found[0].id:'';
+  }
+  function historyVisors(s,personas,proyectos){
+    const people=new Map(rowsOf(personas).filter(p=>p.persona_id).map(p=>[p.persona_id,brokerByName(p.nombre,s.brokers)]));
+    for(const p of rowsOf(proyectos)){
+      const url=p.visor||'',owner=people.get(p.broker);
+      if(!p.proyecto_id||!visorPattern.test(url)||!owner)continue;
+      const id=p.folio||'HMB-'+p.proyecto_id,existing=s.opportunities.find(o=>o.id===id);
+      if(existing){if((existing.broker_ids||[]).includes(owner))existing.visor_url=url;continue;}
+      s.opportunities.push({id,title:p.nombre||p.proyecto_id,kind:'Plan de potencial',contact_id:'',location:'',terrain_id:'',ppp_id:'',ppp_url:'',documents_url:'',project_url:'',stage:historyStages[(p.estado||'').toLowerCase()]||'En revisión',next_action:'',next_date:'',notes:p['descripción']||p.descripcion||'',broker_ids:[owner],origin_broker_id:owner,created_at:'',last_review:'',updated_at:'',visor_url:url});
+    }
+    return s;
+  }
+  const api={actor,snapshot,prepare,createService,historyVisors,stages,states};
   if(typeof module!=='undefined')module.exports=api;
   root.YodBrokersServer=api;
 })(typeof globalThis==='undefined'?this:globalThis);

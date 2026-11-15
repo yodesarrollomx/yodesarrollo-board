@@ -4,3 +4,4 @@ apps-script/
 
 # Respaldo en claro — NUNCA publicar (va cifrado en datos.enc)
 datos.json
+visor-review-artifacts/

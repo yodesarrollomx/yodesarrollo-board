@@ -8,6 +8,12 @@
       return u.protocol === 'https:' && ['yodesarrollomx.github.io', 'docs.google.com', 'drive.google.com'].includes(u.hostname) && !u.username && !u.password ? u.href : '';
     } catch (_) { return ''; }
   }
+  // The live plan viewer of potenciales-yod, with its key in the fragment. Anything else is ignored.
+  const visorPattern = /^https:\/\/yodesarrollomx\.github\.io\/potenciales-yod\/visor\.html#l=[A-Za-z0-9_-]{24,80}$/;
+  function visorLink(o) {
+    const value = String((o && o.visor_url) || '').trim();
+    return visorPattern.test(value) ? value : '';
+  }
   function validateSnapshot(s) {
     if (!s || s.contract !== 'brokers.v1' || !s.actor || !s.actor.id || !['broker', 'direccion'].includes(s.actor.role) || !Number.isInteger(s.revision)) throw new Error('El servidor todavía no ofrece el acceso de Brokers.');
     for (const key of ['brokers', 'contacts', 'opportunities', 'activities', 'participations']) {
@@ -181,7 +187,7 @@
     }
     return { load: () => request('brokers_snapshot', {}), save, invalidate: () => { generation++; } };
   }
-  const api = { stages, participationStates, safeLink, validateSnapshot, visible, caseGroups, clientGroups, portfolioRoleLabel, teamOrder, orderedPortfolios, ownPortfolio, ownerLabel, overdue, nextStep, encodeStep, agenda, previewSnapshot, workspaceSnapshot, dailyControl, createClient };
+  const api = { stages, participationStates, safeLink, visorLink, validateSnapshot, visible, caseGroups, clientGroups, portfolioRoleLabel, teamOrder, orderedPortfolios, ownPortfolio, ownerLabel, overdue, nextStep, encodeStep, agenda, previewSnapshot, workspaceSnapshot, dailyControl, createClient };
   if (typeof module !== 'undefined') module.exports = api;
   root.BrokersCore = api;
 })(typeof window === 'undefined' ? globalThis : window);
