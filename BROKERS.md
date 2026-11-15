@@ -129,3 +129,13 @@ Verificación: `node --test tests/brokers*.test.cjs` (incluye `tests/brokers-tem
 ## Presentar desde el grafo · 11-nov-2026
 
 El cajón «Plan de potencial» de cada expediente agrega la liga «Presentar desde el grafo»: abre `presentacion/grafo/` con el caso y el tipo del plan guardado, para elegir audiencia (cliente, dueño del terreno o producto) y extensión. El encabezado muestra una pastilla discreta cuando hay otra versión del grafo en trabajo. Sólo lectura; detalle en [docs/PRESENTACIONES-GRAFO.md](docs/PRESENTACIONES-GRAFO.md).
+
+## Ver visor · 15-nov-2026
+
+Cada expediente cuyo dato `visor_url` trae la liga del visor en vivo de su plan muestra **«Ver visor ↗»** en su tarjeta de la cartera y en el encabezado del expediente: un toque abre `potenciales-yod/visor.html#l=<liga>` en otra pestaña, sin entrar al PPP. Sin liga no se dibuja nada.
+
+- **De dónde sale:** de datos, no del código. La columna `visor` de la pestaña `Proyectos` del libro de historial de Master Brokers guarda la dirección completa del visor de ese proyecto; `broker` dice de quién es (se empareja por nombre con la hoja de brokers del CRM: nombre idéntico, o nombre y apellido como inicio del otro; un nombre de pila suelto no basta y la coincidencia debe ser única, si no el renglón se ignora).
+- **Quién la ve:** el adaptador privado del CRM llama a `historyVisors()` (`brokers-server.js`) al leer; después `snapshot()` aplica el mismo filtro de siempre: el broker recibe sólo su cartera y Dirección todo. Si el `folio` del proyecto coincide con un expediente del mismo broker sólo le agrega la liga; si no existe, el proyecto aparece como plan de sólo lectura (`HMB-<proyecto_id>` cuando no tiene folio) hasta que alguien lo guarde. `visor_url` no es editable y nunca se escribe en el CRM.
+- **Filtro:** `BrokersCore.visorLink()` sólo acepta `https://yodesarrollomx.github.io/potenciales-yod/visor.html#l=` + la liga; cualquier otra dirección se ignora.
+- **Agregar el visor de un proyecto nuevo:** crear la liga del plan (desde «Compartir visor» de su ficha, o el renglón en la hoja `Ligas` del vivero con `para` = «Master Broker · <nombre>») y pegar la dirección del visor en la columna `visor` de su renglón en `Proyectos`. Sin código ni publicación. Apagar: cambiar el `estado` de la liga.
+- **Verificación:** `node --test tests/brokers-visor.test.cjs` y `node tests/brokers-visor-browser.cjs` (Chromium y WebKit, datos sintéticos, ningún guardado).

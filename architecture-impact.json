@@ -1,16 +1,17 @@
 {
   "model_revision": "2026-11-11.grafo-accesos.3",
-  "proposal_id": "CHG-MASTERBROKERS-PUBLIC-PREVIEW",
-  "summary": "Presentación de Master Brokers (superficie offer-4): un deslizamiento rápido y corto ahora pasa al siguiente punto de lectura en su dirección. Antes, con el tope de avance por cuadro, a 60 cuadros por segundo un deslizamiento de unos 120 px se quedaba en 0.48 de un paso y al soltar regresaba: a veces avanzaba y a veces no. Por eso la prueba «Short fast gesture and reverse reach reading point» fallaba sola (chinches del grafo 98 y 104). Sólo aplica al soltar un arrastre con velocidad de 700 px/s o más y movimiento en los últimos 120 ms. La rueda, los arrastres lentos, los micro-movimientos y las interrupciones siguen igual. La prueba ahora espera un cuadro entre movimientos, como en un teléfono, y a que la posición asiente. La etiqueta de intent-mobile.js pasa a offer-4-flick1.",
+  "proposal_id": "CHG-MASTERBROKERS-MINI-CRM",
+  "summary": "Ver visor en la cartera de Master Brokers: cada expediente cuyo dato visor_url trae la liga del visor en vivo de su plan muestra el botón «Ver visor ↗» en su tarjeta y en el encabezado del expediente; abre visor.html en otra pestaña con un toque. La dirección sale de datos: la columna «visor» de la pestaña Proyectos del libro de historial de Master Brokers. brokers-server.js agrega historyVisors(), una lectura pura que el adaptador privado del CRM llama al leer: el renglón llega sólo a la cartera de su broker (emparejado por nombre, único) y Dirección ve todo; si el folio coincide con un expediente del mismo broker sólo le agrega la liga, y si no existe lo muestra como plan de sólo lectura hasta que alguien lo guarde. visor_url no es campo editable ni se escribe en el CRM. brokers-core.visorLink() acepta únicamente https://yodesarrollomx.github.io/potenciales-yod/visor.html#l=<liga>. Sin cambios en visor.html/js/css ni en el Portero.",
   "components": [
-    "SYS-INVERSION"
+    "SYS-INVERSION",
+    "GAS-CRM",
+    "SHEET-CRM"
   ],
   "tests": [
-    "node tests/offer-review-browser.cjs (Chromium 3 de 3 en local con la copia pública fijada: avanza a 9 y regresa a 7; WebKit en CI)",
-    "QA_BROWSER=chromium node tests/brokers-intent-browser.cjs (velocidad, micro-gesto, rueda y extremos sin cambio)",
-    "node tests/intent-visual-browser.cjs",
-    "tests/intent-continuity-browser.cjs y WebKit corren en CI (paso «Presentación con fuente pública validada»).",
-    "verificar-impacto contra el atlas fijado."
+    "node --test tests/brokers*.test.cjs (incluye tests/brokers-visor.test.cjs: filtro de liga, alcance por broker, Dirección, folio existente, carteras cruzadas, nombres ambiguos, guardado sin visor)",
+    "node tests/brokers-visor-browser.cjs (Chromium y WebKit: botón en tarjeta y encabezado a 390 y 1440, href exacto, otra pestaña, sin desbordar; otro broker no lo recibe; ningún guardado)",
+    "node tests/brokers-journey-browser.cjs (regresión del recorrido)",
+    "Pendiente fuera del repo: publicar el adaptador del CRM (Brokers.gs) como nueva versión de la implementación existente; hasta entonces el botón no aparece en producción."
   ],
-  "rollback": "Revertir el merge: vuelve el redondeo de siempre al soltar y la prueba con 20 ms fijos."
+  "rollback": "Revertir el merge: desaparece el botón. La columna «visor» y las ligas quedan en sus hojas sin efecto; apagar una liga = cambiar su estado en la hoja Ligas del vivero."
 }

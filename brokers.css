@@ -208,3 +208,5 @@ body:has(#brokers){background:#f7f9f7;color:#213b34;color-scheme:light}
 
 /* T-057 · En pantallas angostas las pestañas del expediente envuelven para que la quinta («Historia · Hoy · Plan») quede visible sin desplazamiento horizontal. */
 @media(max-width:600px){#brokers .detail-tabs{flex-wrap:wrap;gap:2px 14px;overflow:visible}#brokers .detail-tabs>button{padding:8px 0}}
+/* Ver visor: one tap to the plan's live viewer from the case card and the case header. */
+#brokers .visor-link{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-weight:600;font-size:13px;text-decoration:none;white-space:nowrap}#brokers .visor-link:hover{opacity:.88}#brokers .visor-link:focus-visible{outline:2px solid currentColor;outline-offset:2px}#brokers .case-row-footer .visor-link{min-height:32px;padding:0 12px;font-size:12px}
