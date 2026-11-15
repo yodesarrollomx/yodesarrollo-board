@@ -109,9 +109,12 @@
     return values.slice(1).map(row=>{const o={};head.forEach((h,i)=>{if(h)o[h]=String(row[i]==null?'':row[i]).trim();});return o;});
   }
   function nameWords(v){return String(v||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim().split(/\s+/).filter(Boolean);}
+  // The visor address is a key to the whole plan. A name matches a broker when it is the same name, or when the
+  // shorter one is a prefix of at least two words (first name and surname); a lone first name never matches.
+  // Exactly one broker may match, otherwise the row is ignored.
   function brokerByName(name,brokers){
     const p=nameWords(name);if(!p.length)return '';
-    const found=brokers.filter(b=>{const n=nameWords(b.name),[short,long]=p.length<=n.length?[p,n]:[n,p];return short.length>0&&short.every((w,i)=>w===long[i]);});
+    const found=brokers.filter(b=>{const n=nameWords(b.name),[short,long]=p.length<=n.length?[p,n]:[n,p];return short.length>0&&short.every((w,i)=>w===long[i])&&(short.length===long.length||short.length>=2);});
     return found.length===1?found[0].id:'';
   }
   function historyVisors(s,personas,proyectos){

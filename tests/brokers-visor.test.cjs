@@ -48,3 +48,12 @@ test('guardar un expediente con visor no escribe la liga en el CRM',()=>{
   const changes=S.prepare(s,A,{kind:'opportunity',record:{id:'PRJ-NUEVO',title:'Proyecto nuevo',kind:'Plan de potencial',stage:'PPP en proceso',next_action:'Revisar',next_date:'2026-11-20',visor_url:'https://example.test/otra'},expected_revision:1},{now:'2026-11-15T00:00:00Z',uuid:()=>'u'});
   const rec=changes[0].record;assert.equal(rec.visor_url,visor(KEY_A),'el visor no es un campo editable');
 });
+
+test('un nombre de pila suelto no basta para entregar la liga a un broker',()=>{
+  const per=[['persona_id','nombre'],['pila','Dirección'],['otra','Otra Persona'],['dir','Persona Dos']];
+  const st=state(),before=st.opportunities.length;
+  S.historyVisors(st,per,[head,['p1','P1','pila','activo','','1','','','','PRJ-P1',visor(KEY_A)],['p2','P2','otra','activo','','1','','','','PRJ-P2',visor(KEY_A)]]);
+  assert.equal(st.opportunities.length,before,'«Dirección» sola no coincide con «Dirección Ejemplo»');
+  const s=S.historyVisors(state(),per,[head,['p3','P3','dir','activo','','1','','','','PRJ-P3',visor(KEY_B)]]);
+  assert.deepEqual(s.opportunities.find(o=>o.id==='PRJ-P3').broker_ids,['BR-DOS'],'nombre completo idéntico sí coincide');
+});
