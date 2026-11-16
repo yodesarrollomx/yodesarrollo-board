@@ -1,6 +1,6 @@
 // Scene A1: the same developer, land, professionals and business, drawn in layers.
 // Progress is the only clock. Scrubbing backwards restores every stroke and position.
-import {clamp,ease,fit} from './story.mjs?v=YOD-APORTADORES-A1-2';
+import {clamp,ease,fit} from './story.mjs?v=YOD-APORTADORES-A1-3';
 const NS='http://www.w3.org/2000/svg';
 const ink='#35443e',soft='#899087',paper='#f8f6ef',red='#a34d45';
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -32,11 +32,11 @@ export function mountFirstScene(svg){
  path(ground,'M-25 15 L-25 27 L180 118 L405 27 L405 15 M180 105 L180 118',{color:'#b4baad',width:.8});
  for(let i=0;i<9;i++)path(ground,`M${-2+i*22} ${27+i*9.8} l0 10`,{color:'#bec2b7',width:.5,ghost:true});
  const developerDetail=layer('desarrollador-detalles',.45,1,[370,-20,1],[105,62,.61]);
- path(developerDetail,'M390 269 L451 271 L449 254 L391 252 Z',{fill:'#d6d9cc',color:'none'});
- path(developerDetail,'M349 371 Q324 416 349 470 L364 446 L362 398 Z',{fill:'#e5e5d9',color:'none'});
- path(developerDetail,'M479 391 Q493 426 480 469 L469 459 L472 415 Z',{fill:'#e5e5d9',color:'none'});
- path(developerDetail,'M404 394 L410 435 L400 449 L394 434 Z',{fill:'#5b695d',color:'none'});
- const developerLabel=layer('etiqueta-desarrollador',.72,1,[807,750,1],[360,459,1]);
+ path(developerDetail,'M393 260 L447 262 L448 270 L393 270 Z',{fill:'#d6d9cc',color:'none'});
+ path(developerDetail,'M390 346.5 Q420 339 450 346.5 L471.6 369 L465.6 466.5 L426 466.5 L420 450.25 L414 466.5 L374.4 466.5 L368.4 369 Z',{fill:'#e5e5d9',color:'none'});
+ path(developerDetail,'M376 346 L420 398 L464 346 Z',{fill:paper,color:'none'});
+ path(developerDetail,'M416 348 L424 348 L427 355.98 L422 361.86 L426 379.92 L420 390 L414 379.92 L418 361.86 L413 355.98 Z',{fill:'#5b695d',color:'none'});
+ const developerLabel=layer('etiqueta-desarrollador',.72,1,[807,750,1],[360,486,1]);
  text(developerLabel,0,-38,'DESARROLLADOR',{size:18,weight:700,align:'middle',spacing:1.5});
  text(developerLabel,0,-7,'Decide · coordina',{size:25,hand:true,align:'middle',color:soft});
  path(developerLabel,'M-94 9 Q0 16 94 8',{color:soft,width:.7});
@@ -109,8 +109,8 @@ export function mountFirstScene(svg){
   teamHead.setAttribute('d',vertical?'M288 389 L300 386 L301 399':'M652 444 L666 445 L661 458');
   businessLine.setAttribute('d',vertical?'M425 310 C511 311 523 372 535 466':'M925 350 C984 310 1014 312 1092 332');
   businessHead.setAttribute('d',vertical?'M526 454 L535 466 L542 452':'M1080 319 L1092 332 L1076 339');
-  returnLine.setAttribute('d',vertical?'M555 810 C430 852 334 619 356 494':'M1255 715 C1180 806 1000 785 923 705');
-  returnHead.setAttribute('d',vertical?'M346 506 L356 494 L363 509':'M924 722 L923 705 L940 712');
+  returnLine.setAttribute('d',vertical?'M555 810 C430 852 334 649 356 526':'M1255 715 C1180 806 1000 785 923 705');
+  returnHead.setAttribute('d',vertical?'M346 538 L356 526 L363 541':'M924 722 L923 705 L940 712');
   // Preserve true dash lengths after responsive path replacement.
   for(const l of [landLink,teamLink,businessLink,returnLink])for(const n of l.nodes)n.length=n.n.getTotalLength();
  }

@@ -80,9 +80,9 @@ def aportadores(maestro):
         asset.thumbnail((ancho * ESCALA, alto * ESCALA), Image.Resampling.LANCZOS)
         xy = (int(cx * ESCALA - asset.width / 2), int(cy * ESCALA - asset.height / 2))
         im.paste(asset, xy, asset)
-    marca("yodesarrollo-original.png", 300, 135, 460, 85)
-    marca("puebla-arquitectos-original.png", 150, 285, 128, 128)
-    marca("avermont-original.webp", 385, 285, 270, 90)
+    marca("yodesarrollo-original.png", 300, 335, 460, 85)
+    marca("puebla-arquitectos-original.png", 150, 190, 128, 128)
+    marca("avermont-original.webp", 385, 190, 270, 90)
     d.line((70 * ESCALA, 395 * ESCALA, 530 * ESCALA, 395 * ESCALA), fill=GRIS, width=ESCALA)
     centrado(d, "DESARROLLAR JUNTOS", fuente(SANS, "DESARROLLAR JUNTOS", 32, 530), 300, 447, VERDE)
     centrado(d, "Alianza de aportadores", fuente(SANS, "Alianza de aportadores", 22, 500), 300, 487, GRIS)
@@ -100,7 +100,7 @@ def main():
             imagen = aportadores(maestro) if slug == "aportadores" else logo(mono, nombre, sub, maestro)
             imagen.save(destino, optimize=True)
             if slug == "aportadores":
-                imagen.save(SALIDA / f"aportadores-logos2-{'maestro' if maestro else 'visor'}.png", optimize=True)
+                imagen.save(SALIDA / f"aportadores-logos3-{'maestro' if maestro else 'visor'}.png", optimize=True)
             print(destino.relative_to(SALIDA.parent.parent), destino.stat().st_size, "bytes")
 
 

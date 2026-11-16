@@ -1,15 +1,15 @@
 {
   "model_revision": "2026-11-16.masterbrokers-colores.1",
   "proposal_id": "CHG-APORTADORES-RELATO-20261116",
-  "summary": "Rediseño visual de la primera escena de Aportadores: capas SVG trazadas por progreso, volumen arquitectónico, actores originales y reencuadre móvil. Misma arquitectura y contenido aprobados; siete escenas,33momentos, tres marcas originales, Portero, chinches y registro sin cambios. Las seis escenas siguientes conservan su geometría y semántica.",
+  "summary": "Rediseño visual de la primera escena de Aportadores: capas SVG trazadas por progreso, volumen arquitectónico, actores originales y reencuadre móvil. Misma arquitectura y contenido aprobados; siete escenas, 33 momentos, tres marcas originales, Portero, chinches y registro sin cambios. Las seis escenas siguientes conservan su geometría y semántica.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
     "Sintaxis JavaScript y git diff --check.",
-    "Recorrido existente de33momentos, reversibilidad, límites, teclado, rotor, movimiento reducido y logos.",
+    "Recorrido existente de 33 momentos, reversibilidad, límites, teclado, rotor, movimiento reducido y logos.",
     "Primera escena: capas visibles, trazos sin NaN, rótulos móviles legibles, retorno determinista y salida a la segunda escena.",
-    "Inspección visual de primer estado y cierre en1440×900,393×852,844×390."
+    "Inspección visual de primer estado y cierre en 1440×900,393×852,844×390."
   ],
-  "rollback": "Revertir sólo el rediseño de A1; conservar PR81 de logos, datos, guion, registro y permisos."
+  "rollback": "Revertir sólo el rediseño de A1; conservar PR81 y PR82 de logos y pulido, datos, guion, registro y permisos."
 }
