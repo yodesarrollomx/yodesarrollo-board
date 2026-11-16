@@ -1,14 +1,13 @@
 {
-  "model_revision": "2026-11-16.aportadores-relato.1",
-  "proposal_id": "CHG-APORTADORES-RELATO-20261116",
-  "summary": "Añadir un recorrido SVG de siete escenas al catálogo existente. Reutilizar dibujos aceptados, fuente de marca, control de presentaciones, Portero y chinches. Material común visible desde las carteras; control privado de Dirección. Conservar los demás casos y datos.",
+  "model_revision": "2026-11-16.masterbrokers-colores.1",
+  "proposal_id": "CHG-MB-COLORES-ESTADO-20261116",
+  "summary": "Consumidor Master Brokers: tono suave por etapa, insignia legible y señal textual independiente de urgencia (vencido, hoy, decisión o planificación incompleta). Pausados, descartados y archivados no se marcan vencidos. Misma paleta en lista y detalle; leyenda secundaria. Sólo presentación; no cambia orden, fechas, estados guardados, permisos ni contratos. SYS-YOD-OS sólo documenta el cambio en el atlas.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "Continuidad de desarrollador, círculo y curva; avance reversible y límites.",
-    "33 momentos en escritorio y móvil vertical/horizontal, teclado, rotor y movimiento reducido.",
-    "Catálogo, acceso a material compartido, edición privada y captura con servicios sintéticos."
+    "Regresión de señales por fechas y estados inactivos; contraste de texto de cada color.",
+    "Navegador móvil/escritorio con las ocho etapas, vencido/hoy/decisión, teclado, detalle, archivo y restauración."
   ],
-  "rollback": "Revertir sólo esta incorporación; conservar archivos privados y recibos existentes."
+  "rollback": "Revertir sólo presentación y documentación; conservar datos y backend."
 }
