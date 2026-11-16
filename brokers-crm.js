@@ -14,7 +14,7 @@
   function encodeCase(text,ppp_status,decision){
     if(!pppStates.includes(ppp_status))throw Error('Revisa el estado del PPP.');
     const result=String(text||'').trim()+caseMarker+JSON.stringify({v:1,ppp_status,decision:decision===true});
-    if(result.length>4000)throw Error('Acorta las notas antes de guardar.');return result;
+    if(result.length>30000)throw Error('Acorta las notas antes de guardar.');return result;
   }
   const types=['Seguimiento','Reunión','WhatsApp','Documento','Llamada'];
   const statuses=['Realizado','Programado','Propuesto','Cancelado'];

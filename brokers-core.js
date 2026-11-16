@@ -28,9 +28,14 @@
     }
     return s;
   }
+  function recordStatus(s,r,kind='opportunity') {
+    const own=r.record_status||'active',c=kind==='opportunity'&&s.contacts.find(c=>c.id===r.contact_id),parent=c&&(c.record_status||'active');
+    return parent==='trash'?'trash':own==='trash'?'trash':parent==='archived'?'archived':own;
+  }
+  function inRecordScope(s,r,kind) { return s.recordScope==='all'||recordStatus(s,r,kind)===(s.recordScope||'active'); }
   function visible(s, broker, query, stage) {
     const q = String(query || '').toLocaleLowerCase('es');
-    return s.opportunities.filter(o => (!broker || (o.broker_ids || []).includes(broker)) && (!stage || o.stage === stage) && [o.title, o.location, o.id, (s.contacts.find(c => c.id === o.contact_id) || {}).name].join(' ').toLocaleLowerCase('es').includes(q));
+    return s.opportunities.filter(o => inRecordScope(s,o,'opportunity') && (!broker || (o.broker_ids || []).includes(broker)) && (!stage || o.stage === stage) && [o.title, o.location, o.id, (s.contacts.find(c => c.id === o.contact_id) || {}).name].join(' ').toLocaleLowerCase('es').includes(q));
   }
   // Group only explicit canonical references, inside the already-authorized snapshot.
   // Names and contact identity never merge independent terrain records.
@@ -100,7 +105,7 @@
       if(!groups.has(key))groups.set(key,{key,contact:c||null,records:[],cases:[],activities:[]});
       groups.get(key).records.push(o);
     }
-    for(const c of s.contacts.filter(c=>!broker||(c.broker_ids||[]).includes(broker))) {
+    for(const c of s.contacts.filter(c=>inRecordScope(s,c,'contact')&&(!broker||(c.broker_ids||[]).includes(broker)))) {
       if(!groups.has('contact:'+c.id)) groups.set('contact:'+c.id,{key:'contact:'+c.id,contact:c,records:[],cases:[],activities:[]});
     }
     return [...groups.values()].map(g=>{
@@ -166,7 +171,7 @@
         if (!response.ok) throw new Error(response.status === 403 || response.status === 401 ? 'Tu sesión no tiene acceso a Brokers.' : 'No se pudo conectar con Brokers.');
         const json = await response.json();
         if (own !== generation || config.token() !== token) throw new Error('La sesión cambió; vuelve a cargar.');
-        if (!json.ok) { const messages = { conflict:'Otra persona actualizó el expediente. Recarga antes de guardar.', broker_not_linked:'Tu sesión es válida; Dirección debe vincularla con tu perfil de broker.', duplicate_contact:'Este contacto ya existe en el CRM. Pide a Dirección vincularlo con tu cartera.', contact_not_linked:'Vincula primero el contacto a los brokers del expediente.', evidence_required:'Agrega el documento que respalda el acuerdo.', invalid_transition:'Avanza la participación una etapa a la vez.', forbidden:'Tu sesión no tiene permiso para esta operación.' }; const error=new Error(messages[json.error] || 'El servidor no confirmó la operación.'); error.code=json.error; error.definitive=action==='brokers_save'&&['unauthorized','forbidden','broker_not_linked','conflict','not_found','invalid_record','invalid_field','invalid_link','invalid_date','invalid_email','invalid_kind','invalid_broker','broker_required','name_required','contact_not_linked','duplicate_contact','opportunity_incomplete','activity_incomplete','invalid_participation','evidence_required','duplicate_participation','invalid_transition','immutable_reference','append_only','invalid_request_id'].includes(json.error); throw error; }
+        if (!json.ok) { const messages = { record_inactive:'Restaura primero el registro o su cliente desde Archivados o Papelera.', conflict:'Otra persona actualizó el expediente. Recarga antes de guardar.', broker_not_linked:'Tu sesión es válida; Dirección debe vincularla con tu perfil de broker.', duplicate_contact:'Este contacto ya existe en el CRM. Pide a Dirección vincularlo con tu cartera.', contact_not_linked:'Vincula primero el contacto a los brokers del expediente.', evidence_required:'Agrega el documento que respalda el acuerdo.', invalid_transition:'Avanza la participación una etapa a la vez.', forbidden:'Tu sesión no tiene permiso para esta operación.' }; const error=new Error(messages[json.error] || 'El servidor no confirmó la operación.'); error.code=json.error; error.definitive=action==='brokers_save'&&['unauthorized','forbidden','broker_not_linked','conflict','not_found','invalid_record','invalid_field','invalid_link','invalid_date','invalid_email','invalid_kind','invalid_broker','broker_required','name_required','contact_not_linked','duplicate_contact','opportunity_incomplete','activity_incomplete','invalid_participation','evidence_required','duplicate_participation','invalid_transition','immutable_reference','append_only','invalid_request_id','record_inactive'].includes(json.error); throw error; }
         if (requestId && json.request_id !== requestId) throw new Error('No se recibió la confirmación del guardado. Conserva el formulario y verifica antes de reintentar.');
         return validateSnapshot(json.data);
       } catch (e) {
@@ -176,7 +181,7 @@
     }
     async function save(kind, record, revision, requestId) {
       const collection = {contact:'contacts',opportunity:'opportunities',activity:'activities',participation:'participations'}[kind];
-      const reflects = data => (data[collection] || []).some(row => Object.entries(record).every(([key,value]) =>
+      const reflects = data => kind==='lifecycle' ? (data[record.entity==='contact'?'contacts':'opportunities']||[]).some(r=>r.id===record.id&&(r.record_status||'active')===record.status) : (data[collection] || []).some(row => Object.entries(record).every(([key,value]) =>
         Array.isArray(value) ? value.every(id => (row[key] || []).includes(id)) : String(row[key] ?? '').trim() === String(value ?? '').trim()));
       let data = await request('brokers_save', { kind, record, expected_revision: revision }, requestId);
       // Some adapters acknowledge the write with their pre-commit snapshot.
@@ -187,7 +192,7 @@
     }
     return { load: () => request('brokers_snapshot', {}), save, invalidate: () => { generation++; } };
   }
-  const api = { stages, participationStates, safeLink, visorLink, validateSnapshot, visible, caseGroups, clientGroups, portfolioRoleLabel, teamOrder, orderedPortfolios, ownPortfolio, ownerLabel, overdue, nextStep, encodeStep, agenda, previewSnapshot, workspaceSnapshot, dailyControl, createClient };
+  const api = { stages, participationStates, recordStatus, inRecordScope, safeLink, visorLink, validateSnapshot, visible, caseGroups, clientGroups, portfolioRoleLabel, teamOrder, orderedPortfolios, ownPortfolio, ownerLabel, overdue, nextStep, encodeStep, agenda, previewSnapshot, workspaceSnapshot, dailyControl, createClient };
   if (typeof module !== 'undefined') module.exports = api;
   root.BrokersCore = api;
 })(typeof window === 'undefined' ? globalThis : window);

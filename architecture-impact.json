@@ -1,17 +1,16 @@
 {
-  "model_revision": "2026-11-11.grafo-accesos.3",
-  "proposal_id": "CHG-MASTERBROKERS-MINI-CRM",
-  "summary": "Ver visor en la cartera de Master Brokers: cada expediente cuyo dato visor_url trae la liga del visor en vivo de su plan muestra el botón «Ver visor ↗» en su tarjeta y en el encabezado del expediente; abre visor.html en otra pestaña con un toque. La dirección sale de datos: la columna «visor» de la pestaña Proyectos del libro de historial de Master Brokers. brokers-server.js agrega historyVisors(), una lectura pura que el adaptador privado del CRM llama al leer: el renglón llega sólo a la cartera de su broker (emparejado por nombre, único) y Dirección ve todo; si el folio coincide con un expediente del mismo broker sólo le agrega la liga, y si no existe lo muestra como plan de sólo lectura hasta que alguien lo guarde. visor_url no es campo editable ni se escribe en el CRM. brokers-core.visorLink() acepta únicamente https://yodesarrollomx.github.io/potenciales-yod/visor.html#l=<liga>. Sin cambios en visor.html/js/css ni en el Portero.",
+  "model_revision": "2026-11-16.masterbrokers-registros.1",
+  "proposal_id": "CHG-MB-REGISTROS-GLOBALES-20261116",
+  "summary": "Referencias explícitas de folio, terreno o PPP único concilian las fuentes dentro del mismo alcance. Edición por campo prevalece sobre la importación. Archivo y papelera persistentes, restauración y confirmación de alcance; contactos inactivos ocultan sus asuntos sin modificar los estados individuales. Conservar historial, concurrencia e idempotencia.",
   "components": [
     "SYS-INVERSION",
     "GAS-CRM",
     "SHEET-CRM"
   ],
   "tests": [
-    "node --test tests/brokers*.test.cjs (incluye tests/brokers-visor.test.cjs: filtro de liga, alcance por broker, Dirección, folio existente, carteras cruzadas, nombres ambiguos, guardado sin visor)",
-    "node tests/brokers-visor-browser.cjs (Chromium y WebKit: botón en tarjeta y encabezado a 390 y 1440, href exacto, otra pestaña, sin desbordar; otro broker no lo recibe; ningún guardado)",
-    "node tests/brokers-journey-browser.cjs (regresión del recorrido)",
-    "Pendiente fuera del repo: publicar el adaptador del CRM (Brokers.gs) como nueva versión de la implementación existente; hasta entonces el botón no aparece en producción."
+    "Pruebas sintéticas: referencia explícita y ambigua, aislamiento, edición parcial y campo vacío intencional.",
+    "Archivo, papelera y restauración de registros compartidos; readback, conflictos y reintentos.",
+    "Editor, filtros y estados en móvil/escritorio; sin escrituras de prueba en producción."
   ],
-  "rollback": "Revertir el merge: desaparece el botón. La columna «visor» y las ligas quedan en sus hojas sin efecto; apagar una liga = cambiar su estado en la hoja Ligas del vivero."
+  "rollback": "Revertir código y versión del motor, conservar columnas, estados e historial; no restaurar hojas de negocio."
 }

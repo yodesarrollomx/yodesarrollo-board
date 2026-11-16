@@ -210,3 +210,12 @@ body:has(#brokers){background:#f7f9f7;color:#213b34;color-scheme:light}
 @media(max-width:600px){#brokers .detail-tabs{flex-wrap:wrap;gap:2px 14px;overflow:visible}#brokers .detail-tabs>button{padding:8px 0}}
 /* Ver visor: one tap to the plan's live viewer from the case card and the case header. */
 #brokers .visor-link{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-weight:600;font-size:13px;text-decoration:none;white-space:nowrap}#brokers .visor-link:hover{opacity:.88}#brokers .visor-link:focus-visible{outline:2px solid currentColor;outline-offset:2px}#brokers .case-row-footer .visor-link{min-height:32px;padding:0 12px;font-size:12px}
+
+/* Shared records: visible edit and recoverable lifecycle actions. */
+.record-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;grid-column:1/-1;padding:4px 10px}
+.record-menu{position:relative}.record-menu summary{cursor:pointer;list-style:none;padding:8px 14px;border:1px solid var(--line,#ddd);border-radius:8px}
+.record-menu>div{position:absolute;right:0;z-index:12;min-width:240px;display:grid;background:var(--surface,#fff);color:var(--ink,#222);padding:8px;box-shadow:0 8px 30px #0002;border:1px solid var(--line,#ddd);border-radius:10px}
+.record-menu button{text-align:left}.record-scope{display:flex;align-items:center;gap:8px;font-size:13px}.record-scope select{min-height:38px}
+@media(max-width:600px){.work-toolbar{flex-wrap:wrap}.record-scope{flex:1}.record-menu>div{max-width:calc(100vw - 48px)}}
+
+#brokers .broker-checks{border:1px solid var(--line,#ddd);border-radius:8px;padding:12px;display:grid;gap:8px}#brokers .broker-checks label{display:flex;align-items:center;gap:10px}#brokers .broker-checks input{width:18px;min-height:18px;accent-color:var(--accent)}

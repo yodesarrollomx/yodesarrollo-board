@@ -43,10 +43,13 @@ test('ignora renglones sin visor válido, sin broker conocido o con nombre ambig
   assert.doesNotThrow(()=>S.historyVisors(state(),[],[]));assert.doesNotThrow(()=>S.historyVisors(state(),undefined,undefined));
 });
 
-test('guardar un expediente con visor no escribe la liga en el CRM',()=>{
+test('edición autorizada del visor valida la liga y persiste la selección',()=>{
   const s=S.historyVisors(state(),personas,[head,['nuevo','Proyecto nuevo','uno','activo','','1','','','','PRJ-NUEVO',visor(KEY_A)]]);
-  const changes=S.prepare(s,A,{kind:'opportunity',record:{id:'PRJ-NUEVO',title:'Proyecto nuevo',kind:'Plan de potencial',stage:'PPP en proceso',next_action:'Revisar',next_date:'2026-11-20',visor_url:'https://example.test/otra'},expected_revision:1},{now:'2026-11-15T00:00:00Z',uuid:()=>'u'});
-  const rec=changes[0].record;assert.equal(rec.visor_url,visor(KEY_A),'el visor no es un campo editable');
+  const input={kind:'opportunity',record:{id:'PRJ-NUEVO',title:'Proyecto nuevo',kind:'Plan de potencial',stage:'PPP en proceso',next_action:'Revisar',next_date:'2026-11-20',visor_url:visor(KEY_B)},expected_revision:1};
+  const env={now:'2026-11-16T00:00:00Z',uuid:()=>'u'};
+  const rec=S.prepare(s,A,input,env)[0].record;assert.equal(rec.visor_url,visor(KEY_B));
+  assert.ok(JSON.parse(rec.edited_fields).includes('visor_url'));
+  assert.throws(()=>S.prepare(s,A,{...input,record:{...input.record,visor_url:'https://example.test/otra'}},env),/invalid_link/);
 });
 
 test('un nombre de pila suelto no basta para entregar la liga a un broker',()=>{

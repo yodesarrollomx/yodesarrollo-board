@@ -2,11 +2,11 @@
   'use strict';
   const stages=['Recibido','En revisión','PPP en proceso','PPP presentado','En negociación','Formalizado','En pausa','Descartado'];
   const states=['Por definir','Propuesta','Acordada','Devengada','Pagada'];
-  const fields={contact:['name','email','phone','company','type','notes'],opportunity:['title','kind','contact_id','location','terrain_id','ppp_id','ppp_url','documents_url','project_url','stage','next_action','next_date','notes'],activity:['opportunity_id','note','next_action','next_date'],participation:['opportunity_id','broker_id','status','terms','agreement_url']};
+  const fields={contact:['name','email','phone','company','type','notes'],opportunity:['title','kind','contact_id','location','terrain_id','ppp_id','ppp_url','documents_url','project_url','visor_url','stage','next_action','next_date','notes'],activity:['opportunity_id','note','next_action','next_date'],participation:['opportunity_id','broker_id','status','terms','agreement_url']};
   const collections={contact:'contacts',opportunity:'opportunities',activity:'activities',participation:'participations'};
   const clone=x=>JSON.parse(JSON.stringify(x));
   function fail(code){throw new Error(code);}
-  function text(v){if(v==null)return '';if(typeof v!=='string'||v.length>4000)fail('invalid_field');return v.trim();}
+  function text(v,limit){if(v==null)return '';if(typeof v!=='string'||v.length>(limit||4000))fail('invalid_field');return v.trim();}
   function link(v){return !v||/^https:\/\/(?:yodesarrollomx\.github\.io|docs\.google\.com|drive\.google\.com)\//.test(v);}
   function date(v){return !v||(/^\d{4}-\d{2}-\d{2}$/.test(v)&&!isNaN(Date.parse(v))&&new Date(v+'T12:00:00Z').toISOString().slice(0,10)===v);}
   function owns(r,a){return a.role==='direccion'||(r.broker_ids||[]).includes(a.id);}
@@ -21,10 +21,12 @@
   }
   function snapshot(s,a){
     const opp=s.opportunities.filter(r=>owns(r,a)), ids=new Set(opp.map(r=>r.id));
-    return {contract:'brokers.v1',revision:s.revision,actor:a,capabilities:{write:true,agree_participation:a.role==='direccion'},brokers:s.brokers.filter(b=>a.role==='direccion'||b.id===a.id).map(b=>({id:b.id,name:b.name,active:b.active})),contacts:s.contacts.filter(r=>owns(r,a)).map(clone),opportunities:opp.map(clone),activities:s.activities.filter(r=>ids.has(r.opportunity_id)).map(clone),participations:s.participations.filter(r=>ids.has(r.opportunity_id)&&(a.role==='direccion'||r.broker_id===a.id)).map(clone)};
+    return {contract:'brokers.v1',revision:s.revision,actor:a,capabilities:{write:true,agree_participation:a.role==='direccion',record_lifecycle:true,full_edit:true},brokers:s.brokers.filter(b=>a.role==='direccion'||b.id===a.id).map(b=>({id:b.id,name:b.name,active:b.active})),contacts:s.contacts.filter(r=>owns(r,a)).map(clone),opportunities:opp.map(clone),activities:s.activities.filter(r=>ids.has(r.opportunity_id)).map(clone),participations:s.participations.filter(r=>ids.has(r.opportunity_id)&&(a.role==='direccion'||r.broker_id===a.id)).map(clone)};
   }
   function prepare(s,a,input,env){
     const kind=input.kind, raw=input.record;
+    if(input.expected_revision!==s.revision)fail('conflict');
+    if(kind==='lifecycle')return prepareLifecycle(s,a,raw,env);
     if(!fields[kind]||!raw||typeof raw!=='object'||Array.isArray(raw))fail('invalid_record');
     if(kind==='participation'&&a.role!=='direccion')fail('forbidden');
     if(input.expected_revision!==s.revision)fail('conflict');
@@ -32,9 +34,11 @@
     if(raw.id&&!existing)fail('not_found');
     if(existing&&['contact','opportunity'].includes(kind)&&!owns(existing,a))fail('forbidden');
     if(kind==='activity'&&raw.id)fail('append_only');
+    if(existing&&recordStatus(s,existing,kind)!=='active')fail('record_inactive');
     let r=existing?clone(existing):{id:kind==='contact'?'POT-BR-'+env.uuid():kind+'-'+env.uuid()};
-    for(const key of fields[kind])if(Object.prototype.hasOwnProperty.call(raw,key))r[key]=text(raw[key]);
+    for(const key of fields[kind])if(Object.prototype.hasOwnProperty.call(raw,key))r[key]=text(raw[key],key==='notes'?30000:4000);
     for(const key of ['ppp_url','documents_url','project_url','agreement_url'])if(!link(r[key]))fail('invalid_link');
+    if(r.visor_url&&!visorPattern.test(r.visor_url))fail('invalid_link');
     if(!date(r.next_date))fail('invalid_date');
     if(['contact','opportunity'].includes(kind)){
       if(a.role==='direccion'){
@@ -54,7 +58,7 @@
       if(s.contacts.some(c=>c.id!==r.id&&((r.email&&c.email&&r.email.toLowerCase()===c.email.toLowerCase())||(normPhone(r.phone)&&normPhone(r.phone)===normPhone(c.phone)))))fail('duplicate_contact');
     }
     if(kind==='opportunity'){
-      if(!r.title||!r.next_action||!r.next_date||!stages.includes(r.stage))fail('opportunity_incomplete');
+      if(!r.title||(!existing&&(!r.next_action||!r.next_date))||!stages.includes(r.stage))fail('opportunity_incomplete');
       if(!['Terreno','Capital','Codesarrollo','Plan de potencial'].includes(r.kind))fail('invalid_kind');
       if(r.contact_id){const c=s.contacts.find(c=>c.id===r.contact_id);if(!c||!owns(c,a)||r.broker_ids.some(id=>!(c.broker_ids||[]).includes(id)))fail('contact_not_linked');}
       if(!existing){r.origin_broker_id=a.role==='broker'?a.id:r.broker_ids[0];r.created_at=env.now;}
@@ -63,6 +67,7 @@
     if(['activity','participation'].includes(kind)){
       const o=s.opportunities.find(o=>o.id===r.opportunity_id);
       if(!o||!owns(o,a))fail('forbidden');
+      if(recordStatus(s,o,'opportunity')!=='active')fail('record_inactive');
       if(kind==='activity'){
         if(!r.note||!r.next_action||!r.next_date)fail('activity_incomplete');
         r.date=env.now;r.author_id=a.id;r.author_name=a.name;
@@ -77,8 +82,40 @@
         r.confirmed_by=a.id;r.confirmed_at=env.now;
       }
     }
+    if(kind==='opportunity'){
+      const edited=new Set(parseList(existing&&existing.edited_fields));
+      for(const key of [...fields.opportunity,'broker_ids'])if(Object.prototype.hasOwnProperty.call(raw,key)&&JSON.stringify(r[key])!==JSON.stringify(existing&&existing[key]))edited.add(key);
+      r.edited_fields=JSON.stringify([...edited]);
+    }
     r.updated_at=env.now;changes.push({kind,record:r});
     return changes;
+  }
+  function parseList(value){try{const a=JSON.parse(value||'[]');return Array.isArray(a)?a.filter(x=>typeof x==='string'):[];}catch(_){return [];}}
+  function recordStatus(s,r,kind){
+    const status=r.record_status||'active';
+    if(kind!=='opportunity')return status;
+    const c=s.contacts.find(c=>c.id===r.contact_id),parent=c&&(c.record_status||'active');
+    return parent==='trash'?'trash':status==='trash'?'trash':parent==='archived'?'archived':status;
+  }
+  function prepareLifecycle(s,a,raw,env){
+    if(!raw||!['contact','opportunity'].includes(raw.entity)||!['active','archived','trash'].includes(raw.status))fail('invalid_record');
+    const r=s[collections[raw.entity]].find(r=>r.id===raw.id);if(!r)fail('not_found');
+    if(!owns(r,a))fail('forbidden');
+    // A contact can affect all its cases. Only Direction can change its global lifecycle.
+    if(raw.entity==='contact'&&a.role!=='direccion')fail('forbidden');
+    if(raw.entity==='opportunity'&&raw.status==='active'){
+      const c=s.contacts.find(c=>c.id===r.contact_id);if(c&&c.record_status&&c.record_status!=='active')fail('record_inactive');
+    }
+    const updated=Object.assign(clone(r),{record_status:raw.status,status_updated_at:env.now,status_updated_by:a.id,updated_at:env.now});
+    const changes=[{kind:raw.entity,record:updated}];
+    if(raw.entity==='opportunity')changes.push({kind:'activity',record:{id:'activity-'+env.uuid(),opportunity_id:r.id,note:({active:'Expediente restaurado',archived:'Expediente archivado',trash:'Expediente enviado a la papelera'})[raw.status]+'. Cambio compartido con todas las carteras vinculadas. Se conserva el historial.',date:env.now,author_id:a.id,author_name:a.name,updated_at:env.now}});
+    return changes;
+  }
+  // Canonical editable fields win only after an intentional edit, including an empty value.
+  function applySource(existing,source){
+    const edited=new Set(parseList(existing.edited_fields));
+    for(const key of Object.keys(source))if(key!=='id'&&!edited.has(key))existing[key]=source[key];
+    return existing;
   }
   function createService(adapter){return {handle:function(p){
     if(!p||!['brokers_snapshot','brokers_save'].includes(p.action))return {ok:false,error:'unknown_action'};
@@ -96,7 +133,7 @@
         adapter.commit(changes,{id:p.request_id,actor_id:a.id,hash,date:now},s);
         const after=adapter.read();return {ok:true,request_id:p.request_id,data:snapshot(after,a)};
       });
-    }catch(e){const allowed=['unauthorized','forbidden','broker_not_linked','conflict','not_found','invalid_record','invalid_field','invalid_link','invalid_date','invalid_email','invalid_kind','invalid_broker','broker_required','name_required','contact_not_linked','duplicate_contact','opportunity_incomplete','activity_incomplete','invalid_participation','evidence_required','duplicate_participation','invalid_transition','immutable_reference','append_only','invalid_request_id','idempotency_mismatch','backend_not_ready'];return {ok:false,error:allowed.includes(e.message)?e.message:'service_unavailable'};}
+    }catch(e){const allowed=['unauthorized','forbidden','broker_not_linked','conflict','not_found','invalid_record','invalid_field','invalid_link','invalid_date','invalid_email','invalid_kind','invalid_broker','broker_required','name_required','contact_not_linked','duplicate_contact','opportunity_incomplete','activity_incomplete','invalid_participation','evidence_required','duplicate_participation','invalid_transition','immutable_reference','append_only','invalid_request_id','idempotency_mismatch','backend_not_ready','record_inactive'];return {ok:false,error:allowed.includes(e.message)?e.message:'service_unavailable'};}
   }};}
   // Read-only bridge from the Master Brokers history book (tabs Personas and Proyectos, header row first).
   // A project row with a valid `visor` address reaches the portfolio of its broker, matched by name.
@@ -122,13 +159,23 @@
     for(const p of rowsOf(proyectos)){
       const url=p.visor||'',owner=people.get(p.broker);
       if(!p.proyecto_id||!visorPattern.test(url)||!owner)continue;
-      const id=p.folio||'HMB-'+p.proyecto_id,existing=s.opportunities.find(o=>o.id===id);
-      if(existing){if((existing.broker_ids||[]).includes(owner))existing.visor_url=url;continue;}
-      s.opportunities.push({id,title:p.nombre||p.proyecto_id,kind:'Plan de potencial',contact_id:'',location:'',terrain_id:'',ppp_id:'',ppp_url:'',documents_url:'',project_url:'',stage:historyStages[(p.estado||'').toLowerCase()]||'En revisión',next_action:'',next_date:'',notes:p['descripción']||p.descripcion||'',broker_ids:[owner],origin_broker_id:owner,created_at:'',last_review:'',updated_at:'',visor_url:url});
+      const id=p.folio||'HMB-'+p.proyecto_id,exact=s.opportunities.find(o=>o.id===id);
+      // Never attach a private viewer to a different broker's case, even with an identical ID.
+      if(exact&&!(exact.broker_ids||[]).includes(owner))continue;
+      const plans=(p.planes||'').split(',').map(x=>x.trim().replace(/^ppp:/,''));
+      const matches=s.opportunities.filter(o=>(o.broker_ids||[]).includes(owner)&&
+        (parseList(o.history_ids).includes(p.proyecto_id)||(p.folio&&o.terrain_id===p.folio)||(o.ppp_id&&plans.includes(o.ppp_id))));
+      const existing=exact||(matches.length===1?matches[0]:null);
+      if(existing){
+        if(!parseList(existing.edited_fields).includes('visor_url'))existing.visor_url=url;
+        existing.history_ids=JSON.stringify([...new Set([...parseList(existing.history_ids),p.proyecto_id])]);
+        continue;
+      }
+      s.opportunities.push({id,title:p.nombre||p.proyecto_id,kind:'Plan de potencial',contact_id:'',location:'',terrain_id:p.folio||'',ppp_id:'',ppp_url:'',documents_url:p.carpeta?'https://drive.google.com/drive/folders/'+p.carpeta:'',project_url:'',stage:historyStages[(p.estado||'').toLowerCase()]||'En revisión',next_action:'',next_date:'',notes:p['descripción']||p.descripcion||'',broker_ids:[owner],origin_broker_id:owner,created_at:'',last_review:'',updated_at:'',visor_url:url,history_ids:JSON.stringify([p.proyecto_id])});
     }
     return s;
   }
-  const api={actor,snapshot,prepare,createService,historyVisors,stages,states};
+  const api={actor,snapshot,prepare,createService,historyVisors,applySource,recordStatus,stages,states};
   if(typeof module!=='undefined')module.exports=api;
   root.YodBrokersServer=api;
 })(typeof globalThis==='undefined'?this:globalThis);
