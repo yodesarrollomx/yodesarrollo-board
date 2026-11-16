@@ -115,15 +115,14 @@ export function mountFirstScene(svg){
   for(const l of [landLink,teamLink,businessLink,returnLink])for(const n of l.nodes)n.length=n.n.getTotalLength();
  }
  const mobileLabels=[
-  [land,'TIERRA',50,348],[land,'El propietario aporta',46,412,'Propietario'],
-  [team,'PROFESIONALES',43,272],[team,'Diseño · trabajo · experiencia',40,322,'Diseño y trabajo'],
-  [developerLabel,'DESARROLLADOR',30,-38],[developerLabel,'Decide · coordina',28,-1],
-  [businessLabel,'EL NEGOCIO',30,-33]
+  [land,'TIERRA',58,348],[land,'El propietario aporta',54,412,'Propietario'],
+  [team,'PROFESIONALES',48,272],[team,'Diseño · trabajo · experiencia',48,332,'Diseño y trabajo'],
+  [developerLabel,'DESARROLLADOR',33,-38],[developerLabel,'Decide · coordina',32,-1],
+  [businessLabel,'EL NEGOCIO',33,-33]
  ].map(([l,value,size,y,short])=>{const item=l.nodes.find(x=>x.n.textContent===value);return {n:item.n,size,y,short:short||value,value,originalSize:item.n.getAttribute('font-size'),originalY:item.n.getAttribute('y')};});
  let lastVertical;
  function render(p,vertical){
   const life=1-between(p,4.02,4.58);root.style.display=p>=4.58?'none':'';root.style.opacity=life;
-  if(p>=4.58)return;
   if(lastVertical!==vertical){lineLayout(vertical);for(const v of mobileLabels){v.n.setAttribute('font-size',vertical?v.size:v.originalSize);v.n.setAttribute('y',vertical?v.y:v.originalY);v.n.textContent=vertical?v.short:v.value;}lastVertical=vertical;}
   for(const l of layers){
    const t=clamp((p-l.start)/(l.end-l.start));const [x,y,s]=vertical?l.portraitPlace:l.place;
