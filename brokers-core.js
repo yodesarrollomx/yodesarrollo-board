@@ -55,6 +55,18 @@
       (!q || [...g.records.flatMap(o=>[o.id,o.title,o.location,o.kind,o.terrain_id,o.ppp_id]),...g.contacts.flatMap(c=>[c.name,c.company])].join(' ').toLocaleLowerCase('es').includes(q)));
   }
   function overdue(o, today) { return !!o.next_date && o.next_date < today && !['Formalizado', 'Descartado', 'En pausa'].includes(o.stage); }
+  function followupSignal(o, day, decision = false, state = 'active') {
+    if (state === 'trash') return {kind:'trash', label:'En papelera'};
+    if (state === 'archived') return {kind:'archived', label:'Archivado'};
+    if (['Formalizado','Descartado','En pausa'].includes(o.stage)) return {kind:'quiet', label:''};
+    if (overdue(o, day)) return {kind:'overdue', label:'Vencido'};
+    if (o.next_date === day) return {kind:'today', label:'Hoy'};
+    if (decision) return {kind:'decision', label:'Decisión'};
+    if (!o.next_date) return {kind:'unplanned', label:'Sin fecha'};
+    if (!nextStep(o.next_action).text.trim()) return {kind:'unplanned', label:'Falta siguiente paso'};
+    if (!nextStep(o.next_action).owner) return {kind:'unplanned', label:'Sin responsable'};
+    return {kind:'scheduled', label:''};
+  }
   // Presentation order only. Never change a saved stage, date or assignment.
   function compareFollowup(a, b, day, needsDecision = () => false) {
     const rank = o => {
@@ -207,7 +219,7 @@
     }
     return { load: () => request('brokers_snapshot', {}), save, invalidate: () => { generation++; } };
   }
-  const api = { compareFollowup, stages, participationStates, recordStatus, inRecordScope, safeLink, visorLink, validateSnapshot, visible, caseGroups, clientGroups, portfolioRoleLabel, teamOrder, orderedPortfolios, ownPortfolio, ownerLabel, overdue, nextStep, encodeStep, agenda, previewSnapshot, workspaceSnapshot, dailyControl, createClient };
+  const api = { followupSignal, compareFollowup, stages, participationStates, recordStatus, inRecordScope, safeLink, visorLink, validateSnapshot, visible, caseGroups, clientGroups, portfolioRoleLabel, teamOrder, orderedPortfolios, ownPortfolio, ownerLabel, overdue, nextStep, encodeStep, agenda, previewSnapshot, workspaceSnapshot, dailyControl, createClient };
   if (typeof module !== 'undefined') module.exports = api;
   root.BrokersCore = api;
 })(typeof window === 'undefined' ? globalThis : window);

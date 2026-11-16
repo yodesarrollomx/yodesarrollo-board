@@ -1,5 +1,5 @@
 {
-  "model_revision": "2026-11-16.aportadores-relato.1",
+  "model_revision": "2026-11-16.masterbrokers-colores.1",
   "proposal_id": "CHG-APORTADORES-RELATO-20261116",
   "summary": "Corregir las marcas estáticas de Aportadores con los tres activos originales: YoDesarrollo, Puebla Arquitectos y Avermont. Misma arquitectura aprobada, siete escenas y treinta y tres momentos; sin cambios a permisos, datos ni backend.",
   "components": [
