@@ -1,14 +1,14 @@
 {
   "model_revision": "2026-11-16.masterbrokers-colores.1",
   "proposal_id": "CHG-APORTADORES-RELATO-20261116",
-  "summary": "Corregir las marcas estáticas de Aportadores con los tres activos originales: YoDesarrollo, Puebla Arquitectos y Avermont. Misma arquitectura aprobada, siete escenas y treinta y tres momentos; sin cambios a permisos, datos ni backend.",
+  "summary": "Refinar ligeramente los croquis existentes: proporciones de figuras, silueta del desarrollador, jerarquía de trazo y rótulos. Colocar YoDesarrollo debajo de Puebla Arquitectos y Avermont en la apertura. Mismos siete capítulos, 33 momentos, recorrido y accesos.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "Comparación visual de los tres logos con fuentes originales e integridad de sus proporciones.",
-    "Apertura y navegación sin recortes en escritorio, vertical y horizontal; 33 momentos existentes.",
-    "Miniaturas de visor y maestro con los mismos activos y caché renovada."
+    "Orden de logos, originales intactos, figuras y rótulos afinados en los tres formatos.",
+    "Prueba existente de Aportadores: escritorio, vertical, horizontal, movimiento reducido y 33 momentos.",
+    "git diff --check y verificación del impacto."
   ],
-  "rollback": "Revertir solamente este cambio de marcas y miniaturas; no modifica registros de negocio."
+  "rollback": "Revertir sólo esta composición, sin modificar los activos originales ni registros."
 }
