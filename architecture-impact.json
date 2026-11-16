@@ -1,14 +1,15 @@
 {
   "model_revision": "2026-11-16.masterbrokers-colores.1",
   "proposal_id": "CHG-APORTADORES-RELATO-20261116",
-  "summary": "Corregir las marcas estáticas de Aportadores con los tres activos originales: YoDesarrollo, Puebla Arquitectos y Avermont. Misma arquitectura aprobada, siete escenas y treinta y tres momentos; sin cambios a permisos, datos ni backend.",
+  "summary": "Rediseño visual de la primera escena de Aportadores: capas SVG trazadas por progreso, volumen arquitectónico, actores originales y reencuadre móvil. Misma arquitectura y contenido aprobados; siete escenas,33momentos, tres marcas originales, Portero, chinches y registro sin cambios. Las seis escenas siguientes conservan su geometría y semántica.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "Comparación visual de los tres logos con fuentes originales e integridad de sus proporciones.",
-    "Apertura y navegación sin recortes en escritorio, vertical y horizontal; 33 momentos existentes.",
-    "Miniaturas de visor y maestro con los mismos activos y caché renovada."
+    "Sintaxis JavaScript y git diff --check.",
+    "Recorrido existente de33momentos, reversibilidad, límites, teclado, rotor, movimiento reducido y logos.",
+    "Primera escena: capas visibles, trazos sin NaN, rótulos móviles legibles, retorno determinista y salida a la segunda escena.",
+    "Inspección visual de primer estado y cierre en1440×900,393×852,844×390."
   ],
-  "rollback": "Revertir solamente este cambio de marcas y miniaturas; no modifica registros de negocio."
+  "rollback": "Revertir sólo el rediseño de A1; conservar PR81 de logos, datos, guion, registro y permisos."
 }
