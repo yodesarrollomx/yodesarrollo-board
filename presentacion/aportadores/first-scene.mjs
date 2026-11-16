@@ -36,12 +36,12 @@ export function mountFirstScene(svg){
  path(developerDetail,'M349 371 Q324 416 349 470 L364 446 L362 398 Z',{fill:'#e5e5d9',color:'none'});
  path(developerDetail,'M479 391 Q493 426 480 469 L469 459 L472 415 Z',{fill:'#e5e5d9',color:'none'});
  path(developerDetail,'M404 394 L410 435 L400 449 L394 434 Z',{fill:'#5b695d',color:'none'});
- const developerLabel=layer('etiqueta-desarrollador',.72,1,[807,705,1],[360,459,1]);
+ const developerLabel=layer('etiqueta-desarrollador',.72,1,[807,750,1],[360,459,1]);
  text(developerLabel,0,-38,'DESARROLLADOR',{size:18,weight:700,align:'middle',spacing:1.5});
  text(developerLabel,0,-7,'Decide · coordina',{size:25,hand:true,align:'middle',color:soft});
  path(developerLabel,'M-94 9 Q0 16 94 8',{color:soft,width:.7});
  // Land retains its own owner; no invented lot area or financial value.
- const land=layer('tierra',1.13,1.9,[105,190,1],[34,132,.57]);
+ const land=layer('tierra',1.13,1.9,[105,165,1],[34,132,.57]);
  path(land,'M0 188 L200 105 L382 189 L181 279 Z',{fill:'#e8e4d4',color:ink,width:1.4});
  path(land,'M0 188 L0 204 L181 295 L382 205 L382 189 M181 279 L181 295',{color:soft,width:.9});
  path(land,'M30 188 L202 119 L351 189 L181 263 Z',{color:'#aaa389',width:1,dash:'4 6'});
@@ -52,7 +52,7 @@ export function mountFirstScene(svg){
  text(land,180,348,'TIERRA',{size:25,weight:700,align:'middle',spacing:1.3});
  text(land,180,381,'El propietario aporta',{size:30,hand:true,align:'middle',color:soft});
  const landLink=layer('conexion-tierra',1.65,2,[0,0,1],[0,0,1]);
- const landLine=path(landLink,'M500 390 C560 390 592 362 655 362',{color:soft,width:1.4});
+ const landLine=path(landLink,'M500 365 C560 365 592 362 655 362',{color:soft,width:1.4});
  const landHead=path(landLink,'M642 354 L655 362 L642 370',{color:soft,width:1.4});
  // The two original professional roles are made recognizable with plans and a hard hat.
  const team=layer('profesionales',2.1,2.88,[145,584,1],[38,526,.67]);
@@ -90,8 +90,8 @@ export function mountFirstScene(svg){
  const businessLine=path(businessLink,'M925 350 C984 310 1014 312 1092 332',{color:red,width:2.1});
  const businessHead=path(businessLink,'M1080 319 L1092 332 L1076 339',{color:red,width:2.1});
  const returnLink=layer('retorno-negocio',3.52,3.96,[0,0,1],[0,0,1]);
- const returnLine=path(returnLink,'M1255 637 C1190 755 1000 755 923 657',{color:red,width:1.5});
- const returnHead=path(returnLink,'M924 674 L923 657 L940 664',{color:red,width:1.5});
+ const returnLine=path(returnLink,'M1255 715 C1180 806 1000 785 923 705',{color:red,width:1.5});
+ const returnHead=path(returnLink,'M924 722 L923 705 L940 712',{color:red,width:1.5});
  const businessLabel=layer('etiqueta-negocio',3.55,4,[1300,676,1],[586,785,1]);
  text(businessLabel,0,-33,'EL NEGOCIO',{size:24,weight:700,align:'middle',color:red,spacing:1.2});
  text(businessLabel,0,4,'Él y sus accionistas',{size:31,hand:true,align:'middle',color:red});
@@ -103,14 +103,14 @@ export function mountFirstScene(svg){
 
  // The mobile composition is rearranged, not a miniature of the desktop sheet.
  function lineLayout(vertical){
-  landLine.setAttribute('d',vertical?'M233 268 C250 268 267 278 283 282':'M500 390 C560 390 592 362 655 362');
+  landLine.setAttribute('d',vertical?'M233 268 C250 268 267 278 283 282':'M500 365 C560 365 592 362 655 362');
   landHead.setAttribute('d',vertical?'M275 273 L283 282 L270 286':'M642 354 L655 362 L642 370');
   teamLine.setAttribute('d',vertical?'M239 598 C284 576 278 408 300 386':'M511 670 C590 666 603 477 666 445');
   teamHead.setAttribute('d',vertical?'M288 389 L300 386 L301 399':'M652 444 L666 445 L661 458');
   businessLine.setAttribute('d',vertical?'M425 310 C511 311 523 372 535 466':'M925 350 C984 310 1014 312 1092 332');
   businessHead.setAttribute('d',vertical?'M526 454 L535 466 L542 452':'M1080 319 L1092 332 L1076 339');
-  returnLine.setAttribute('d',vertical?'M555 810 C430 852 334 619 356 494':'M1255 637 C1190 755 1000 755 923 657');
-  returnHead.setAttribute('d',vertical?'M346 506 L356 494 L363 509':'M924 674 L923 657 L940 664');
+  returnLine.setAttribute('d',vertical?'M555 810 C430 852 334 619 356 494':'M1255 715 C1180 806 1000 785 923 705');
+  returnHead.setAttribute('d',vertical?'M346 506 L356 494 L363 509':'M924 722 L923 705 L940 712');
   // Preserve true dash lengths after responsive path replacement.
   for(const l of [landLink,teamLink,businessLink,returnLink])for(const n of l.nodes)n.length=n.n.getTotalLength();
  }
@@ -140,7 +140,7 @@ export function mountFirstScene(svg){
   }
  }
  function developer(p,vertical){const t=between(p,4,5),a=vertical?[105,62,.61]:[370,-20,1],b=[188,69,.5645];return `translate(${lerp(a[0],b[0],t)} ${lerp(a[1],b[1],t)}) scale(${lerp(a[2],b[2],t)})`;}
- const landscape=[[80,110,1450,690],[610,175,400,550],[75,150,960,595],[75,155,970,740],[65,60,1460,830]];
+ const landscape=[[80,110,1450,690],[610,175,400,610],[75,150,960,650],[75,155,970,740],[65,60,1460,830]];
  const portrait=[[0,55,720,810],[260,160,205,320],[23,120,440,420],[15,480,310,290],[15,40,690,835]];
  function view(p,width,height,next){const vertical=width/height<.95,boxes=vertical?portrait:landscape,n=Math.min(4,Math.floor(p)),a=fit(boxes[n],width,height,.07),b=n===4?next:fit(boxes[n+1],width,height,.07),t=between(p,n,n+1);return a.map((v,i)=>lerp(v,b[i],t));}
  return {render,developer,view};
