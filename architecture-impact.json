@@ -1,14 +1,14 @@
 {
-  "model_revision": "2026-11-16.masterbrokers-compacto.1",
-  "proposal_id": "CHG-MB-CARTERA-COMPACTA-20261116",
-  "summary": "Entrada por nombre y estado de cada expediente canónico, sin repetirlo por contacto. Abrir conserva el detalle completo; el desplegable permite comparar. Seguimientos vencidos y de hoy primero, luego decisiones y siguientes pasos; formalizados, pausados y descartados al final. Cabecera del broker con regreso al equipo, herramientas secundarias y altas al pie. Se conservan IDs, ACL, fuentes, edición compartida y archivo/papelera global.",
+  "model_revision": "2026-11-16.aportadores-relato.1",
+  "proposal_id": "CHG-APORTADORES-RELATO-20261116",
+  "summary": "Añadir un recorrido SVG de siete escenas al catálogo existente. Reutilizar dibujos aceptados, fuente de marca, control de presentaciones, Portero y chinches. Material común visible desde las carteras; control privado de Dirección. Conservar los demás casos y datos.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "Orden con vencidos, hoy, decisión, sin fecha, futuros y estados inactivos; desempate determinista.",
-    "Recorridos sintéticos 320/390/1440, apertura y regreso, comparación, filtros, edición, archivo/papelera entre carteras y restauración.",
-    "Regresión de evaluación y retorno, sin escrituras de negocio en producción."
+    "Continuidad de desarrollador, círculo y curva; avance reversible y límites.",
+    "33 momentos en escritorio y móvil vertical/horizontal, teclado, rotor y movimiento reducido.",
+    "Catálogo, acceso a material compartido, edición privada y captura con servicios sintéticos."
   ],
-  "rollback": "Revertir documentación y frontend; conservar registros de negocio y backend."
+  "rollback": "Revertir sólo esta incorporación; conservar archivos privados y recibos existentes."
 }

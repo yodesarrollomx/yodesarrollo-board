@@ -274,6 +274,56 @@
           "moments": 4
         }
       ]
+    },
+    {
+      "id": "PRS-YOD-APORTADORES",
+      "title": "Desarrollar juntos · Aportadores",
+      "site": "YoDesarrollo",
+      "location": "General",
+      "type": "Modelo de desarrollo compartido",
+      "stage": "presentation",
+      "baseVersion": "YOD-APORTADORES-1",
+      "url": "https://yodesarrollomx.github.io/yodesarrollo-board/presentacion/aportadores/",
+      "adapter": "aportadores",
+      "maxPosition": 32,
+      "public": true,
+      "shared": true,
+      "order": 11,
+      "tags": [
+        "Aportadores",
+        "Alianza desarrolladora",
+        "Master Brokers"
+      ],
+      "scenes": [
+        {
+          "id": "tradicional",
+          "moments": 5
+        },
+        {
+          "id": "aportadores",
+          "moments": 5
+        },
+        {
+          "id": "excedente",
+          "moments": 4
+        },
+        {
+          "id": "sistema",
+          "moments": 3
+        },
+        {
+          "id": "etapas",
+          "moments": 5
+        },
+        {
+          "id": "semilla",
+          "moments": 4
+        },
+        {
+          "id": "frutos",
+          "moments": 7
+        }
+      ]
     }
   ]
 }

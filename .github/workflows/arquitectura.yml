@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: yodesarrollomx/yod-portal
-          ref: 4335208a4b4bbda7a3690467217bd4b39844fe57
+          ref: c208afefb444e1a97bea7c5297c2681423557573
           path: .yod-atlas
           persist-credentials: false
           sparse-checkout-cone-mode: false
@@ -120,6 +120,7 @@ jobs:
           node tests/brokers-evaluator-browser.cjs
           node tests/brokers-journey-browser.cjs
           node tests/presentation-hub-browser.cjs
+          QA_ARTIFACTS=aportadores-review-artifacts node tests/aportadores-browser.cjs
           QA_ARTIFACTS=ppp-review-artifacts node tests/ppp-storyboard-browser.cjs
           QA_ARTIFACTS=ppp-review-artifacts node tests/ppp-grafo-browser.cjs
           node tests/brokers-board-browser.cjs
@@ -159,6 +160,7 @@ jobs:
             slider-*.jpg
             atlas-*.jpg
             ppp-review-artifacts/
+            aportadores-review-artifacts/
             intent-*.jpg
             offer-review-artifacts/
             abasto-review-artifacts/

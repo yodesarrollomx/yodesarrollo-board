@@ -15,6 +15,7 @@ LADO, ESCALA = 600, 2  # se dibuja al doble y se reduce para suavizar bordes
 
 # slug, monograma, nombre, subtítulo
 PRESENTACIONES = [
+    ("aportadores", "YOD", "DESARROLLAR JUNTOS", "Alianza de aportadores"),
     ("gaston-madrid", "GM", "GASTÓN MADRID", "Plan de potencial"),
     ("distrito-abasto", "DA", "DISTRITO ABASTO SONORA", "Presentación"),
     ("distrito-obregon", "DO", "DISTRITO OBREGÓN", "Guion visual"),
