@@ -1,14 +1,14 @@
 {
   "model_revision": "2026-11-16.aportadores-relato.1",
   "proposal_id": "CHG-APORTADORES-RELATO-20261116",
-  "summary": "Añadir un recorrido SVG de siete escenas al catálogo existente. Reutilizar dibujos aceptados, fuente de marca, control de presentaciones, Portero y chinches. Material común visible desde las carteras; control privado de Dirección. Conservar los demás casos y datos.",
+  "summary": "Corregir las marcas estáticas de Aportadores con los tres activos originales: YoDesarrollo, Puebla Arquitectos y Avermont. Misma arquitectura aprobada, siete escenas y treinta y tres momentos; sin cambios a permisos, datos ni backend.",
   "components": [
     "SYS-INVERSION"
   ],
   "tests": [
-    "Continuidad de desarrollador, círculo y curva; avance reversible y límites.",
-    "33 momentos en escritorio y móvil vertical/horizontal, teclado, rotor y movimiento reducido.",
-    "Catálogo, acceso a material compartido, edición privada y captura con servicios sintéticos."
+    "Comparación visual de los tres logos con fuentes originales e integridad de sus proporciones.",
+    "Apertura y navegación sin recortes en escritorio, vertical y horizontal; 33 momentos existentes.",
+    "Miniaturas de visor y maestro con los mismos activos y caché renovada."
   ],
-  "rollback": "Revertir sólo esta incorporación; conservar archivos privados y recibos existentes."
+  "rollback": "Revertir solamente este cambio de marcas y miniaturas; no modifica registros de negocio."
 }

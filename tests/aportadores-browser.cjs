@@ -2,13 +2,19 @@
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const assert=require('node:assert/strict'),fs=require('node:fs/promises'),path=require('node:path'),http=require('node:http'),sync=require('node:fs');
 const root=path.resolve(__dirname,'..');
-const mime={'.html':'text/html','.mjs':'text/javascript','.js':'text/javascript','.json':'application/json','.css':'text/css','.webp':'image/webp','.woff2':'font/woff2'};
+const mime={'.html':'text/html','.mjs':'text/javascript','.js':'text/javascript','.json':'application/json','.css':'text/css','.png':'image/png','.webp':'image/webp','.woff2':'font/woff2'};
 const server=http.createServer((req,res)=>{let file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!file.startsWith(root+path.sep)){res.writeHead(403);return res.end();}if(sync.existsSync(file)&&sync.statSync(file).isDirectory())file=path.join(file,'index.html');if(!sync.existsSync(file)){res.writeHead(404);return res.end();}res.setHeader('content-type',mime[path.extname(file)]||'application/octet-stream');res.end(sync.readFileSync(file));});
 let base;
 const out=process.env.QA_ARTIFACTS||'/tmp/aportadores-qa';
 (async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));base='http://127.0.0.1:'+server.address().port;await fs.mkdir(out,{recursive:true});const browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_EXECUTABLE_PATH?{executablePath:process.env.CHROMIUM_EXECUTABLE_PATH}:{}),args:['--no-sandbox']});let checks=0;
 try{for(const viewport of [{width:1440,height:900},{width:393,height:852},{width:844,height:390}]){
  const context=await browser.newContext({viewport});await context.route('https://**/*',r=>r.fulfill({status:200,contentType:r.request().resourceType()==='script'?'text/javascript':'application/json',body:r.request().resourceType()==='script'?'':JSON.stringify({ok:true,data:{id:'PRS-YOD-APORTADORES',baseVersion:'YOD-APORTADORES-1',patch:{scenes:{}},mode:'summary',epoch:0,sequence:0}})}));const page=await context.newPage(),errors=[];page.setDefaultTimeout(12000);page.on('pageerror',e=>errors.push(e.message));await page.goto(base+'/presentacion/aportadores/');await page.waitForFunction(()=>window.YODAportadores).catch(async e=>{console.error({errors,caption:await page.locator('#caption').textContent()});await page.screenshot({path:path.join(out,'load-error.png')});throw e;});assert.equal(await page.locator('#scene-list button').count(),7);checks++;
+ await page.locator('#opening img').evaluateAll(ns=>Promise.all(ns.map(n=>n.decode())));
+ assert.equal(await page.locator('.brand img').count(),3);
+ assert.equal(await page.locator('#opening img').count(),3);
+ assert.equal(await page.locator('.brand img, #opening img').evaluateAll(ns=>ns.every(n=>{const b=n.getBoundingClientRect();return n.complete&&n.naturalWidth>0&&b.left>=0&&b.right<=innerWidth&&Math.abs(b.width/b.height-n.naturalWidth/n.naturalHeight)<.02;})),true);
+ const opening=await page.locator('#opening').boundingBox(), drawing=await page.locator('.drawing').boundingBox();
+ assert.ok(opening.y>=drawing.y&&opening.y+opening.height<=drawing.y+drawing.height);checks+=4;
  for(let p=0;p<=32;p++){await page.evaluate(p=>YODAportadores.seek(p,true),p);assert.equal(await page.evaluate(()=>YODAportadores.state().position),p);assert.equal(await page.locator('body').evaluate(e=>e.scrollWidth<=innerWidth+1),true);assert.ok(await page.locator('#caption').textContent());const invalid=await page.locator('#stage path').evaluateAll(ns=>ns.some(n=>/NaN|Infinity|undefined/.test(n.getAttribute('d'))));assert.equal(invalid,false);checks+=4;
   if([0,1,4,5,6,7,11,14,15,16,17,18,20,22,25,26,29,31,32].includes(p))await page.screenshot({path:path.join(out,`${viewport.width}-${p}.png`)});
  }

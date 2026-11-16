@@ -9,6 +9,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 SALIDA = Path(__file__).resolve().parent.parent / "presentacion" / "telon"
+APORTADORES = SALIDA.parent / "aportadores" / "assets"
 SERIF = "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf"
 SANS = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 LADO, ESCALA = 600, 2  # se dibuja al doble y se reduce para suavizar bordes
@@ -70,12 +71,36 @@ def logo(mono, nombre, sub, maestro):
     return im.resize((LADO, LADO), Image.LANCZOS)
 
 
+def aportadores(maestro):
+    """Componer los archivos originales; nunca reconstruir las marcas con texto."""
+    im = Image.new("RGB", (LADO * ESCALA, LADO * ESCALA), CREMA)
+    d = ImageDraw.Draw(im)
+    def marca(nombre, cx, cy, ancho, alto):
+        asset = Image.open(APORTADORES / nombre).convert("RGBA")
+        asset.thumbnail((ancho * ESCALA, alto * ESCALA), Image.Resampling.LANCZOS)
+        xy = (int(cx * ESCALA - asset.width / 2), int(cy * ESCALA - asset.height / 2))
+        im.paste(asset, xy, asset)
+    marca("yodesarrollo-original.png", 300, 135, 460, 85)
+    marca("puebla-arquitectos-original.png", 150, 285, 128, 128)
+    marca("avermont-original.webp", 385, 285, 270, 90)
+    d.line((70 * ESCALA, 395 * ESCALA, 530 * ESCALA, 395 * ESCALA), fill=GRIS, width=ESCALA)
+    centrado(d, "DESARROLLAR JUNTOS", fuente(SANS, "DESARROLLAR JUNTOS", 32, 530), 300, 447, VERDE)
+    centrado(d, "Alianza de aportadores", fuente(SANS, "Alianza de aportadores", 22, 500), 300, 487, GRIS)
+    pie = "MAESTRO · NO COMPARTIR" if maestro else "VER PRESENTACIÓN"
+    d.rectangle((0, 530 * ESCALA, 600 * ESCALA, 600 * ESCALA), fill=ROJO if maestro else VERDE)
+    centrado(d, pie, fuente(SANS, pie, 23, 530), 300, 565, BLANCO)
+    return im.resize((LADO, LADO), Image.Resampling.LANCZOS)
+
+
 def main():
     SALIDA.mkdir(parents=True, exist_ok=True)
     for slug, mono, nombre, sub in PRESENTACIONES:
         for maestro in (False, True):
             destino = SALIDA / f"{slug}-{'maestro' if maestro else 'visor'}.png"
-            logo(mono, nombre, sub, maestro).save(destino, optimize=True)
+            imagen = aportadores(maestro) if slug == "aportadores" else logo(mono, nombre, sub, maestro)
+            imagen.save(destino, optimize=True)
+            if slug == "aportadores":
+                imagen.save(SALIDA / f"aportadores-logos2-{'maestro' if maestro else 'visor'}.png", optimize=True)
             print(destino.relative_to(SALIDA.parent.parent), destino.stat().st_size, "bytes")
 
 
