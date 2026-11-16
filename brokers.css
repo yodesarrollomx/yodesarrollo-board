@@ -253,3 +253,35 @@ body:has(#brokers){background:#f7f9f7;color:#213b34;color-scheme:light}
 #brokers .portfolio-create{display:flex;flex-wrap:wrap;gap:8px}
 #brokers .portfolio-create button{font-size:12px;min-height:42px;padding:8px 14px;background:var(--surface);color:var(--accent)}
 @media(max-width:600px){#brokers.portfolio-workspace{padding:8px 12px 36px}#brokers .work-surface .case-summary .case-main{padding:13px 12px}#brokers .work-surface .case-summary .case-title-line{gap:8px}#brokers .work-surface .case-summary .case-title-line strong{font-size:14px}#brokers .search-field input{font-size:16px}#brokers .workspace-menu>summary{min-height:44px;min-width:44px}}
+
+/* Each saved stage has a stable palette; follow-up urgency has its own text. */
+#brokers [data-stage]{--stage-ink:#52616c;--stage-soft:#f1f4f6;--stage-wash:#fafbfc;--stage-edge:#7c8b95}
+#brokers [data-stage="Recibido"]{--stage-ink:#1e527c;--stage-soft:#e2effa;--stage-wash:#f3f8fd;--stage-edge:#568fc0}
+#brokers [data-stage="En revisión"]{--stage-ink:#805600;--stage-soft:#faeac1;--stage-wash:#fffaf0;--stage-edge:#c28a22}
+#brokers [data-stage="PPP en proceso"]{--stage-ink:#674194;--stage-soft:#eee3fa;--stage-wash:#faf5ff;--stage-edge:#9163b8}
+#brokers [data-stage="PPP presentado"]{--stage-ink:#14685f;--stage-soft:#d7f0e9;--stage-wash:#f0faf6;--stage-edge:#409887}
+#brokers [data-stage="En negociación"]{--stage-ink:#a34b19;--stage-soft:#ffe7d5;--stage-wash:#fff5ed;--stage-edge:#d77b3d}
+#brokers [data-stage="Formalizado"]{--stage-ink:#2f673d;--stage-soft:#e0efdb;--stage-wash:#f2f9ef;--stage-edge:#63995a}
+#brokers [data-stage="En pausa"]{--stage-ink:#5c606b;--stage-soft:#e8eaf0;--stage-wash:#f7f8fa;--stage-edge:#999eaa}
+#brokers [data-stage="Descartado"]{--stage-ink:#80505b;--stage-soft:#f2e2e6;--stage-wash:#fbf5f6;--stage-edge:#b98995}
+#brokers .case-row[data-record-state="archived"],#brokers .case-row[data-record-state="trash"],#brokers .detail[data-record-state="archived"],#brokers .detail[data-record-state="trash"]{--stage-edge:#999eaa;--stage-wash:#f7f8fa}
+#brokers .work-surface .case-summary{background:var(--stage-wash);box-shadow:inset 3px 0 var(--stage-edge)}
+#brokers .work-surface .case-summary .case-main:hover,#brokers .work-surface .case-summary .case-toggle:hover{background:var(--stage-soft)}
+#brokers .work-surface .case-summary .case-toggle{color:var(--stage-ink)}
+#brokers .work-surface .is-current .case-summary{outline:2px solid var(--stage-edge);outline-offset:-2px}
+#brokers .case-badges{display:flex;flex-direction:column;align-items:flex-end;gap:3px;max-width:48%;flex:none}
+#brokers .stage-badge,#brokers .work-surface .case-summary .case-title-line .stage-badge{display:inline-block;max-width:100%;border-radius:5px;padding:3px 7px;color:var(--stage-ink);background:var(--stage-soft);font-size:11px;font-weight:600;line-height:1.35;white-space:normal;text-align:right}
+#brokers .followup-signal{display:inline-flex;gap:4px;align-items:center;color:#59646c;font-size:10px;font-weight:600;line-height:1.35;text-align:right}
+#brokers .followup-signal::before{content:'•';font-size:14px;line-height:1}
+#brokers .followup-signal[data-signal="overdue"]{color:#a52c2c}
+#brokers .followup-signal[data-signal="overdue"]::before{content:'!';font-size:11px;font-weight:800}
+#brokers .followup-signal[data-signal="today"]{color:#805600}
+#brokers .followup-signal[data-signal="decision"]{color:#674194}
+#brokers .case-row[data-signal="overdue"]>.case-summary{box-shadow:inset 4px 0 #ba4545}
+#brokers .detail[data-stage]{border-top:4px solid var(--stage-edge)}
+#brokers .detail-subtitle .case-badges{display:inline-flex;flex-direction:row;align-items:center;flex-wrap:wrap;max-width:100%;gap:8px;margin-right:8px;vertical-align:middle}
+#brokers .color-key{border-top:1px solid var(--line);padding:10px 6px 4px;font-size:11px}
+#brokers .color-key summary{font-weight:500;letter-spacing:0;text-align:left;min-height:32px;padding:4px 0;list-style:revert}
+#brokers .color-key ul{display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:8px 0;list-style:none}
+#brokers .color-key p{font-size:11px;line-height:1.5;color:var(--muted)}
+@media(forced-colors:active){#brokers .stage-badge{border:1px solid CanvasText}#brokers .work-surface .case-summary{border-left:3px solid CanvasText}}
