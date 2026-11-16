@@ -219,3 +219,37 @@ body:has(#brokers){background:#f7f9f7;color:#213b34;color-scheme:light}
 @media(max-width:600px){.work-toolbar{flex-wrap:wrap}.record-scope{flex:1}.record-menu>div{max-width:calc(100vw - 48px)}}
 
 #brokers .broker-checks{border:1px solid var(--line,#ddd);border-radius:8px;padding:12px;display:grid;gap:8px}#brokers .broker-checks label{display:flex;align-items:center;gap:10px}#brokers .broker-checks input{width:18px;min-height:18px;accent-color:var(--accent)}
+
+/* Compact portfolio: cases first, secondary controls and creation at the end. */
+#brokers.portfolio-workspace>header{display:none}
+#brokers .portfolio-back{margin:0 0 5px}
+#brokers .portfolio-back button{border:0;background:transparent;color:var(--muted);padding:8px 0;min-height:40px;font-size:12px}
+#brokers.portfolio-workspace .work-heading{margin-bottom:12px;flex-wrap:nowrap}
+#brokers.portfolio-workspace .work-heading>div:first-child{min-width:0}
+#brokers.portfolio-workspace .work-heading h2{font-size:23px;max-width:none;overflow-wrap:anywhere}
+#brokers .workspace-menu a{display:block;padding:10px;font-size:13px}
+#brokers .work-toolbar{flex-wrap:nowrap;margin-bottom:12px}
+#brokers .search-field{flex:1 1 0;min-width:0}
+#brokers .filter-menu>summary{min-height:42px}
+#brokers .filter-menu>div{left:auto;right:0;width:min(265px,calc(100vw - 36px));max-height:70dvh;overflow:auto}
+#brokers .client-list{display:block;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+#brokers .case-row{overflow:visible}
+#brokers .case-row:first-child{border-top:0}
+#brokers .work-surface .case-summary{display:flex;align-items:stretch;min-width:0}
+#brokers .work-surface .case-summary .case-main{display:block;padding:16px;min-width:0;flex:1;width:auto}
+#brokers .work-surface .case-summary .case-title-line{display:flex;align-items:center;gap:12px;min-width:0}
+#brokers .work-surface .case-summary .case-title-line strong{font-size:15px;font-weight:600;flex:1;min-width:0;overflow-wrap:anywhere}
+#brokers .work-surface .case-summary .case-title-line .status{display:inline-block;margin:0;flex:none;max-width:38%;white-space:normal;font-size:11px;text-align:right}
+#brokers .work-surface .case-summary .case-toggle{width:44px;min-height:52px;text-align:center;padding:8px;font-size:19px;color:var(--accent);border-radius:0}
+#brokers .work-surface .case-summary .case-toggle span{margin:0}
+#brokers .case-row.is-expanded{background:var(--soft)}
+#brokers .case-preview{border:0;border-top:1px solid var(--line);margin:0;padding:14px 16px;background:var(--surface)}
+#brokers .case-client{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:10px}
+#brokers .case-client .text-button{display:inline;padding:3px 6px}
+#brokers .case-preview .case-row-footer{padding:8px 0;flex-wrap:wrap}
+#brokers .case-preview .record-actions{padding:8px 0 0}
+#brokers .portfolio-footer{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+#brokers .portfolio-footer h3{font-size:12px;font-weight:500;color:var(--muted);margin:0 0 10px}
+#brokers .portfolio-create{display:flex;flex-wrap:wrap;gap:8px}
+#brokers .portfolio-create button{font-size:12px;min-height:42px;padding:8px 14px;background:var(--surface);color:var(--accent)}
+@media(max-width:600px){#brokers.portfolio-workspace{padding:8px 12px 36px}#brokers .work-surface .case-summary .case-main{padding:13px 12px}#brokers .work-surface .case-summary .case-title-line{gap:8px}#brokers .work-surface .case-summary .case-title-line strong{font-size:14px}#brokers .search-field input{font-size:16px}#brokers .workspace-menu>summary{min-height:44px;min-width:44px}}

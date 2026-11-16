@@ -55,6 +55,21 @@
       (!q || [...g.records.flatMap(o=>[o.id,o.title,o.location,o.kind,o.terrain_id,o.ppp_id]),...g.contacts.flatMap(c=>[c.name,c.company])].join(' ').toLocaleLowerCase('es').includes(q)));
   }
   function overdue(o, today) { return !!o.next_date && o.next_date < today && !['Formalizado', 'Descartado', 'En pausa'].includes(o.stage); }
+  // Presentation order only. Never change a saved stage, date or assignment.
+  function compareFollowup(a, b, day, needsDecision = () => false) {
+    const rank = o => {
+      if (o.stage === 'Descartado') return 8;
+      if (o.stage === 'En pausa') return 7;
+      if (o.stage === 'Formalizado') return 6;
+      if (overdue(o, day)) return 0;
+      if (o.next_date === day) return 1;
+      if (needsDecision(o)) return 2;
+      if (!o.next_date || !nextStep(o.next_action).text.trim()) return 3;
+      return 4;
+    };
+    return rank(a) - rank(b) || String(a.next_date || '9999').localeCompare(String(b.next_date || '9999')) ||
+      String(a.title || '').localeCompare(String(b.title || ''), 'es') || String(a.id).localeCompare(String(b.id));
+  }
   function nextStep(value) {
     const text = String(value || ''), match = text.match(/^\[(YOD|Masterbroker|PG|Persona:[A-Za-z0-9_.:@%-]{1,600})\]\s*/);
     if (match && match[1].startsWith('Persona:')) {
@@ -192,7 +207,7 @@
     }
     return { load: () => request('brokers_snapshot', {}), save, invalidate: () => { generation++; } };
   }
-  const api = { stages, participationStates, recordStatus, inRecordScope, safeLink, visorLink, validateSnapshot, visible, caseGroups, clientGroups, portfolioRoleLabel, teamOrder, orderedPortfolios, ownPortfolio, ownerLabel, overdue, nextStep, encodeStep, agenda, previewSnapshot, workspaceSnapshot, dailyControl, createClient };
+  const api = { compareFollowup, stages, participationStates, recordStatus, inRecordScope, safeLink, visorLink, validateSnapshot, visible, caseGroups, clientGroups, portfolioRoleLabel, teamOrder, orderedPortfolios, ownPortfolio, ownerLabel, overdue, nextStep, encodeStep, agenda, previewSnapshot, workspaceSnapshot, dailyControl, createClient };
   if (typeof module !== 'undefined') module.exports = api;
   root.BrokersCore = api;
 })(typeof window === 'undefined' ? globalThis : window);
