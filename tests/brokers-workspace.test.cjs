@@ -37,3 +37,18 @@ test('etiqueta comercial sólo por ID confirmado; Sayri y homónimos quedan inte
  for(const id of ['BR-EDUARDO-LARA','BR-ALEJANDRO-FRANCO','BR-LUPITA'])assert.equal(C.portfolioRoleLabel(id),'MB');
  for(const id of ['BR-SAYRI-FRAIJO','Alejandro Puebla Gayón','Eduardo Lara','direccion','nuevo','',null,undefined])assert.equal(C.portfolioRoleLabel(id),'Integrante');
 });
+
+
+test('prioridad de seguimiento: vencidos, hoy, decisión, sin plan, futuros, formalizados, pausa y descartados',()=>{
+ const day='2026-11-16',o=(id,stage,next_date,decision=false)=>({id,title:id,stage,next_date,notes:CRM.encodeCase('','Por confirmar',decision),next_action:'[YOD] Dar seguimiento'});
+ const rows=[o('descartado','Descartado','2000-01-01',true),o('pausa','En pausa','2000-01-01',true),o('futuro','En revisión','2026-12-01'),o('sin-fecha','Recibido',''),o('hoy','En revisión',day),o('decisión','En negociación','2026-12-10',true),o('vencido','En revisión','2026-11-15'),o('formalizado','Formalizado','2000-01-01'),o('más-vencido','En revisión','2026-11-01')];
+ const before=JSON.stringify(rows),compare=(a,b)=>C.compareFollowup(a,b,day,o=>CRM.caseInfo(o).decision);
+ assert.deepEqual([...rows].sort(compare).map(o=>o.id),['más-vencido','vencido','hoy','decisión','sin-fecha','futuro','formalizado','pausa','descartado']);
+ assert.equal(JSON.stringify(rows),before);
+ const a=o('a','Recibido',''),b=o('b','Recibido','');a.title=b.title='Mismo nombre';assert.ok(compare(a,b)<0);assert.ok(compare(b,a)>0);assert.equal(compare(a,a),0);
+});
+test('un caso canónico compartido entre contactos sólo produce un renglón y conserva sus relaciones',()=>{
+ const s=fixture();s.opportunities[1].terrain_id='t1';s.opportunities[1].contact_id='c2';
+ const group=C.caseGroups(s,'d','','','').find(g=>g.key==='terrain:t1');
+ assert.equal(group.records.length,2);assert.deepEqual(group.contacts.map(c=>c.id),['c1','c2']);assert.equal(C.caseGroups(s,'d','','','').filter(g=>g.key==='terrain:t1').length,1);
+});

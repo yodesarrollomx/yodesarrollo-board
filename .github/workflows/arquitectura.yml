@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: yodesarrollomx/yod-portal
-          ref: 0ecb2d485dc92210603408e805433d9ee8d8a069
+          ref: 4335208a4b4bbda7a3690467217bd4b39844fe57
           path: .yod-atlas
           persist-credentials: false
           sparse-checkout-cone-mode: false
@@ -163,6 +163,8 @@ jobs:
             offer-review-artifacts/
             abasto-review-artifacts/
             temporal-review-artifacts/
+            workspace-*.png
+            crm-*.png
             mobile-*.jpg
             pin-*.jpg
             pin-*.png

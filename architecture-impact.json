@@ -1,16 +1,14 @@
 {
-  "model_revision": "2026-11-16.masterbrokers-registros.1",
-  "proposal_id": "CHG-MB-REGISTROS-GLOBALES-20261116",
-  "summary": "Referencias explícitas de folio, terreno o PPP único concilian las fuentes dentro del mismo alcance. Edición por campo prevalece sobre la importación. Archivo y papelera persistentes, restauración y confirmación de alcance; contactos inactivos ocultan sus asuntos sin modificar los estados individuales. Conservar historial, concurrencia e idempotencia.",
+  "model_revision": "2026-11-16.masterbrokers-compacto.1",
+  "proposal_id": "CHG-MB-CARTERA-COMPACTA-20261116",
+  "summary": "Entrada por nombre y estado de cada expediente canónico, sin repetirlo por contacto. Abrir conserva el detalle completo; el desplegable permite comparar. Seguimientos vencidos y de hoy primero, luego decisiones y siguientes pasos; formalizados, pausados y descartados al final. Cabecera del broker con regreso al equipo, herramientas secundarias y altas al pie. Se conservan IDs, ACL, fuentes, edición compartida y archivo/papelera global.",
   "components": [
-    "SYS-INVERSION",
-    "GAS-CRM",
-    "SHEET-CRM"
+    "SYS-INVERSION"
   ],
   "tests": [
-    "Pruebas sintéticas: referencia explícita y ambigua, aislamiento, edición parcial y campo vacío intencional.",
-    "Archivo, papelera y restauración de registros compartidos; readback, conflictos y reintentos.",
-    "Editor, filtros y estados en móvil/escritorio; sin escrituras de prueba en producción."
+    "Orden con vencidos, hoy, decisión, sin fecha, futuros y estados inactivos; desempate determinista.",
+    "Recorridos sintéticos 320/390/1440, apertura y regreso, comparación, filtros, edición, archivo/papelera entre carteras y restauración.",
+    "Regresión de evaluación y retorno, sin escrituras de negocio en producción."
   ],
-  "rollback": "Revertir código y versión del motor, conservar columnas, estados e historial; no restaurar hojas de negocio."
+  "rollback": "Revertir documentación y frontend; conservar registros de negocio y backend."
 }

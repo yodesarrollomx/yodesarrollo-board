@@ -40,7 +40,7 @@ const service=S.createService({auth:k=>identities[k]?{ok:true,...identities[k]}:
             assert.equal(await p.getByText('Plan sintético').count(),0,label+': ni el proyecto');
           }else{
             if(who==='synthetic-dir'){const own=p.locator('[data-open-broker="b1"]');if(await own.count())await own.first().click();}
-            const card=p.locator('.case-row',{hasText:'Plan sintético'}).first();await card.waitFor();
+            const card=p.locator('.case-row',{hasText:'Plan sintético'}).first();await card.waitFor();await card.locator('[data-expand]').click();
             const a=card.locator('a.visor-link');
             assert.equal(await a.count(),1,label+': un botón por tarjeta');
             assert.equal(await a.getAttribute('href'),VISOR,label);assert.equal(await a.getAttribute('target'),'_blank',label);
