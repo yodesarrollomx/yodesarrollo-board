@@ -113,6 +113,7 @@ jobs:
         run: |
           npm install --no-save --ignore-scripts --no-audit --no-fund playwright@1.58.2
           npx playwright install --with-deps chromium webkit
+          QA_ARTIFACTS=aportadores-review-artifacts node tests/aportadores-browser.cjs
           node tests/brokers-public-preview-browser.cjs
           node tests/brokers-crm-browser.cjs
           node tests/brokers-workspace-browser.cjs
@@ -159,6 +160,7 @@ jobs:
             slider-*.jpg
             atlas-*.jpg
             ppp-review-artifacts/
+            aportadores-review-artifacts/
             intent-*.jpg
             offer-review-artifacts/
             abasto-review-artifacts/
