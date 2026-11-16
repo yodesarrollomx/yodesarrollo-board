@@ -62,3 +62,5 @@ test('readback de ciclo de vida exige estado real, no un simple ACK',async()=>{
 });
 
 test('notas extensas conservan su contenido al editar',()=>{const CRM=require('../brokers-crm.js'),note='Dato relevante. '.repeat(500),encoded=CRM.encodeCase(note,'Listo',true);assert.equal(CRM.caseInfo({notes:encoded}).text,note.trim());const s=state();assert.equal(S.prepare(s,D,{kind:'opportunity',record:{id:'o',notes:encoded,broker_ids:['a','b']},expected_revision:1},env)[0].record.notes,encoded);assert.throws(()=>CRM.encodeCase('x'.repeat(30000),'Listo',false));});
+
+test('reasignar la cartera de un alias persistido no recrea el registro importado',()=>{const s=state();S.historyVisors(s,personas,[head,['alias','Proyecto','p','activo','',viewer,'ppp:plan-1']]);s.opportunities[0].broker_ids=['b'];S.historyVisors(s,personas,[head,['alias','Proyecto','p','activo','',viewer,'ppp:plan-1']]);assert.equal(s.opportunities.length,1);assert.equal(S.snapshot(s,A).opportunities.length,0);assert.equal(S.snapshot(s,B).opportunities.length,1);});

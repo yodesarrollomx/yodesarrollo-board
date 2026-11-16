@@ -162,6 +162,9 @@
       const id=p.folio||'HMB-'+p.proyecto_id,exact=s.opportunities.find(o=>o.id===id);
       // Never attach a private viewer to a different broker's case, even with an identical ID.
       if(exact&&!(exact.broker_ids||[]).includes(owner))continue;
+      // A persisted alias identifies a moved record; the old import must not recreate it.
+      const known=s.opportunities.filter(o=>parseList(o.history_ids).includes(p.proyecto_id));
+      if(known.length&&!known.some(o=>(o.broker_ids||[]).includes(owner)))continue;
       const plans=(p.planes||'').split(',').map(x=>x.trim().replace(/^ppp:/,''));
       const matches=s.opportunities.filter(o=>(o.broker_ids||[]).includes(owner)&&
         (parseList(o.history_ids).includes(p.proyecto_id)||(p.folio&&o.terrain_id===p.folio)||(o.ppp_id&&plans.includes(o.ppp_id))));
